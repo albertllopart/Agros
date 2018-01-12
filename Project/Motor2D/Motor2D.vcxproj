@@ -75,7 +75,13 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_ITERATOR_DEBUG_LEVEL=0;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -113,17 +119,22 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Module.h" />
+    <ClInclude Include="M_Window.h" />
     <ClInclude Include="p2Defs.h" />
     <ClInclude Include="p2DynArray.h" />
     <ClInclude Include="p2List.h" />
     <ClInclude Include="p2Log.h" />
     <ClInclude Include="p2Point.h" />
     <ClInclude Include="p2SString.h" />
+    <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
+    <ClInclude Include="PugiXml\src\pugixml.hpp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="M_Window.cpp" />
     <ClCompile Include="p2Log.cpp" />
+    <ClCompile Include="PugiXml\src\pugixml.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

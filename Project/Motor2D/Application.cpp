@@ -6,6 +6,8 @@
 
 #include "Application.h"
 
+#include "M_Window.h"
+
 #include "Brofiler\Brofiler.h"
 
 // Constructor
@@ -13,7 +15,9 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 {
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
+	win = new Window();
 
+	AddModule(win);
 	// render last to swap buffer
 
 	cap = "ON";

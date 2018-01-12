@@ -10,6 +10,12 @@
     <Filter Include="SRC\Tools">
       <UniqueIdentifier>{0bcac50a-3542-4a7d-b7d1-046a863461e5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SRC\Tools\PugiXML">
+      <UniqueIdentifier>{1cb41c30-ef38-444a-bede-83f7c08697e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SRC\Modules">
+      <UniqueIdentifier>{e2e93ee7-f3d8-458a-abdd-c5848f02b343}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -36,6 +42,15 @@
     <ClInclude Include="Module.h">
       <Filter>SRC\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="PugiXml\src\pugiconfig.hpp">
+      <Filter>SRC\Tools\PugiXML</Filter>
+    </ClInclude>
+    <ClInclude Include="PugiXml\src\pugixml.hpp">
+      <Filter>SRC\Tools\PugiXML</Filter>
+    </ClInclude>
+    <ClInclude Include="M_Window.h">
+      <Filter>SRC\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="p2Log.cpp">
@@ -46,6 +61,12 @@
     </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>SRC\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="PugiXml\src\pugixml.cpp">
+      <Filter>SRC\Tools\PugiXML</Filter>
+    </ClCompile>
+    <ClCompile Include="M_Window.cpp">
+      <Filter>SRC\Modules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

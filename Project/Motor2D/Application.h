@@ -8,6 +8,7 @@
 #include "PugiXml\src\pugixml.hpp"
 
 // Modules
+class Window;
 
 class Application
 {
@@ -72,6 +73,7 @@ private:
 public:
 
 	// Modules
+	Window* win;
 
 private:
 

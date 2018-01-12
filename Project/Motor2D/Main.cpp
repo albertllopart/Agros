@@ -21,7 +21,8 @@
 #include "Brofiler\Brofiler.h"
 #pragma comment(lib, "Brofiler/ProfilerCore32.lib")
 
-
+//pugixml
+#include "PugiXml\src\pugixml.hpp"
 
 enum MainState
 {

@@ -122,6 +122,7 @@
     <ClInclude Include="M_Audio.h" />
     <ClInclude Include="M_Input.h" />
     <ClInclude Include="M_Render.h" />
+    <ClInclude Include="M_Scene.h" />
     <ClInclude Include="M_Textures.h" />
     <ClInclude Include="M_Window.h" />
     <ClInclude Include="p2Defs.h" />
@@ -139,6 +140,7 @@
     <ClCompile Include="M_Audio.cpp" />
     <ClCompile Include="M_Input.cpp" />
     <ClCompile Include="M_Render.cpp" />
+    <ClCompile Include="M_Scene.cpp" />
     <ClCompile Include="M_Textures.cpp" />
     <ClCompile Include="M_Window.cpp" />
     <ClCompile Include="p2Log.cpp" />

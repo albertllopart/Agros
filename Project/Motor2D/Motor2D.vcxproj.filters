@@ -16,6 +16,9 @@
     <Filter Include="SRC\Modules">
       <UniqueIdentifier>{e2e93ee7-f3d8-458a-abdd-c5848f02b343}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SRC\Scenes">
+      <UniqueIdentifier>{911e2ebb-ed67-4198-9523-77e8d203497d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -63,6 +66,9 @@
     <ClInclude Include="M_Audio.h">
       <Filter>SRC\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="M_Scene.h">
+      <Filter>SRC\Scenes</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="p2Log.cpp">
@@ -91,6 +97,9 @@
     </ClCompile>
     <ClCompile Include="M_Audio.cpp">
       <Filter>SRC\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="M_Scene.cpp">
+      <Filter>SRC\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

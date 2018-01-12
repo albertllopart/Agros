@@ -12,6 +12,7 @@ class Window;
 class Render;
 class Input;
 class Textures;
+class Audio;
 
 class Application
 {
@@ -80,6 +81,7 @@ public:
 	Render* render;
 	Input* input;
 	Textures* tex;
+	Audio* audio;
 
 private:
 

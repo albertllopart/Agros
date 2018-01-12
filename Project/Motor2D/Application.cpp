@@ -10,6 +10,7 @@
 #include "M_Render.h"
 #include "M_Input.h"
 #include "M_Textures.h"
+#include "M_Audio.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -22,10 +23,13 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	render = new Render();
 	input = new Input();
 	tex = new Textures();
+	audio = new Audio();
 
 	AddModule(win);
 	AddModule(input);
 	AddModule(tex);
+	AddModule(audio);
+
 	// render last to swap buffer
 	AddModule(render);
 

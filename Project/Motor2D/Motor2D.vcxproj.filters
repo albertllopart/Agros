@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Programació 2">
+      <UniqueIdentifier>{a117a5a7-c063-468f-8341-5dcabe070274}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SRC">
+      <UniqueIdentifier>{1a24f23c-aa5a-4284-a2c4-029b6a5c0f92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SRC\Tools">
+      <UniqueIdentifier>{0bcac50a-3542-4a7d-b7d1-046a863461e5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="p2Defs.h">
+      <Filter>Programació 2</Filter>
+    </ClInclude>
+    <ClInclude Include="p2DynArray.h">
+      <Filter>Programació 2</Filter>
+    </ClInclude>
+    <ClInclude Include="p2List.h">
+      <Filter>Programació 2</Filter>
+    </ClInclude>
+    <ClInclude Include="p2Log.h">
+      <Filter>Programació 2</Filter>
+    </ClInclude>
+    <ClInclude Include="p2Point.h">
+      <Filter>Programació 2</Filter>
+    </ClInclude>
+    <ClInclude Include="p2SString.h">
+      <Filter>Programació 2</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>SRC\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Module.h">
+      <Filter>SRC\Tools</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="p2Log.cpp">
+      <Filter>Programació 2</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>SRC\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>SRC\Tools</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

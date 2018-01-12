@@ -7,6 +7,8 @@
 #include "Application.h"
 
 #include "M_Window.h"
+#include "M_Render.h"
+#include "M_Input.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -16,9 +18,13 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
 	win = new Window();
+	render = new Render();
+	input = new Input();
 
 	AddModule(win);
+	AddModule(input);
 	// render last to swap buffer
+	AddModule(render);
 
 	cap = "ON";
 	vsync = "ON";

@@ -51,6 +51,12 @@
     <ClInclude Include="M_Window.h">
       <Filter>SRC\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="M_Render.h">
+      <Filter>SRC\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="M_Input.h">
+      <Filter>SRC\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="p2Log.cpp">
@@ -66,6 +72,12 @@
       <Filter>SRC\Tools\PugiXML</Filter>
     </ClCompile>
     <ClCompile Include="M_Window.cpp">
+      <Filter>SRC\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="M_Render.cpp">
+      <Filter>SRC\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="M_Input.cpp">
       <Filter>SRC\Modules</Filter>
     </ClCompile>
   </ItemGroup>

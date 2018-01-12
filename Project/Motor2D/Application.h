@@ -9,6 +9,8 @@
 
 // Modules
 class Window;
+class Render;
+class Input;
 
 class Application
 {
@@ -74,6 +76,8 @@ public:
 
 	// Modules
 	Window* win;
+	Render* render;
+	Input* input;
 
 private:
 

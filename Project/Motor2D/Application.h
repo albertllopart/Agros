@@ -11,6 +11,7 @@
 class Window;
 class Render;
 class Input;
+class Textures;
 
 class Application
 {
@@ -78,6 +79,7 @@ public:
 	Window* win;
 	Render* render;
 	Input* input;
+	Textures* tex;
 
 private:
 

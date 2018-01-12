@@ -57,6 +57,9 @@
     <ClInclude Include="M_Input.h">
       <Filter>SRC\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="M_Textures.h">
+      <Filter>SRC\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="p2Log.cpp">
@@ -78,6 +81,9 @@
       <Filter>SRC\Modules</Filter>
     </ClCompile>
     <ClCompile Include="M_Input.cpp">
+      <Filter>SRC\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="M_Textures.cpp">
       <Filter>SRC\Modules</Filter>
     </ClCompile>
   </ItemGroup>

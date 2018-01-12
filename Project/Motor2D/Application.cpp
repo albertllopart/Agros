@@ -9,6 +9,7 @@
 #include "M_Window.h"
 #include "M_Render.h"
 #include "M_Input.h"
+#include "M_Textures.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -20,9 +21,11 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	win = new Window();
 	render = new Render();
 	input = new Input();
+	tex = new Textures();
 
 	AddModule(win);
 	AddModule(input);
+	AddModule(tex);
 	// render last to swap buffer
 	AddModule(render);
 

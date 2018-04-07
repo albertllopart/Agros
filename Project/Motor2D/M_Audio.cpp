@@ -50,6 +50,10 @@ bool Audio::Awake(pugi::xml_node& config)
 		ret = true;
 	}
 
+	//XML config
+	music_volume = config.child("volume").attribute("music").as_uint();
+	fx_volume = config.child("volume").attribute("fx").as_uint();
+
 	Mix_AllocateChannels(MAX_CHANNELS);
 	Mix_VolumeMusic(music_volume);
 

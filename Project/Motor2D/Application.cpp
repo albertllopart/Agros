@@ -64,19 +64,19 @@ void Application::AddModule(Module* module)
 // Called before render is available
 bool Application::Awake()
 {
-	pugi::xml_document	config_file;
-	pugi::xml_node		config;
-	pugi::xml_node		app_config;
+	pugi::xml_parse_result result = config.load_file("config.xml");
+	pugi::xml_node app_config;
 
 	bool ret = false;
+	if (result.status == 0)//0 means ok, 1 equals to failure (missing file)
+		ret = true;
 
-	config = LoadConfig(config_file);
+	config_node = LoadConfig(config);
 
-	if (config.empty() == false)
+	if (config_node.empty() == false)
 	{
 		// self-config
-		ret = true;
-		app_config = config.child("app");
+		app_config = config_node.child("app");
 		title.create(app_config.child("title").child_value());
 		organization.create(app_config.child("organization").child_value());
 
@@ -95,7 +95,7 @@ bool Application::Awake()
 
 		while (item != NULL && ret == true)
 		{
-			ret = item->data->Awake(config.child(item->data->name.GetString()));
+			ret = item->data->Awake(config_node.child(item->data->name.GetString()));
 			item = item->next;
 		}
 	}

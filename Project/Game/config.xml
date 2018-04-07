@@ -1,9 +1,8 @@
-<!-- Config file for the game -->
+<!-- Config file -->
 
 <config>
   <app>
-    <title>Game Development Testbed</title>
-    <organization>UPC</organization>
+    <title>Warpolis</title>
   </app>
 	
   <renderer>
@@ -11,12 +10,26 @@
   </renderer>
 
   <window>
+    <title>Warpolis project by Albert Llopart</title>
     <resolution width="800" height="480" scale="2"/>
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
     <fullscreen_window value="false"/>
   </window>
+
+  <input>
+  </input>
+
+  <textures>
+  </textures>
+
+  <audio>
+    <volume music="10" fx ="100"/>
+  </audio>
+
+  <scene>
+  </scene>
 
   <file_system>
     <path>data.zip</path>

@@ -95,6 +95,10 @@ private:
 	p2SString			title;
 	p2SString			organization;
 
+	//XML Related
+	pugi::xml_document	config;
+	pugi::xml_node		config_node;
+
 	bool		        want_to_save = false;
 	bool				want_to_save_audio = false;
 	bool                want_to_save_player = false;

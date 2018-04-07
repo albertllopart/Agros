@@ -42,8 +42,8 @@ public:
 
 private:
 
-	uint				music_volume = 96;
-	uint				fx_volume = 128;
+	uint				music_volume;
+	uint				fx_volume;
 
 	_Mix_Music*			music = nullptr;
 	p2List<Mix_Chunk*>	fx;

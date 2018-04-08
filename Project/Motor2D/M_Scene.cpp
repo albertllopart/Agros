@@ -67,10 +67,10 @@ bool Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x += 1;
 
-	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d",
+	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Layers:%d",
 		App->map->map_data.width, App->map->map_data.height,
 		App->map->map_data.tile_width, App->map->map_data.tile_height,
-		App->map->map_data.tilesets.count());
+		App->map->map_data.tilesets.count(), App->map->map_data.layers.count());
 
 	App->win->SetTitle(title.GetString());
 

@@ -27,6 +27,7 @@ struct map_layer
 	p2SString			name = nullptr;
 	int					width = 0;
 	int					height = 0;
+	int					size = 0;
 
 	uint*				gid = nullptr;
 
@@ -68,9 +69,11 @@ public:
 	// Load new map
 	bool Load(const char* path);
 
-	bool LoadMapFromTMX();
+	bool LoadMap();
 
 	bool LoadTileset(pugi::xml_node& node);
+
+	bool LoadLayer(pugi::xml_node& node);
 
 	bool UnloadMap();
 

@@ -68,7 +68,7 @@ bool Map::Load(const char* file_name)
 
 	if (ret == true)
 	{
-		LoadMapFromTMX();
+		LoadMap();
 	}
 
 	pugi::xml_node node = map_file.child("map");
@@ -80,6 +80,20 @@ bool Map::Load(const char* file_name)
 		if (name == "tileset")
 		{ 
 			LoadTileset(iterator);
+		}
+		iterator = iterator.next_sibling();
+		name = iterator.name();
+	}
+
+	node = map_file.child("map");
+	iterator = node.child("layer");
+	name = iterator.name();
+
+	while (iterator != NULL)
+	{
+		if (name == "layer")
+		{
+			LoadLayer(iterator);
 		}
 		iterator = iterator.next_sibling();
 		name = iterator.name();
@@ -104,7 +118,7 @@ bool Map::Load(const char* file_name)
 	return ret;
 }
 
-bool Map::LoadMapFromTMX()
+bool Map::LoadMap()
 {
 	bool ret = true;
 
@@ -168,6 +182,36 @@ bool Map::LoadTileset(pugi::xml_node& node)
 		}
 
 		map_data.tilesets.add(set);
+	}
+
+	return ret;
+}
+
+bool Map::LoadLayer(pugi::xml_node& node)
+{
+	bool ret = true;
+
+	if (node != NULL)
+	{
+		map_layer* yer = new map_layer();
+
+		yer->name.create(node.attribute("name").as_string());
+		yer->width = node.attribute("width").as_int();
+		yer->height = node.attribute("height").as_int();
+		yer->size = yer->width * yer->height;
+
+		yer->gid = new uint[yer->size];
+		memset(yer->gid, 0, yer->size);
+
+		int i = 0;
+
+		for (pugi::xml_node iterator = node.child("data").child("tile"); iterator; iterator = iterator.next_sibling("tile"))
+		{
+			yer->gid[i] = iterator.attribute("gid").as_uint();
+			i++;
+		}
+
+		map_data.layers.add(yer);
 	}
 
 	return ret;

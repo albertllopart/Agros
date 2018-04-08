@@ -1,7 +1,12 @@
 #include "p2Defs.h"
 #include "p2Log.h"
+#include "Application.h"
+#include "M_Input.h"
+#include "M_Textures.h"
 #include "M_Audio.h"
-#include "p2List.h"
+#include "M_Render.h"
+#include "M_Window.h"
+#include "M_Scene.h"
 
 #include "SDL/include/SDL.h"
 #include "SDL_mixer\include\SDL_mixer.h"
@@ -63,6 +68,30 @@ bool Audio::Awake(pugi::xml_node& config)
 	}
 
 	return ret;
+}
+
+bool Audio::Update(float dt)
+{
+	//Volume control
+	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_DOWN)
+	{
+		App->audio->MusicUp();
+		App->audio->FxUp();
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_DOWN)
+	{
+		App->audio->MusicDown();
+		App->audio->FxDown();
+	}
+
+	if (volume_changed == true)
+	{
+		Mix_VolumeMusic(music_volume);
+		volume_changed = false;
+	}
+
+	return true;
 }
 
 // Called before quitting
@@ -188,7 +217,8 @@ void Audio::MusicUp()
 {
 	if (music_volume < 128)
 	{
-		music_volume += 32;
+		music_volume += 16;
+		volume_changed = true;
 	}
 }
 
@@ -196,7 +226,8 @@ void Audio::MusicDown()
 {
 	if (music_volume > 0)
 	{
-		music_volume -= 32;
+		music_volume -= 16;
+		volume_changed = true;
 	}
 }
 
@@ -214,4 +245,24 @@ void Audio::FxDown()
 	{
 		fx_volume -= 32;
 	}
+}
+
+bool Audio::Save(pugi::xml_node& data) const
+{
+	pugi::xml_node volume = data.append_child("volume");
+
+	volume.append_attribute("music") = music_volume;
+	volume.append_attribute("fx") = fx_volume;
+
+	return true;
+}
+
+bool Audio::Load(pugi::xml_node& data)
+{
+	music_volume = data.child("volume").attribute("music").as_uint();
+	fx_volume = data.child("volume").attribute("fx").as_uint();
+
+	volume_changed = true;
+
+	return true;
 }

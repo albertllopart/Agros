@@ -332,8 +332,6 @@ bool Application::LoadGame()
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list
 	want_to_load = true;
-	want_to_load_audio = true;
-	want_to_load_Entity = true;
 	return true;
 }
 
@@ -344,8 +342,6 @@ bool Application::SaveGame()
 	// from the "GetSaveGames" list ... should we overwrite ?
 
 	want_to_save = true;
-	want_to_save_audio = true;
-	want_to_save_Entity = true;
 	return true;
 }
 
@@ -360,7 +356,6 @@ void Application::GetSaveGames(p2List<p2SString>& list_to_fill) const
 
 void Application::LoadGameNow()
 {
-
 	pugi::xml_document document;
 	pugi::xml_node root_node;
 
@@ -372,10 +367,8 @@ void Application::LoadGameNow()
 	{
 		modules[i]->Load(root_node.child(modules[i]->name.GetString()));
 	}
-	want_to_load = false;
-	want_to_load_audio = false;
-	want_to_load_Entity = false;
 
+	want_to_load = false;
 }
 
 void Application::SavegameNow()
@@ -395,11 +388,9 @@ void Application::SavegameNow()
 		save_node = root_node.append_child(modules[i]->name.GetString());
 		modules[i]->Save(save_node);
 	}
+
 	document.save_file("save_game.xml");
 	want_to_save = false;
-	want_to_save_audio = false;
-	want_to_save_player = false;
-	want_to_save_Entity = false;
 }
 
 float Application::GetDT() const

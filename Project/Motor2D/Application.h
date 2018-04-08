@@ -100,14 +100,7 @@ private:
 	pugi::xml_node		config_node;
 
 	bool		        want_to_save = false;
-	bool				want_to_save_audio = false;
-	bool                want_to_save_player = false;
-	bool				want_to_save_Entity = false;
-
 	bool				want_to_load = false;
-	bool				want_to_load_audio = false;
-	bool				want_to_load_player = false;
-	bool				want_to_load_Entity = false;
 
 	p2SString			load_game;
 	mutable p2SString	save_game;

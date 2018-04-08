@@ -25,7 +25,7 @@
   </textures>
 
   <audio>
-    <volume music="10" fx ="100"/>
+    <volume music="32" fx ="128"/>
   </audio>
 
   <scene>

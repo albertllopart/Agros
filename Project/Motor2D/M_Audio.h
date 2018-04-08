@@ -23,6 +23,8 @@ public:
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
 
+	bool Update(float dt);
+
 	// Called before quitting
 	bool CleanUp();
 
@@ -35,6 +37,9 @@ public:
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0);
 
+	bool Save(pugi::xml_node& data) const;
+	bool Load(pugi::xml_node& data);
+
 	void MusicUp();
 	void MusicDown();
 	void FxUp();
@@ -44,6 +49,8 @@ private:
 
 	uint				music_volume;
 	uint				fx_volume;
+
+	bool				volume_changed = false;
 
 	_Mix_Music*			music = nullptr;
 	p2List<Mix_Chunk*>	fx;

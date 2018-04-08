@@ -72,12 +72,17 @@ bool Map::Load(const char* file_name)
 	}
 
 	pugi::xml_node node = map_file.child("map");
-	node = node.child("tileset");
+	pugi::xml_node iterator = node.first_child();
+	p2SString name = iterator.name();
 
-	while (node != NULL)
+	while (iterator != NULL)
 	{
-		LoadTileset(node);
-		node = node.next_sibling();
+		if (name == "tileset")
+		{ 
+			LoadTileset(iterator);
+		}
+		iterator = iterator.next_sibling();
+		name = iterator.name();
 	}
 
 

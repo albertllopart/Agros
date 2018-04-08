@@ -7,6 +7,7 @@
 #include "M_Render.h"
 #include "M_Window.h"
 #include "M_Scene.h"
+#include "M_Map.h"
 
 Scene::Scene() : Module()
 {
@@ -31,6 +32,9 @@ bool Scene::Start()
 {
 	img = App->tex->Load("textures/uncha.png");
 	App->audio->PlayMusic("audio/jumpup.ogg");
+
+	App->map->Load("map1.tmx");
+
 	return true;
 }
 
@@ -43,6 +47,7 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
+	App->map->Draw();
 	//Save and load
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 		App->LoadGame();
@@ -62,7 +67,6 @@ bool Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		App->render->camera.x += 1;
 
-	App->render->Blit(img, 0, 0);
 	return true;
 }
 

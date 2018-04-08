@@ -14,6 +14,7 @@ class Input;
 class Textures;
 class Audio;
 class Scene;
+class Map;
 
 class Application
 {
@@ -84,6 +85,7 @@ public:
 	Textures* tex;
 	Audio* audio;
 	Scene* scene;
+	Map* map;
 
 private:
 

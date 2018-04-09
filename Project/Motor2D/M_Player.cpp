@@ -34,7 +34,7 @@ bool Player::Awake(pugi::xml_node& config)
 
 	//Animations from config.tmx
 	idle.PushBack({ node.child("idle").child("frame_1").attribute("x").as_int(), node.child("idle").child("frame_1").attribute("y").as_int(), node.child("idle").child("frame_1").attribute("w").as_int(), node.child("idle").child("frame_1").attribute("h").as_int() });
-	idle.PushBack({ node.child("idle").child("frame_2").attribute("x").as_int(), node.child("idle").child("frame_1").attribute("y").as_int(), node.child("idle").child("frame_1").attribute("w").as_int(), node.child("idle").child("frame_1").attribute("h").as_int() });
+	idle.PushBack({ node.child("idle").child("frame_2").attribute("x").as_int(), node.child("idle").child("frame_2").attribute("y").as_int(), node.child("idle").child("frame_2").attribute("w").as_int(), node.child("idle").child("frame_2").attribute("h").as_int() });
 
 	return ret;
 }

@@ -11,7 +11,7 @@
 
   <window>
     <title>Warpolis project by Albert Llopart</title>
-    <resolution width="800" height="480" scale="2"/>
+    <resolution width="1920" height="1080" scale="4"/>
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
@@ -41,6 +41,17 @@
 
   <map>
     <folder>maps/</folder>
+    <level_1 file="map1.tmx"/>
   </map>
+
+  <player>
+    <position x="15" y="10"/>
+    <animation>
+      <idle>
+        <frame_1 x="0" y="0" w="22" h="22"/>
+        <frame_2 x="22" y="0" w="22" h="22"/>
+      </idle>
+    </animation>
+  </player>
 
 </config>

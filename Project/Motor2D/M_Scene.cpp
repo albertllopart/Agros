@@ -33,7 +33,9 @@ bool Scene::Start()
 	img = App->tex->Load("textures/uncha.png");
 	App->audio->PlayMusic("audio/jumpup.ogg");
 
+	pugi::xml_node node = App->GetConfigNode("map");
 
+	App->map->LoadMapFromTMX(node.child("level_1").attribute("file").as_string());
 
 	return true;
 }

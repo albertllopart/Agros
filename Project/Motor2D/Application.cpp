@@ -13,6 +13,7 @@
 #include "M_Audio.h"
 #include "M_Scene.h"
 #include "M_Map.h"
+#include "M_Player.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -28,6 +29,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio();
 	scene = new Scene();
 	map = new Map();
+	player = new Player();
 
 	AddModule(win);
 	AddModule(input);
@@ -35,6 +37,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(scene);
 	AddModule(map);
+	AddModule(player);
 
 	// render last to swap buffer
 	AddModule(render);
@@ -171,6 +174,12 @@ pugi::xml_node Application::LoadConfig(pugi::xml_document& config_file) const
 		ret = config_file.child("config");
 
 	return ret;
+}
+
+pugi::xml_node Application::GetConfigNode(const char* objective) const
+{
+	pugi::xml_node node = config.child("config").child(objective);
+	return node;
 }
 
 // ---------------------------------------------

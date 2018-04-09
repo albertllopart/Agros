@@ -31,12 +31,29 @@ void Map::Draw()
 	if (map_loaded == false)
 		return;
 
-	p2List_item<tileset*>* item = map_data.tilesets.start;
-	while (item != NULL)
+	p2List_item<tileset*>* tileset = map_data.tilesets.start;
+	p2List_item<map_layer*>* layer = map_data.layers.start;
+
+	while (tileset != NULL)
 	{
-		App->render->Blit(item->data->texture, 0, 0);
-		item = item->next;
+		while (layer != NULL)
+		{
+			for (uint x = 0; x < layer->data->width; x++)
+			{
+				for (uint y = 0; y < layer->data->height; y++)
+				{
+					int id = layer->data->GetGid(x, y);
+					iPoint position = MapToWorld(x, y);
+					SDL_Rect rect = tileset->data->GetTileRect(id);
+
+					App->render->Blit(tileset->data->texture, position.x, position.y, &rect);
+				}
+			}
+			layer = layer->next;
+		}
+		tileset = tileset->next;
 	}
+	
 
 }
 
@@ -52,8 +69,28 @@ bool Map::CleanUp()
 	return true;
 }
 
+iPoint Map::MapToWorld(int x, int y) const
+{
+	iPoint ret;
+
+	ret.x = x * map_data.tile_width;
+	ret.y = y * map_data.tile_height;
+
+	return ret;
+}
+
+iPoint Map::WorldToMap(int x, int y) const
+{
+	iPoint ret;
+
+	ret.x = x / map_data.tile_width;
+	ret.y = y / map_data.tile_height;
+
+	return ret;
+}
+
 // Load new map
-bool Map::Load(const char* file_name)
+bool Map::LoadMapFromTMX(const char* file_name)
 {
 	bool ret = true;
 	p2SString tmp("%s%s", folder.GetString(), file_name);
@@ -104,12 +141,20 @@ bool Map::Load(const char* file_name)
 	{
 		LOG("Loaded Map: %s", file_name);
 
-		p2List_item<tileset*>* item = map_data.tilesets.start;
+		p2List_item<tileset*>* tileset_item = map_data.tilesets.start;
 
-		while (item != NULL)
+		while (tileset_item != NULL)
 		{
-			LOG("Loaded Tileset: %s", item->data->name.GetString());
-			item = item->next;
+			LOG("Loaded Tileset: %s", tileset_item->data->name.GetString());
+			tileset_item = tileset_item->next;
+		}
+
+		p2List_item<map_layer*>* layer_item = map_data.layers.start;
+
+		while (layer_item != NULL)
+		{
+			LOG("Loaded Layer: %s", layer_item->data->name.GetString());
+			layer_item = layer_item->next;
 		}
 	}
 

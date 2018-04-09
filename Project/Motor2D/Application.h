@@ -15,6 +15,7 @@ class Textures;
 class Audio;
 class Scene;
 class Map;
+class Player;
 
 class Application
 {
@@ -40,6 +41,9 @@ public:
 
 	// Add a new module to handle
 	void AddModule(Module* module);
+
+	//Get config node
+	pugi::xml_node GetConfigNode(const char* objective) const;
 
 	// Exposing some properties for reading
 	int GetArgc() const;
@@ -86,6 +90,7 @@ public:
 	Audio* audio;
 	Scene* scene;
 	Map* map;
+	Player* player;
 
 private:
 

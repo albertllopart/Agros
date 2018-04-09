@@ -19,6 +19,9 @@
     <Filter Include="SRC\Scenes">
       <UniqueIdentifier>{911e2ebb-ed67-4198-9523-77e8d203497d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SRC\Other">
+      <UniqueIdentifier>{871aec58-e161-4a34-ae75-e736e98ea42b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -72,6 +75,12 @@
     <ClInclude Include="M_Map.h">
       <Filter>SRC\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>SRC\Other</Filter>
+    </ClInclude>
+    <ClInclude Include="M_Player.h">
+      <Filter>SRC\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="p2Log.cpp">
@@ -105,6 +114,9 @@
       <Filter>SRC\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="M_Map.cpp">
+      <Filter>SRC\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="M_Player.cpp">
       <Filter>SRC\Modules</Filter>
     </ClCompile>
   </ItemGroup>

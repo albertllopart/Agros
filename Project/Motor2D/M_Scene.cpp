@@ -19,7 +19,7 @@ Scene::~Scene()
 {}
 
 // Called before render is available
-bool Scene::Awake()
+bool Scene::Awake(pugi::xml_node& conf)
 {
 	LOG("Loading Scene");
 	bool ret = true;
@@ -33,7 +33,7 @@ bool Scene::Start()
 	img = App->tex->Load("textures/uncha.png");
 	App->audio->PlayMusic("audio/jumpup.ogg");
 
-	App->map->Load("map1.tmx");
+
 
 	return true;
 }

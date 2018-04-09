@@ -12,7 +12,7 @@ struct tileset
 	int					firstgid;
 	p2SString			name;
 	int					margin;
-	int					spacing;
+	int					spacing = 0;
 	int					tile_width;
 	int					tile_height;
 	SDL_Texture*		texture;
@@ -20,6 +20,17 @@ struct tileset
 	int					texture_height;
 	int					tilecount;
 	int					columns;
+
+	SDL_Rect GetTileRect(int id) const
+	{
+		int relative_id = id - firstgid;
+		SDL_Rect rect;
+		rect.w = tile_width;
+		rect.h = tile_height;
+		rect.x = margin + ((rect.w + spacing) * (relative_id % tilecount));
+		rect.y = margin + ((rect.h + spacing) * (relative_id / tilecount));
+		return rect;
+	}
 };
 
 struct map_layer
@@ -67,7 +78,7 @@ public:
 	bool CleanUp();
 
 	// Load new map
-	bool Load(const char* path);
+	bool LoadMapFromTMX(const char* path);
 
 	bool LoadMap();
 
@@ -76,6 +87,9 @@ public:
 	bool LoadLayer(pugi::xml_node& node);
 
 	bool UnloadMap();
+
+	iPoint MapToWorld(int x, int y) const;
+	iPoint WorldToMap(int x, int y) const;
 
 private:
 

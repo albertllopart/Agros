@@ -14,6 +14,7 @@ Input::Input() : Module()
 	keyboard = new j1KeyState[MAX_KEYS];
 	memset(keyboard, KEY_IDLE, sizeof(j1KeyState) * MAX_KEYS);
 	memset(mouse_buttons, KEY_IDLE, sizeof(j1KeyState) * NUM_MOUSE_BUTTONS);
+	memset(controller_buttons, KEY_IDLE, sizeof(j1KeyState) * NUM_CONTROLLER_BUTTONS);
 }
 
 // Destructor
@@ -29,6 +30,9 @@ bool Input::Awake(pugi::xml_node& config)
 	bool ret = true;
 	SDL_Init(0);
 
+	SDL_Init(SDL_INIT_GAMECONTROLLER);
+	SDL_GameControllerAddMappingsFromFile(config.child("controller").attribute("file").as_string());
+
 	if (SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
 		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
@@ -42,6 +46,22 @@ bool Input::Awake(pugi::xml_node& config)
 bool Input::Start()
 {
 	SDL_StopTextInput();
+
+	for (int i = 0; i < SDL_NumJoysticks(); i++)
+	{
+		if (SDL_IsGameController(i))
+		{
+			controller = SDL_GameControllerOpen(i);
+			if (controller)
+			{
+				break;
+			}
+			else
+			{
+				LOG("Could not open gamecontroller %i: %s", i, SDL_GetError());
+			}
+		}
+	}
 	return true;
 }
 
@@ -77,6 +97,19 @@ bool Input::PreUpdate()
 
 		if (mouse_buttons[i] == KEY_UP)
 			mouse_buttons[i] = KEY_IDLE;
+	}
+
+	for (int i = 0; i < NUM_CONTROLLER_BUTTONS; ++i)
+	{
+		if (controller_buttons[i] == KEY_DOWN || controller_buttons[i] == KEY_REPEAT)
+		{
+			controller_buttons[i] = KEY_REPEAT;
+		}
+
+		if (controller_buttons[i] == KEY_UP)
+		{
+			controller_buttons[i] = KEY_IDLE;
+		}
 	}
 
 	while (SDL_PollEvent(&event) != 0)
@@ -135,7 +168,7 @@ bool Input::PreUpdate()
 bool Input::CleanUp()
 {
 	LOG("Quitting SDL event subsystem");
-	SDL_QuitSubSystem(SDL_INIT_EVENTS);
+	SDL_QuitSubSystem(SDL_INIT_EVENTS | SDL_INIT_GAMECONTROLLER);
 	return true;
 }
 

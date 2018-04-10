@@ -32,14 +32,11 @@ bool Scene::Awake(pugi::xml_node& conf)
 bool Scene::Start()
 {
 	img = App->tex->Load("textures/uncha.png");
-	App->audio->PlayMusic("audio/andy.ogg");
+	//App->audio->PlayMusic("audio/andy.ogg");
 
 	pugi::xml_node node = App->GetConfigNode("map");
 
 	App->map->LoadMapFromTMX(node.child("level_1").attribute("file").as_string());
-
-	iPoint cani(15, 10);
-	App->entities->CreateCani(cani);
 
 	return true;
 }
@@ -79,6 +76,12 @@ bool Scene::Update(float dt)
 		App->map->map_data.tilesets.count(), App->map->map_data.layers.count());
 
 	//App->win->SetTitle(title.GetString());
+	if (App->input->GetControllerButton(SDL_CONTROLLER_BUTTON_A) == KEY_REPEAT)
+	{
+		iPoint cani(15, 10);
+		App->entities->CreateCani(cani);
+	}
+	
 
 	return true;
 }

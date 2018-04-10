@@ -2,9 +2,11 @@
 #define __M_INPUT_H__
 
 #include "Module.h"
+#include "SDL\include\SDL_gamecontroller.h"
 
 //#define NUM_KEYS 352
 #define NUM_MOUSE_BUTTONS 5
+#define NUM_CONTROLLER_BUTTONS 8
 //#define LAST_KEYS_PRESSED_BUFFER 50
 
 struct SDL_Rect;
@@ -27,7 +29,6 @@ enum j1KeyState
 
 class Input : public Module
 {
-
 public:
 
 	Input();
@@ -61,6 +62,11 @@ public:
 		return mouse_buttons[id - 1];
 	}
 
+	j1KeyState GetControllerButton(int id) const
+	{
+		return controller_buttons[id];
+	}
+
 	// Check if a certain window event happened
 	bool GetWindowEvent(int code);
 
@@ -69,6 +75,7 @@ public:
 	void GetMouseMotion(int& x, int& y);
 
 private:
+
 	bool		windowEvents[WE_COUNT];
 	j1KeyState*	keyboard;
 	j1KeyState	mouse_buttons[NUM_MOUSE_BUTTONS];
@@ -76,6 +83,11 @@ private:
 	int			mouse_motion_y = 0;
 	int			mouse_x = 0;
 	int			mouse_y = 0;
+
+	//joystick
+	SDL_GameController*		controller = nullptr;
+	SDL_Joystick*			joystick = nullptr;
+	j1KeyState				controller_buttons[NUM_CONTROLLER_BUTTONS];
 };
 
 #endif // __M_INPUT_H__

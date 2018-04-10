@@ -19,6 +19,7 @@
   </window>
 
   <input>
+    <controller file="controller/gamecontrollerdb.txt"/>
   </input>
 
   <textures>

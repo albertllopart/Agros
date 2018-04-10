@@ -1,7 +1,7 @@
 <!-- Config file -->
 
 <config>
-  <app>
+  <app framerate_cap="30">
     <title>Warpolis</title>
   </app>
 	

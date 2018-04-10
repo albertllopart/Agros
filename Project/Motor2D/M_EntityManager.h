@@ -7,6 +7,7 @@
 #include "p2Point.h"
 #include "Entity.h"
 #include "Cani.h"
+#include "Factory.h"
 
 class EntityManager : public Module
 {
@@ -23,7 +24,11 @@ public:
 
 	bool CleanUp();
 
+	//UNITS
 	Entity* CreateCani(iPoint position);
+
+	//BUILDINGS
+	Entity* CreateFactory(iPoint position);
 
 	bool Load(pugi::xml_node& data);
 	bool Save(pugi::xml_node& data) const;

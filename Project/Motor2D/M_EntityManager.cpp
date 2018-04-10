@@ -37,6 +37,7 @@ bool EntityManager::CleanUp()
 	return true;
 }
 
+//UNITS
 Entity* EntityManager::CreateCani(iPoint position)
 {
 	Cani* cani = new Cani();
@@ -47,6 +48,19 @@ Entity* EntityManager::CreateCani(iPoint position)
 	entities.add(cani);
 
 	return cani;
+}
+
+//BUILDINGS
+Entity* EntityManager::CreateFactory(iPoint position)
+{
+	Factory* factory = new Factory();
+	factory->Awake(App->GetConfigNode("entities"));
+	factory->Start();
+	factory->position = position;
+
+	entities.add(factory);
+
+	return factory;
 }
 
 bool EntityManager::Load(pugi::xml_node& data)

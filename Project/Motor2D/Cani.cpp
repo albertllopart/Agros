@@ -13,7 +13,7 @@ Cani::~Cani()
 
 bool Cani::Awake(pugi::xml_node& config)
 {
-	pugi::xml_node node = config.child("cani").child("animation");
+	pugi::xml_node node = config.child("units").child("cani").child("animation");
 
 	idle_right.PushBack({ node.child("idle_right").child("frame_1").attribute("x").as_int(), node.child("idle_right").child("frame_1").attribute("y").as_int(), node.child("idle_right").child("frame_1").attribute("w").as_int(), node.child("idle_right").child("frame_1").attribute("h").as_int(), });
 	idle_right.PushBack({ node.child("idle_right").child("frame_2").attribute("x").as_int(), node.child("idle_right").child("frame_2").attribute("y").as_int(), node.child("idle_right").child("frame_2").attribute("w").as_int(), node.child("idle_right").child("frame_2").attribute("h").as_int(), });

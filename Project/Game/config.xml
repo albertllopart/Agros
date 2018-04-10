@@ -56,16 +56,27 @@
   </player>
 
   <entities>
-    <cani>
-      <animation>
-        <idle_right speed="5.0">
-          <frame_1 x="0" y="0" w="16" h="16"/>
-          <frame_2 x="16" y="0" w="16" h="16"/>
-          <frame_3 x="32" y="0" w="16" h="16"/>
-          <frame_4 x="16" y="0" w="16" h="16"/>
-        </idle_right>
-      </animation>
-    </cani>
+    <units>
+      <cani>
+        <animation>
+          <idle_right speed="5.0">
+            <frame_1 x="0" y="0" w="16" h="16"/>
+            <frame_2 x="16" y="0" w="16" h="16"/>
+            <frame_3 x="32" y="0" w="16" h="16"/>
+            <frame_4 x="16" y="0" w="16" h="16"/>
+          </idle_right>
+        </animation>
+      </cani>
+    </units>
+    <buildings>
+      <factory>
+        <animation>
+          <idle>
+            <frame_1 x ="16" y="0" w="16" h="16"/>
+          </idle>
+        </animation>
+      </factory>
+    </buildings>
   </entities>
 
 </config>

@@ -22,6 +22,12 @@
     <Filter Include="SRC\Entities">
       <UniqueIdentifier>{e3df051e-3262-488a-aa29-c1b430b4942b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SRC\Entities\Units">
+      <UniqueIdentifier>{01aab4d8-61b2-48a7-9c66-8baba2edfc1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SRC\Entities\Buildings">
+      <UniqueIdentifier>{4db80dfa-39b3-4d7d-a642-a5e78c45d257}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -94,7 +100,10 @@
       <Filter>SRC\Entities</Filter>
     </ClInclude>
     <ClInclude Include="Cani.h">
-      <Filter>SRC\Entities</Filter>
+      <Filter>SRC\Entities\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Factory.h">
+      <Filter>SRC\Entities\Buildings</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -144,7 +153,10 @@
       <Filter>SRC\Modules</Filter>
     </ClCompile>
     <ClCompile Include="Cani.cpp">
-      <Filter>SRC\Entities</Filter>
+      <Filter>SRC\Entities\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Factory.cpp">
+      <Filter>SRC\Entities\Buildings</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

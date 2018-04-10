@@ -307,7 +307,7 @@ void Map::CreateEntitiesFromTMX() const
 			if (current_gid == 38)//factory
 			{
 				iPoint pos(x, y);
-				App->entities->CreateCani(pos);
+				App->entities->CreateFactory(pos);
 			}
 		}
 	}

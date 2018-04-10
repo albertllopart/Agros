@@ -6,6 +6,9 @@
 
 #include "Application.h"
 
+#include "Timer.h"
+#include "PerfTimer.h"
+
 #include "M_Window.h"
 #include "M_Render.h"
 #include "M_Input.h"
@@ -128,19 +131,19 @@ bool Application::Start()
 // Called each loop iteration
 bool Application::Update()
 {
-		/*if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	{
+		if (capped_ms == -1000)
 		{
-			if (capped_ms == -1000)
-			{
-				capped_ms = 1000 / 30;
-				cap = "ON";
-			}
-			else
-			{
-				capped_ms = -1000;
-				cap = "OFF";
-			}
-		}*/
+			capped_ms = 1000 / 30;
+			cap = "ON";
+		}
+		else
+		{
+			capped_ms = -1000;
+			cap = "OFF";
+		}
+	}
 
 	bool ret = true;
 	PrepareUpdate();
@@ -185,11 +188,11 @@ pugi::xml_node Application::GetConfigNode(const char* objective) const
 // ---------------------------------------------
 void Application::PrepareUpdate()
 {
-	/*frame_count++;
+	frame_count++;
 	last_sec_frame_count++;
 
 	dt = frame_time.ReadSec();
-	frame_time.Start();*/
+	frame_time.Start();
 }
 
 // ---------------------------------------------
@@ -203,7 +206,7 @@ void Application::FinishUpdate()
 
 	// Framerate calculations --
 
-	/*if (last_sec_frame_time.Read() > 1000)
+	if (last_sec_frame_time.Read() > 1000)
 	{
 		last_sec_frame_time.Start();
 		prev_last_sec_frame_count = last_sec_frame_count;
@@ -219,15 +222,14 @@ void Application::FinishUpdate()
 	sprintf_s(title, 256, "FPS: %i Av.FPS: %.2f Last Frame Ms: %u Cap: %s Vsync: %s",
 		frames_on_last_update, avg_fps, last_frame_ms, cap.GetString(), vsync.GetString());
 
-	if (App->scene->title_2 == false)
-		App->win->SetTitle(title);
+	App->win->SetTitle(title);
 
 	if (capped_ms > 0 && last_frame_ms < capped_ms)
 	{
-		j1PerfTimer t;
+		PerfTimer t;
 		SDL_Delay(capped_ms - last_frame_ms);
 		LOG("We waited for %d milliseconds and got back in %f", capped_ms - last_frame_ms, t.ReadMs());
-	}*/
+	}
 }
 
 // Call modules before each loop iteration

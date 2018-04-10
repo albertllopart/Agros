@@ -19,9 +19,6 @@
     <Filter Include="SRC\Scenes">
       <UniqueIdentifier>{911e2ebb-ed67-4198-9523-77e8d203497d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="SRC\Other">
-      <UniqueIdentifier>{871aec58-e161-4a34-ae75-e736e98ea42b}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -41,12 +38,6 @@
     </ClInclude>
     <ClInclude Include="p2SString.h">
       <Filter>Programació 2</Filter>
-    </ClInclude>
-    <ClInclude Include="Application.h">
-      <Filter>SRC\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Module.h">
-      <Filter>SRC\Tools</Filter>
     </ClInclude>
     <ClInclude Include="PugiXml\src\pugiconfig.hpp">
       <Filter>SRC\Tools\PugiXML</Filter>
@@ -75,22 +66,28 @@
     <ClInclude Include="M_Map.h">
       <Filter>SRC\Modules</Filter>
     </ClInclude>
-    <ClInclude Include="Animation.h">
-      <Filter>SRC\Other</Filter>
-    </ClInclude>
     <ClInclude Include="M_Player.h">
       <Filter>SRC\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>SRC</Filter>
+    </ClInclude>
+    <ClInclude Include="Module.h">
+      <Filter>SRC</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>SRC\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>SRC\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="PerfTimer.h">
+      <Filter>SRC\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="p2Log.cpp">
       <Filter>Programació 2</Filter>
-    </ClCompile>
-    <ClCompile Include="Application.cpp">
-      <Filter>SRC\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="Main.cpp">
-      <Filter>SRC\Tools</Filter>
     </ClCompile>
     <ClCompile Include="PugiXml\src\pugixml.cpp">
       <Filter>SRC\Tools\PugiXML</Filter>
@@ -118,6 +115,18 @@
     </ClCompile>
     <ClCompile Include="M_Player.cpp">
       <Filter>SRC\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>SRC</Filter>
+    </ClCompile>
+    <ClCompile Include="Main.cpp">
+      <Filter>SRC</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>SRC\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="PerfTimer.cpp">
+      <Filter>SRC\Tools</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

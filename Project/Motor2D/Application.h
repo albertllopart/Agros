@@ -3,8 +3,8 @@
 
 #include "p2List.h"
 #include "Module.h"
-//#include "j1PerfTimer.h"
-//#include "j1Timer.h"
+#include "PerfTimer.h"
+#include "Timer.h"
 #include "PugiXml\src\pugixml.hpp"
 
 // Modules
@@ -115,6 +115,13 @@ private:
 	//timer related
 	int					capped_ms;
 	float				dt = 0.0f;
+	Timer				startup_time;
+	Timer				frame_time;
+	Timer				last_sec_frame_time;
+	PerfTimer			perftimer;
+	uint64				frame_count = 0;
+	uint32				last_sec_frame_count = 0;
+	uint32				prev_last_sec_frame_count = 0;
 
 	p2SString			cap;
 	p2SString			vsync;

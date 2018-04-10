@@ -31,7 +31,7 @@ bool Scene::Awake(pugi::xml_node& conf)
 bool Scene::Start()
 {
 	img = App->tex->Load("textures/uncha.png");
-	App->audio->PlayMusic("audio/jumpup.ogg");
+	App->audio->PlayMusic("audio/andy.ogg");
 
 	pugi::xml_node node = App->GetConfigNode("map");
 
@@ -74,7 +74,7 @@ bool Scene::Update(float dt)
 		App->map->map_data.tile_width, App->map->map_data.tile_height,
 		App->map->map_data.tilesets.count(), App->map->map_data.layers.count());
 
-	App->win->SetTitle(title.GetString());
+	//App->win->SetTitle(title.GetString());
 
 	return true;
 }

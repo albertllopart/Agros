@@ -16,6 +16,7 @@ class Audio;
 class Scene;
 class Map;
 class Player;
+class EntityManager;
 
 class Application
 {
@@ -91,6 +92,7 @@ public:
 	Scene* scene;
 	Map* map;
 	Player* player;
+	EntityManager* entities;
 
 private:
 

@@ -4,9 +4,14 @@
 	<input />
 	<textures />
 	<audio>
-		<volume music="0" fx="0" />
+		<volume music="32" fx="128" />
 	</audio>
 	<scene />
+	<map />
+	<player>
+		<position x="4" y="4" />
+	</player>
+	<entities />
 	<renderer>
 		<camera x="0" y="0" />
 	</renderer>

@@ -8,6 +8,7 @@
 #include "M_Window.h"
 #include "M_Scene.h"
 #include "M_Map.h"
+#include "M_EntityManager.h"
 
 Scene::Scene() : Module()
 {
@@ -36,6 +37,9 @@ bool Scene::Start()
 	pugi::xml_node node = App->GetConfigNode("map");
 
 	App->map->LoadMapFromTMX(node.child("level_1").attribute("file").as_string());
+
+	iPoint cani(15, 10);
+	App->entities->CreateCani(cani);
 
 	return true;
 }

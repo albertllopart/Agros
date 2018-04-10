@@ -33,12 +33,12 @@ bool Player::Awake(pugi::xml_node& config)
 	pugi::xml_node node = config.child("animation");
 
 	//Animations from config.tmx
-	idle.PushBack({ node.child("idle").child("frame_1").attribute("x").as_int(), node.child("idle").child("frame_1").attribute("y").as_int(), node.child("idle").child("frame_1").attribute("w").as_int(), node.child("idle").child("frame_1").attribute("h").as_int() });
-	idle.PushBack({ node.child("idle").child("frame_1").attribute("x").as_int(), node.child("idle").child("frame_1").attribute("y").as_int(), node.child("idle").child("frame_1").attribute("w").as_int(), node.child("idle").child("frame_1").attribute("h").as_int() });
-	idle.PushBack({ node.child("idle").child("frame_2").attribute("x").as_int(), node.child("idle").child("frame_2").attribute("y").as_int(), node.child("idle").child("frame_2").attribute("w").as_int(), node.child("idle").child("frame_2").attribute("h").as_int() });
-	idle.PushBack({ node.child("idle").child("frame_2").attribute("x").as_int(), node.child("idle").child("frame_2").attribute("y").as_int(), node.child("idle").child("frame_2").attribute("w").as_int(), node.child("idle").child("frame_2").attribute("h").as_int() });
+	navigating.PushBack({ node.child("idle").child("frame_1").attribute("x").as_int(), node.child("idle").child("frame_1").attribute("y").as_int(), node.child("idle").child("frame_1").attribute("w").as_int(), node.child("idle").child("frame_1").attribute("h").as_int() });
+	navigating.PushBack({ node.child("idle").child("frame_1").attribute("x").as_int(), node.child("idle").child("frame_1").attribute("y").as_int(), node.child("idle").child("frame_1").attribute("w").as_int(), node.child("idle").child("frame_1").attribute("h").as_int() });
+	navigating.PushBack({ node.child("idle").child("frame_2").attribute("x").as_int(), node.child("idle").child("frame_2").attribute("y").as_int(), node.child("idle").child("frame_2").attribute("w").as_int(), node.child("idle").child("frame_2").attribute("h").as_int() });
+	navigating.PushBack({ node.child("idle").child("frame_2").attribute("x").as_int(), node.child("idle").child("frame_2").attribute("y").as_int(), node.child("idle").child("frame_2").attribute("w").as_int(), node.child("idle").child("frame_2").attribute("h").as_int() });
 
-	idle.speed = node.child("idle").attribute("speed").as_float();
+	navigating.speed = node.child("idle").attribute("speed").as_float();
 
 	return ret;
 }
@@ -50,7 +50,7 @@ bool Player::Start()
 
 	graphic = App->tex->Load("textures/player.png");
 
-	state = IDLE;
+	state = NAVIGATING;
 
 	return ret;
 }
@@ -103,15 +103,16 @@ void Player::Draw()
 {
 	switch (state)
 	{
-		case IDLE:
+		case NAVIGATING:
 		{
-			current_animation = &idle;
+			current_animation = &navigating;
 			break;
 		}
 	}
 
 	SDL_Rect r = current_animation->GetCurrentFrame();
-	App->render->Blit(graphic, OFFSET + position.x * TILE_WIDTH, OFFSET + position.y * TILE_WIDTH, &r);
+	iPoint world_position = App->map->MapToWorld(position.x, position.y);
+	App->render->Blit(graphic, OFFSET + world_position.x, OFFSET + world_position.y, &r);
 }
 
 bool Player::Save(pugi::xml_node& data) const

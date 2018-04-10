@@ -18,8 +18,7 @@ struct SDL_Rect;
 
 enum player_state
 {
-	UNKNOWN = 0,
-	IDLE
+	NAVIGATING
 };
 
 class Player : public Module
@@ -54,7 +53,7 @@ private:
 	player_state		state;
 
 	//Animations
-	Animation			idle;
+	Animation			navigating;
 	Animation*			current_animation;
 
 };

@@ -19,6 +19,9 @@
     <Filter Include="SRC\Scenes">
       <UniqueIdentifier>{911e2ebb-ed67-4198-9523-77e8d203497d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SRC\Entities">
+      <UniqueIdentifier>{e3df051e-3262-488a-aa29-c1b430b4942b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -84,6 +87,15 @@
     <ClInclude Include="PerfTimer.h">
       <Filter>SRC\Tools</Filter>
     </ClInclude>
+    <ClInclude Include="M_EntityManager.h">
+      <Filter>SRC\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>SRC\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Cani.h">
+      <Filter>SRC\Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="p2Log.cpp">
@@ -127,6 +139,12 @@
     </ClCompile>
     <ClCompile Include="PerfTimer.cpp">
       <Filter>SRC\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="M_EntityManager.cpp">
+      <Filter>SRC\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Cani.cpp">
+      <Filter>SRC\Entities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -11,7 +11,7 @@
 
   <window>
     <title>Warpolis project by Albert Llopart</title>
-    <resolution width="960" height="540" scale="2"/>
+    <resolution width="960" height="540" scale="3"/>
     <fullscreen value="false"/>
     <borderless value="false"/>
     <resizable value="false"/>
@@ -53,5 +53,18 @@
       </idle>
     </animation>
   </player>
+
+  <entities>
+    <cani>
+      <animation>
+        <idle_right speed="5.0">
+          <frame_1 x="0" y="0" w="16" h="16"/>
+          <frame_2 x="16" y="0" w="16" h="16"/>
+          <frame_3 x="32" y="0" w="16" h="16"/>
+          <frame_4 x="16" y="0" w="16" h="16"/>
+        </idle_right>
+      </animation>
+    </cani>
+  </entities>
 
 </config>

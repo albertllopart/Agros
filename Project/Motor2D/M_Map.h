@@ -40,6 +40,8 @@ struct map_layer
 	int					height = 0;
 	int					size = 0;
 
+	bool				draw;
+
 	uint*				gid = nullptr;
 
 	uint GetGid(int x, int y)
@@ -85,6 +87,11 @@ public:
 	bool LoadTileset(pugi::xml_node& node);
 
 	bool LoadLayer(pugi::xml_node& node);
+
+	tileset* GetTilesetFromTileId(int id) const;
+
+	//entities
+	void CreateEntitiesFromTMX() const;
 
 	bool UnloadMap();
 

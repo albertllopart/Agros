@@ -225,7 +225,7 @@ void Application::FinishUpdate()
 	sprintf_s(title, 256, "FPS: %i Av.FPS: %.2f Last Frame Ms: %u Cap: %s Vsync: %s",
 		frames_on_last_update, avg_fps, last_frame_ms, cap.GetString(), vsync.GetString());
 
-	App->win->SetTitle(title);
+	//App->win->SetTitle(title);
 
 	if (capped_ms > 0 && last_frame_ms < capped_ms)
 	{

@@ -37,6 +37,7 @@ bool Scene::Start()
 	pugi::xml_node node = App->GetConfigNode("map");
 
 	App->map->LoadMapFromTMX(node.child("level_1").attribute("file").as_string());
+	App->map->CreateEntitiesFromTMX();
 
 	return true;
 }
@@ -75,7 +76,7 @@ bool Scene::Update(float dt)
 		App->map->map_data.tile_width, App->map->map_data.tile_height,
 		App->map->map_data.tilesets.count(), App->map->map_data.layers.count());
 
-	//App->win->SetTitle(title.GetString());
+	App->win->SetTitle(title.GetString());
 	if (App->input->GetControllerButton(SDL_CONTROLLER_BUTTON_A) == KEY_REPEAT)
 	{
 		iPoint cani(15, 10);

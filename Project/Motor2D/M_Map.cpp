@@ -5,6 +5,7 @@
 #include "M_Textures.h"
 #include "M_Map.h"
 #include <math.h>
+#include "M_EntityManager.h"
 
 Map::Map() : Module(), map_loaded(false)
 {
@@ -31,12 +32,11 @@ void Map::Draw()
 	if (map_loaded == false)
 		return;
 
-	p2List_item<tileset*>* tileset = map_data.tilesets.start;
 	p2List_item<map_layer*>* layer = map_data.layers.start;
 
-	while (tileset != NULL)
+	while (layer != NULL)
 	{
-		while (layer != NULL)
+		if (layer->data->draw == true)
 		{
 			for (uint x = 0; x < layer->data->width; x++)
 			{
@@ -44,17 +44,15 @@ void Map::Draw()
 				{
 					int id = layer->data->GetGid(x, y);
 					iPoint position = MapToWorld(x, y);
-					SDL_Rect rect = tileset->data->GetTileRect(id);
-
-					App->render->Blit(tileset->data->texture, position.x, position.y, &rect);
+					tileset* set = GetTilesetFromTileId(id);
+					SDL_Rect rect = set->GetTileRect(id);
+					App->render->Blit(set->texture, position.x, position.y, &rect);
 				}
 			}
-			layer = layer->next;
 		}
-		tileset = tileset->next;
+		layer = layer->next;
 	}
-	
-
+		
 }
 
 // Called before quitting
@@ -245,6 +243,18 @@ bool Map::LoadLayer(pugi::xml_node& node)
 		yer->height = node.attribute("height").as_int();
 		yer->size = yer->width * yer->height;
 
+		//to draw or not to draw
+		pugi::xml_node draw = node.child("properties");
+		
+		if (draw.child("property").attribute("value").as_int() == 1)
+		{
+			yer->draw = true;
+		}
+		else
+		{
+			yer->draw = false;
+		}
+
 		yer->gid = new uint[yer->size];
 		memset(yer->gid, 0, yer->size);
 
@@ -260,6 +270,47 @@ bool Map::LoadLayer(pugi::xml_node& node)
 	}
 
 	return ret;
+}
+
+tileset* Map::GetTilesetFromTileId(int id) const
+{
+	p2List_item<tileset*>* endset = map_data.tilesets.end;
+
+	for (p2List_item<tileset*>* set = map_data.tilesets.start; set != NULL; set = set->next)
+	{
+		if (set->next != NULL && id >= set->data->firstgid && id < set->next->data->firstgid)
+		{
+			return set->data;
+		}
+	}
+	return endset->data;
+}
+
+void Map::CreateEntitiesFromTMX() const
+{
+	p2List_item<map_layer*>* item = nullptr;
+
+	for (p2List_item<map_layer*>* iterator = map_data.layers.start; iterator != NULL; iterator = iterator->next)
+	{
+		if (iterator->data->name == "buildings")
+		{
+			item = iterator;
+		}
+	}
+
+	for (int x = 0; x < map_data.width; x++)
+	{
+		for (int y = 0; y < map_data.height; y++)
+		{
+			uint current_gid = item->data->GetGid(x, y);
+
+			if (current_gid == 38)//factory
+			{
+				iPoint pos(x, y);
+				App->entities->CreateCani(pos);
+			}
+		}
+	}
 }
 
 bool Map::UnloadMap()

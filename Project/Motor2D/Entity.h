@@ -6,7 +6,8 @@ struct SDL_Texture;
 
 enum entity_state
 {
-	IDLE
+	IDLE,
+	SELECTED,
 };
 
 enum entity_direction
@@ -65,14 +66,26 @@ public:
 		return true;
 	}
 
-	iPoint	Getposition() const
+	virtual iPoint	Getposition() const
 	{
 		return position;
 	}
-	entity_direction GetDirection()const
+	virtual entity_direction GetDirection()const
 	{
 		return direction;
 	}
+
+	//interaction with player
+	virtual bool OnSelection()
+	{
+		return true;
+	}
+
+	virtual bool OnRelease()
+	{
+		return true;
+	}
+
 	//virtual load/save function
 	virtual bool Load(pugi::xml_node&)
 	{

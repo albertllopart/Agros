@@ -31,9 +31,14 @@ public:
 
 	iPoint				GetPosition() const;
 
+	//interaction with player
+	bool				OnSelection();
+	bool				OnRelease();
+
 public:
 
 	Animation			idle_right;
+	Animation			walk_right;
 	Animation*			current_animation;
 
 };

@@ -8,6 +8,7 @@
 #include "M_Map.h"
 #include "M_Audio.h"
 #include "M_Scene.h"
+#include "M_EntityManager.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -59,7 +60,7 @@ bool Player::Update(float dt)
 {
 	LOG("Updating Player");
 
-	Input(0.1);
+	Input(dt);
 	Draw();
 
 	return true;
@@ -81,21 +82,49 @@ bool Player::CleanUp()
 
 void Player::Input(float dt)
 {
-	if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
+	//moving
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 	{
 		position.y -= 1;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 	{
 		position.y += 1;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 	{
 		position.x += 1;
 	}
-	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 	{
 		position.x -= 1;
+	}
+
+	//controlling units
+	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && selected_unit == NULL)
+	{
+		for (p2List_item<Entity*>* item = App->entities->entities.start; item; item = item->next)
+		{
+			if (item->data->position == position)
+			{
+				selected_unit = item->data;
+				selected_unit->OnSelection();
+				break;
+			}
+		}
+		if (selected_unit == NULL)
+		{
+			//obrir el menú
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+	{
+		if (selected_unit != NULL)
+		{
+			selected_unit->OnRelease();
+			selected_unit = nullptr;
+		}
 	}
 }
 
@@ -112,7 +141,7 @@ void Player::Draw()
 
 	SDL_Rect r = current_animation->GetCurrentFrame();
 	iPoint world_position = App->map->MapToWorld(position.x, position.y);
-	App->render->Blit(graphic, OFFSET + world_position.x, OFFSET + world_position.y, &r);
+	App->render->Blit(graphic, OFFSET + world_position.x - 1, OFFSET + world_position.y, &r);
 }
 
 bool Player::Save(pugi::xml_node& data) const

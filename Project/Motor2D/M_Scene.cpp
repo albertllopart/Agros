@@ -32,12 +32,14 @@ bool Scene::Awake(pugi::xml_node& conf)
 bool Scene::Start()
 {
 	img = App->tex->Load("textures/uncha.png");
-	//App->audio->PlayMusic("audio/andy.ogg");
+	App->audio->PlayMusic("audio/andy.ogg");
 
 	pugi::xml_node node = App->GetConfigNode("map");
 
 	App->map->LoadMapFromTMX(node.child("level_1").attribute("file").as_string());
 	App->map->CreateEntitiesFromTMX();
+
+	App->entities->CreateCani(iPoint(15, 10));
 
 	return true;
 }
@@ -53,23 +55,23 @@ bool Scene::Update(float dt)
 {
 	App->map->Draw();
 	//Save and load
-	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		App->LoadGame();
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 		App->SaveGame();
 
 
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		App->render->camera.y -= 1000 * dt;
-
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 		App->render->camera.y += 1000 * dt;
 
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+		App->render->camera.y -= 1000 * dt;
+
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		App->render->camera.x -= 1000 * dt;
+		App->render->camera.x += 1000 * dt;
 
 	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		App->render->camera.x += 1000 * dt;
+		App->render->camera.x -= 1000 * dt;
 
 	p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d Layers:%d",
 		App->map->map_data.width, App->map->map_data.height,

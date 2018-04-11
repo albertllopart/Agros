@@ -7,6 +7,8 @@
 #include	"p2Point.h"
 #include	"M_Textures.h"
 #include	"Animation.h"
+#include	"Entity.h"
+
 
 #define		TILE_WIDTH	16
 #define		PLAYER_WIDTH 22
@@ -18,7 +20,8 @@ struct SDL_Rect;
 
 enum player_state
 {
-	NAVIGATING
+	NAVIGATING,
+	UNIT_SELECTED
 };
 
 class Player : public Module
@@ -55,6 +58,9 @@ private:
 	//Animations
 	Animation			navigating;
 	Animation*			current_animation;
+
+	//controlling units
+	Entity*				selected_unit = nullptr;
 
 };
 #endif

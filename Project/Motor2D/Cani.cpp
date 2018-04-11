@@ -22,11 +22,19 @@ bool Cani::Awake(pugi::xml_node& config)
 
 	idle_right.speed = node.child("idle_right").attribute("speed").as_float();
 
+	walk_right.PushBack({ node.child("walk_right").child("frame_1").attribute("x").as_int(), node.child("walk_right").child("frame_1").attribute("y").as_int(), node.child("walk_right").child("frame_1").attribute("w").as_int(), node.child("walk_right").child("frame_1").attribute("h").as_int(), });
+	walk_right.PushBack({ node.child("walk_right").child("frame_2").attribute("x").as_int(), node.child("walk_right").child("frame_2").attribute("y").as_int(), node.child("walk_right").child("frame_2").attribute("w").as_int(), node.child("walk_right").child("frame_2").attribute("h").as_int(), });
+	walk_right.PushBack({ node.child("walk_right").child("frame_3").attribute("x").as_int(), node.child("walk_right").child("frame_3").attribute("y").as_int(), node.child("walk_right").child("frame_3").attribute("w").as_int(), node.child("walk_right").child("frame_3").attribute("h").as_int(), });
+	walk_right.PushBack({ node.child("walk_right").child("frame_4").attribute("x").as_int(), node.child("walk_right").child("frame_4").attribute("y").as_int(), node.child("walk_right").child("frame_4").attribute("w").as_int(), node.child("walk_right").child("frame_4").attribute("h").as_int(), });
+
+	walk_right.speed = node.child("walk_right").attribute("speed").as_float();
+
 	return true;
 }
 
 bool Cani::Start()
 {
+	type = CANI;
 	graphic = App->tex->Load("textures/cani.png");
 	current_animation = &idle_right;
 	state = IDLE;
@@ -59,6 +67,14 @@ void Cani::Draw()
 				break;
 			}
 		}
+		case SELECTED:
+		{
+			if (direction == RIGHT)
+			{
+				current_animation = &walk_right;
+				break;
+			}
+		}
 	}
 
 	SDL_Rect r = current_animation->GetCurrentFrame();
@@ -69,4 +85,18 @@ void Cani::Draw()
 iPoint Cani::GetPosition() const
 {
 	return position;
+}
+
+bool Cani::OnSelection()
+{
+	state = SELECTED;
+
+	return true;
+}
+
+bool Cani::OnRelease()
+{
+	state = IDLE;
+
+	return true;
 }

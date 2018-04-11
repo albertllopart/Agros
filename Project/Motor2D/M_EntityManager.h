@@ -7,6 +7,7 @@
 #include "p2Point.h"
 #include "Entity.h"
 #include "Cani.h"
+#include "CaniBase.h"
 #include "Factory.h"
 
 class EntityManager : public Module
@@ -28,6 +29,7 @@ public:
 	Entity* CreateCani(iPoint position);
 
 	//BUILDINGS
+	Entity* CreateCanibase(iPoint position);
 	Entity* CreateFactory(iPoint position);
 
 	bool Load(pugi::xml_node& data);

@@ -51,6 +51,18 @@ Entity* EntityManager::CreateCani(iPoint position)
 }
 
 //BUILDINGS
+Entity* EntityManager::CreateCanibase(iPoint position)
+{
+	Canibase* canibase = new Canibase();
+	canibase->Awake(App->GetConfigNode("entities"));
+	canibase->Start();
+	canibase->position = position;
+
+	entities.add(canibase);
+
+	return canibase;
+}
+
 Entity* EntityManager::CreateFactory(iPoint position)
 {
 	Factory* factory = new Factory();

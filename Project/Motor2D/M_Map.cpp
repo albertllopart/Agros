@@ -304,7 +304,12 @@ void Map::CreateEntitiesFromTMX() const
 		{
 			uint current_gid = item->data->GetGid(x, y);
 
-			if (current_gid == 38)//factory
+			if (current_gid == 37)//canibase
+			{
+				iPoint pos(x, y);
+				App->entities->CreateCanibase(pos);
+			}
+			else if (current_gid == 38)//factory
 			{
 				iPoint pos(x, y);
 				App->entities->CreateFactory(pos);

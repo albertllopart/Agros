@@ -105,6 +105,9 @@
     <ClInclude Include="Factory.h">
       <Filter>SRC\Entities\Buildings</Filter>
     </ClInclude>
+    <ClInclude Include="CaniBase.h">
+      <Filter>SRC\Entities\Buildings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="p2Log.cpp">
@@ -156,6 +159,9 @@
       <Filter>SRC\Entities\Units</Filter>
     </ClCompile>
     <ClCompile Include="Factory.cpp">
+      <Filter>SRC\Entities\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="CaniBase.cpp">
       <Filter>SRC\Entities\Buildings</Filter>
     </ClCompile>
   </ItemGroup>

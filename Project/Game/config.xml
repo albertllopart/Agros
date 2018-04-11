@@ -69,7 +69,14 @@
       </cani>
     </units>
     <buildings>
-      <factory>
+      <canibase>--------CANI BASE
+        <animation>
+          <idle>
+            <frame_1 x="0" y="0" w="16" h="32"/>
+          </idle>
+        </animation>
+      </canibase>
+      <factory>---------FACTORY
         <animation>
           <idle>
             <frame_1 x ="16" y="0" w="16" h="16"/>

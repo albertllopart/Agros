@@ -108,6 +108,9 @@
     <ClInclude Include="CaniBase.h">
       <Filter>SRC\Entities\Buildings</Filter>
     </ClInclude>
+    <ClInclude Include="p2Queue.h">
+      <Filter>Programació 2</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="p2Log.cpp">

@@ -55,6 +55,108 @@ void Map::Draw()
 		
 }
 
+//BFS
+void Map::ResetBFS(iPoint position)
+{
+	frontier.Clear();
+	visited.clear();
+	frontier.Push(position);
+	visited.add(position);
+}
+
+void Map::PropagateBFS()
+{
+	
+	while (frontier.start != NULL)
+	{
+		iPoint popped = frontier.start->data;
+		frontier.Pop(popped);
+
+		if (IsWalkable(popped.x, popped.y))
+		{
+			iPoint north(popped.x, popped.y - 1);
+			iPoint south(popped.x, popped.y + 1);
+			iPoint east(popped.x + 1, popped.y);
+			iPoint west(popped.x - 1, popped.y);
+
+			if (visited.find(north) == -1 && IsWalkable(north.x, north.y))
+			{
+				frontier.Push(north);
+				visited.add(north);
+			}
+			if (visited.find(south) == -1 && IsWalkable(south.x, south.y))
+			{
+				frontier.Push(south);
+				visited.add(south);
+			}
+			if (visited.find(east) == -1 && IsWalkable(east.x, east.y))
+			{
+				frontier.Push(east);
+				visited.add(east);
+			}
+			if (visited.find(west) == -1 && IsWalkable(west.x, west.y))
+			{
+				frontier.Push(west);
+				visited.add(west);
+			}
+		}
+	}
+}
+
+void Map::DrawBFS()
+{
+	iPoint point;
+
+	// Draw visited
+	p2List_item<iPoint>* item = visited.start;
+
+	while (item)
+	{
+		point = item->data;
+		tileset* tileset = GetTilesetFromTileId(137);
+
+		SDL_Rect r = tileset->GetTileRect(137);
+		iPoint pos = MapToWorld(point.x, point.y);
+
+		App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+
+		item = item->next;
+	}
+
+	// Draw frontier
+	for (uint i = 0; i < frontier.Count(); ++i)
+	{
+		point = *(frontier.Peek(i));
+		tileset* tileset = GetTilesetFromTileId(138);
+
+		SDL_Rect r = tileset->GetTileRect(138);
+		iPoint pos = MapToWorld(point.x, point.y);
+
+		App->render->Blit(tileset->texture, pos.x, pos.y, &r);
+	}
+
+}
+
+bool Map::IsWalkable(int x, int y) const
+{
+	// TODO 3: return true only if x and y are within map limits
+	// and the tile is walkable (tile id 138 in the navigation layer)
+	p2List_item<map_layer*>* walkability = map_data.layers.start;
+	
+	while (walkability->data->name != "walkability" && walkability != NULL)
+	{
+		walkability = walkability->next;
+	}
+
+	if (walkability != NULL)
+	{
+		if (walkability->data->GetGid(x, y) == 138 || x > map_data.width || x < 0 || y > map_data.height || y < 0)
+			return false;
+	}
+
+	return true;
+}
+
 // Called before quitting
 bool Map::CleanUp()
 {

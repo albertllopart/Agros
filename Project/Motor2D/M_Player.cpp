@@ -109,6 +109,11 @@ void Player::Input(float dt)
 			{
 				selected_unit = item->data;
 				selected_unit->OnSelection();
+				state = UNIT_SELECTED;
+
+				//BFS
+				App->map->ResetBFS(position);
+				App->map->PropagateBFS();
 				break;
 			}
 		}
@@ -124,6 +129,7 @@ void Player::Input(float dt)
 		{
 			selected_unit->OnRelease();
 			selected_unit = nullptr;
+			state = NAVIGATING;
 		}
 	}
 }

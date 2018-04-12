@@ -8,6 +8,7 @@
 #include "M_Window.h"
 #include "M_Scene.h"
 #include "M_Map.h"
+#include "M_Player.h"
 #include "M_EntityManager.h"
 
 Scene::Scene() : Module()
@@ -53,6 +54,10 @@ bool Scene::PreUpdate()
 bool Scene::Update(float dt)
 {
 	App->map->Draw();
+
+	if (App->player->state == UNIT_SELECTED)
+		App->map->DrawBFS();
+
 	//Save and load
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		App->LoadGame();

@@ -5,6 +5,7 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "Module.h"
+#include "p2Queue.h"
 
 
 struct tileset
@@ -98,6 +99,12 @@ public:
 	iPoint MapToWorld(int x, int y) const;
 	iPoint WorldToMap(int x, int y) const;
 
+	//BFS
+	void PropagateBFS();
+	void DrawBFS();
+	bool IsWalkable(int x, int y) const;
+	void ResetBFS(iPoint position);
+
 private:
 
 
@@ -110,6 +117,10 @@ private:
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;
+
+	//BFS
+	p2Queue<iPoint>		frontier;
+	p2List<iPoint>		visited;
 };
 
 #endif

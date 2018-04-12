@@ -53,7 +53,6 @@ private:
 	SDL_Texture*		graphic = nullptr;
 
 	iPoint				position;
-	player_state		state;
 
 	//Animations
 	Animation			navigating;
@@ -61,6 +60,10 @@ private:
 
 	//controlling units
 	Entity*				selected_unit = nullptr;
+
+public:
+
+	player_state		state;
 
 };
 #endif

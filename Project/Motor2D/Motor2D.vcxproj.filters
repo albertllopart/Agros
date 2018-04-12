@@ -111,6 +111,12 @@
     <ClInclude Include="p2Queue.h">
       <Filter>Programació 2</Filter>
     </ClInclude>
+    <ClInclude Include="Unit.h">
+      <Filter>SRC\Entities\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>SRC\Entities\Buildings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="p2Log.cpp">

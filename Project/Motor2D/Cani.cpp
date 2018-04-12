@@ -3,7 +3,7 @@
 #include "M_Render.h"
 #include "M_Map.h"
 
-Cani::Cani() : Entity()
+Cani::Cani() : Unit()
 {
 	name.create("cani");
 }
@@ -41,9 +41,12 @@ bool Cani::Awake(pugi::xml_node& config)
 
 bool Cani::Start()
 {
-	type = CANI;
+	entity_type = UNIT;
+	unit_type = CANI;
+
 	graphic = App->tex->Load("textures/cani.png");
 	current_animation = &idle_right;
+
 	state = IDLE;
 	direction = RIGHT;
 

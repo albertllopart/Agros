@@ -55,9 +55,6 @@ bool Scene::Update(float dt)
 {
 	App->map->Draw();
 
-	if (App->player->state == UNIT_SELECTED)
-		App->map->DrawBFS();
-
 	//Save and load
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 		App->LoadGame();

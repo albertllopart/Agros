@@ -11,17 +11,10 @@ enum entity_state
 	MOVING
 };
 
-enum entity_direction
-{
-	UP,
-	DOWN,
-	RIGHT,
-	LEFT
-};
-
 enum entity_type
 {
-	CANI
+	UNIT,
+	BUILDING
 };
 
 class Entity
@@ -71,10 +64,6 @@ public:
 	{
 		return position;
 	}
-	virtual entity_direction GetDirection()const
-	{
-		return direction;
-	}
 
 	//interaction with player
 	virtual bool OnSelection()
@@ -102,8 +91,7 @@ public:
 
 	p2SString					name;
 
-	entity_type					type;
-	entity_direction			direction;
+	entity_type					entity_type;
 	entity_state				state;
 
 	iPoint						position;

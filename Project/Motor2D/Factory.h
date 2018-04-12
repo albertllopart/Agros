@@ -1,6 +1,7 @@
 #pragma once
 #include "p2Point.h"
 #include "Entity.h"
+#include "Building.h"
 #include "Animation.h"
 
 #define OFFSET -2
@@ -9,7 +10,7 @@
 struct SDL_Texture;
 struct SDL_Rect;
 
-class Factory : public Entity
+class Factory : public Building
 {
 public:
 
@@ -30,10 +31,7 @@ public:
 
 	void				Draw();
 
-	iPoint				GetPosition() const;
 
 public:
-
-	SDL_Rect			sprite;
 
 };

@@ -26,7 +26,22 @@ bool EntityManager::Update(float dt)
 	p2List_item<Entity*>* item = entities.start;
 	while (item != NULL)
 	{
-		item->data->Update(dt);
+		if (item->data->entity_type == BUILDING)
+			item->data->Update(dt);
+
+		item = item->next;
+	}
+	return true;
+}
+
+bool EntityManager::PostUpdate()
+{
+	p2List_item<Entity*>* item = entities.start;
+	while (item != NULL)
+	{
+		if (item->data->entity_type == UNIT)
+			item->data->Update(1.0f);
+
 		item = item->next;
 	}
 	return true;

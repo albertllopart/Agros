@@ -3,7 +3,7 @@
 #include "M_Render.h"
 #include "M_Map.h"
 
-Canibase::Canibase() : Entity()
+Canibase::Canibase() : Building()
 {
 	name.create("Canibase");
 }
@@ -28,7 +28,8 @@ bool Canibase::Start()
 	graphic = App->tex->Load("textures/buildings_cani.png");
 
 	state = IDLE;
-	direction = RIGHT;
+	entity_type = BUILDING;
+	building_type = CANIBASE;
 
 	return true;
 }
@@ -49,9 +50,4 @@ void Canibase::Draw()
 {
 	iPoint world_position = App->map->MapToWorld(position.x, position.y);
 	App->render->Blit(graphic, world_position.x, world_position.y + OFFSET, &sprite);
-}
-
-iPoint Canibase::GetPosition() const
-{
-	return position;
 }

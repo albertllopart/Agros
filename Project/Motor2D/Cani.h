@@ -1,6 +1,7 @@
 #pragma once
 #include "p2Point.h"
 #include "Entity.h"
+#include "Unit.h"
 #include "Animation.h"
 
 #define OFFSET -2
@@ -8,7 +9,7 @@
 
 struct SDL_Texture;
 
-class Cani : public Entity
+class Cani : public Unit
 {
 public:
 
@@ -37,9 +38,5 @@ public:
 
 public:
 
-	Animation			idle_right;
-	Animation			walk_right;
-	Animation			walk_up;
-	Animation*			current_animation;
 
 };

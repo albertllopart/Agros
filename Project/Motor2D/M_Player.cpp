@@ -61,8 +61,12 @@ bool Player::Update(float dt)
 	LOG("Updating Player");
 
 	Input(dt);
-	Draw();
 
+	if (state == UNIT_SELECTED)
+		App->map->DrawBFS();
+
+	Draw();
+	
 	return true;
 }
 

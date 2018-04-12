@@ -1,5 +1,6 @@
 #include "p2Point.h"
 #include "Entity.h"
+#include "Building.h"
 #include "Animation.h"
 
 #define OFFSET -18
@@ -8,7 +9,7 @@
 struct SDL_Texture;
 struct SDL_Rect;
 
-class Canibase : public Entity
+class Canibase : public Building
 {
 public:
 
@@ -33,6 +34,5 @@ public:
 
 public:
 
-	SDL_Rect			sprite;
 
 };

@@ -33,8 +33,10 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	audio = new Audio();
 	scene = new Scene();
 	map = new Map();
-	player = new Player();
 	entities = new EntityManager();
+	player = new Player();
+	
+	
 
 	AddModule(win);
 	AddModule(input);
@@ -42,8 +44,9 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(scene);
 	AddModule(map);
-	AddModule(player);
 	AddModule(entities);
+	AddModule(player);
+	
 
 	// render last to swap buffer
 	AddModule(render);

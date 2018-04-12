@@ -124,6 +124,7 @@
   <ItemGroup>
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Application.h" />
+    <ClInclude Include="Building.h" />
     <ClInclude Include="Cani.h" />
     <ClInclude Include="CaniBase.h" />
     <ClInclude Include="Entity.h" />
@@ -149,6 +150,7 @@
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="Unit.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />

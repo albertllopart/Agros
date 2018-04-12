@@ -29,6 +29,13 @@ bool Cani::Awake(pugi::xml_node& config)
 
 	walk_right.speed = node.child("walk_right").attribute("speed").as_float();
 
+	walk_up.PushBack({ node.child("walk_up").child("frame_1").attribute("x").as_int(), node.child("walk_up").child("frame_1").attribute("y").as_int(), node.child("walk_up").child("frame_1").attribute("w").as_int(), node.child("walk_up").child("frame_1").attribute("h").as_int(), });
+	walk_up.PushBack({ node.child("walk_up").child("frame_2").attribute("x").as_int(), node.child("walk_up").child("frame_2").attribute("y").as_int(), node.child("walk_up").child("frame_2").attribute("w").as_int(), node.child("walk_up").child("frame_2").attribute("h").as_int(), });
+	walk_up.PushBack({ node.child("walk_up").child("frame_3").attribute("x").as_int(), node.child("walk_up").child("frame_3").attribute("y").as_int(), node.child("walk_up").child("frame_3").attribute("w").as_int(), node.child("walk_up").child("frame_3").attribute("h").as_int(), });
+	walk_up.PushBack({ node.child("walk_up").child("frame_4").attribute("x").as_int(), node.child("walk_up").child("frame_4").attribute("y").as_int(), node.child("walk_up").child("frame_4").attribute("w").as_int(), node.child("walk_up").child("frame_4").attribute("h").as_int(), });
+
+	walk_up.speed = node.child("walk_right").attribute("speed").as_float();
+
 	return true;
 }
 
@@ -72,6 +79,19 @@ void Cani::Draw()
 			if (direction == RIGHT)
 			{
 				current_animation = &walk_right;
+				break;
+			}
+		}
+		case MOVING:
+		{
+			if (direction == RIGHT)
+			{
+				current_animation = &walk_right;
+				break;
+			}
+			else if (direction == UP)
+			{
+				current_animation = &walk_up;
 				break;
 			}
 		}

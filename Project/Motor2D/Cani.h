@@ -39,6 +39,7 @@ public:
 
 	Animation			idle_right;
 	Animation			walk_right;
+	Animation			walk_up;
 	Animation*			current_animation;
 
 };

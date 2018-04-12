@@ -8,6 +8,7 @@ enum entity_state
 {
 	IDLE,
 	SELECTED,
+	MOVING
 };
 
 enum entity_direction

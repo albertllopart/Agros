@@ -66,11 +66,17 @@
             <frame_4 x="16" y="0" w="16" h="17"/>
           </idle_right>
           <walk_right speed="6.5">
-            <frame_1 x="0" y="31" w="16" h="17"/>
-            <frame_2 x="16" y="31" w="16" h="17"/>
-            <frame_3 x="32" y="31" w="16" h="17"/>
-            <frame_4 x="48" y="31" w="16" h="17"/>
+            <frame_1 x="0" y="17" w="16" h="17"/>
+            <frame_2 x="16" y="17" w="16" h="17"/>
+            <frame_3 x="32" y="17" w="16" h="17"/>
+            <frame_4 x="48" y="17" w="16" h="17"/>
           </walk_right>
+          <walk_up speed="6.5">
+            <frame_1 x="0" y="34" w="16" h="17"/>
+            <frame_2 x="16" y="34" w="16" h="17"/>
+            <frame_3 x="32" y="34" w="16" h="17"/>
+            <frame_4 x="48" y="34" w="16" h="17"/>
+          </walk_up>
         </animation>
       </cani>
     </units>

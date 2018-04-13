@@ -13,7 +13,7 @@
 #define		TILE_WIDTH	16
 #define		PLAYER_WIDTH 22
 #define		PLAYER_HIGHT 22
-#define		OFFSET -3
+#define		PLAYER_OFFSET -3
 
 struct SDL_texture;
 struct SDL_Rect;
@@ -22,6 +22,20 @@ enum player_state
 {
 	NAVIGATING,
 	UNIT_SELECTED
+};
+
+enum arrow_frame
+{
+	ARROW_DOWN,
+	ARROW_LEFT,
+	ARROW_VERTICAL,
+	ARROW_UP_RIGHT,
+	ARROW_UP_LEFT,
+	ARROW_RIGHT,
+	ARROW_UP,
+	ARROW_HORIZONTAL,
+	ARROW_DOWN_RIGHT,
+	ARROW_DOWN_LEFT
 };
 
 class Player : public Module
@@ -47,6 +61,7 @@ public:
 	void Input(float dt);
 
 	void Draw();
+	void DrawArrow() const;
 
 private:
 
@@ -57,6 +72,8 @@ private:
 	//Animations
 	Animation			navigating;
 	Animation*			current_animation;
+
+	SDL_Rect			arrow[10];
 
 	//controlling units
 	Entity*				selected_unit = nullptr;

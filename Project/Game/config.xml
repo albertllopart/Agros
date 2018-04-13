@@ -52,12 +52,24 @@
         <frame_1 x="0" y="0" w="22" h="22"/>
         <frame_2 x="22" y="0" w="22" h="22"/>
       </idle>
+      <arrow>
+        <frame_1 x="0" y="32" w="16" h="16"/>
+        <frame_2 x="16" y="32" w="16" h="16"/>
+        <frame_3 x="32" y="32" w="16" h="16"/>
+        <frame_4 x="48" y="32" w="16" h="16"/>
+        <frame_5 x="64" y="32" w="16" h="16"/>
+        <frame_6 x="0" y="48" w="16" h="16"/>
+        <frame_7 x="16" y="48" w="16" h="16"/>
+        <frame_8 x="32" y="48" w="16" h="16"/>
+        <frame_9 x="48" y="48" w="16" h="16"/>
+        <frame_10 x="64" y="48" w="16" h="16"/>
+      </arrow>
     </animation>
   </player>
 
   <entities>
     <units>
-      <cani move="3">-------------CANI
+      <cani move="8">-------------CANI
         <animation>
           <idle_right speed="5.0">
             <frame_1 x="0" y="0" w="16" h="17"/>

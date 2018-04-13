@@ -10,8 +10,7 @@
 
 struct BFS_node
 {
-	BFS_node(){}
-	BFS_node(iPoint data, iPoint parent = { -1, -1 })
+	BFS_node(iPoint data = { -1, -1 }, iPoint parent = { -1, -1 })
 	{
 		this->data = data;
 		this->parent = parent;
@@ -128,23 +127,20 @@ public:
 	void DrawBFS();
 	bool IsWalkable(int x, int y) const;
 
-private:
-
-
 public:
 
 	map_info			map_data;
+
+	//BFS
+	p2Queue<BFS_node>		frontier;
+	p2List<iPoint>			visited;
+	p2List<BFS_node>		backtrack;
 
 private:
 
 	pugi::xml_document	map_file;
 	p2SString			folder;
 	bool				map_loaded;
-
-	//BFS
-	p2Queue<BFS_node>		frontier;
-	p2List<iPoint>			visited;
-	p2List<BFS_node>		backtrack;
 
 };
 

@@ -41,6 +41,17 @@ bool Player::Awake(pugi::xml_node& config)
 
 	navigating.speed = node.child("idle").attribute("speed").as_float();
 
+	uint i = 0;
+	for (pugi::xml_node arrow_node = node.child("arrow").child("frame_1"); arrow_node; arrow_node = arrow_node.next_sibling())
+	{
+		arrow[i].x = arrow_node.attribute("x").as_int();
+		arrow[i].y = arrow_node.attribute("y").as_int();
+		arrow[i].w = arrow_node.attribute("w").as_int();
+		arrow[i].h = arrow_node.attribute("h").as_int();
+
+		i++;
+	}
+
 	return ret;
 }
 
@@ -61,6 +72,9 @@ bool Player::Update(float dt)
 	LOG("Updating Player");
 
 	Input(dt);
+
+	if (selected_unit != NULL && selected_unit->entity_type == UNIT)
+		DrawArrow();
 	
 	return true;
 }
@@ -144,7 +158,122 @@ void Player::Draw()
 
 	SDL_Rect r = current_animation->GetCurrentFrame();
 	iPoint world_position = App->map->MapToWorld(position.x, position.y);
-	App->render->Blit(graphic, OFFSET + world_position.x - 1, OFFSET + world_position.y, &r);
+	App->render->Blit(graphic, PLAYER_OFFSET + world_position.x, PLAYER_OFFSET + world_position.y, &r);
+}
+
+void Player::DrawArrow() const
+{
+	p2List_item<BFS_node>* iterator = App->map->backtrack.start;
+	BFS_node node;
+	iPoint prev_pos = position;
+
+	while (iterator != NULL)
+	{
+		if (iterator->data.data == position)
+		{
+			node = iterator->data;
+			break;
+		}
+
+		iterator = iterator->next;
+	}
+
+	if (node.data.x == -1)
+		return;
+
+	//final arrow
+	{
+		if (node.parent.x > position.x)
+		{
+			prev_pos = App->map->MapToWorld(position.x, position.y);
+			App->render->Blit(graphic, prev_pos.x, prev_pos.y, &arrow[ARROW_LEFT]);
+		}
+		else if (node.parent.x < position.x && node.parent.x != -1)
+		{
+			prev_pos = App->map->MapToWorld(position.x, position.y);
+			App->render->Blit(graphic, prev_pos.x, prev_pos.y, &arrow[ARROW_RIGHT]);
+		}
+		else if (node.parent.y > position.y)
+		{
+			prev_pos = App->map->MapToWorld(position.x, position.y);
+			App->render->Blit(graphic, prev_pos.x, prev_pos.y, &arrow[ARROW_UP]);
+		}
+		else if (node.parent.y < position.y && node.parent.y != -1)
+		{
+			prev_pos = App->map->MapToWorld(position.x, position.y);
+			App->render->Blit(graphic, prev_pos.x, prev_pos.y, &arrow[ARROW_DOWN]);
+		}
+	}
+
+	while (node.data != selected_unit->position)
+	{
+		while (iterator != NULL && iterator->data.data != node.parent)
+		{
+			iterator = iterator->prev;
+
+			if (iterator != NULL && iterator->data.data == node.parent)
+			{
+				node = iterator->data;
+				break;
+			}
+		}
+		prev_pos = App->map->WorldToMap(prev_pos.x, prev_pos.y);
+
+		//HORIZONTAL
+		if ((prev_pos.x > node.data.x && node.parent.x < node.data.x || prev_pos.x < node.data.x && node.parent.x > node.data.x) && prev_pos.y == node.parent.y)
+		{
+			if (node.data != selected_unit->position)
+			{
+				prev_pos = App->map->MapToWorld(node.data.x, node.data.y);
+				App->render->Blit(graphic, prev_pos.x, prev_pos.y, &arrow[ARROW_HORIZONTAL]);
+			}
+		}
+		//VERTICAL
+		else if ((prev_pos.y > node.data.y && node.parent.y < node.data.y || prev_pos.y < node.data.y && node.parent.y > node.data.y) && prev_pos.x == node.parent.x)
+		{
+			if (node.data != selected_unit->position)
+			{
+				prev_pos = App->map->MapToWorld(node.data.x, node.data.y);
+				App->render->Blit(graphic, prev_pos.x, prev_pos.y, &arrow[ARROW_VERTICAL]);
+			}
+		}
+		//UP_RIGHT
+		else if (prev_pos.x > node.data.x && node.parent.y > node.data.y || prev_pos.y > node.data.y && node.parent.x > node.data.x)
+		{
+			if (node.data != selected_unit->position)
+			{
+				prev_pos = App->map->MapToWorld(node.data.x, node.data.y);
+				App->render->Blit(graphic, prev_pos.x, prev_pos.y, &arrow[ARROW_UP_RIGHT]);
+			}
+		}
+		//UP_LEFT
+		else if (prev_pos.x < node.data.x && node.parent.y > node.data.y || prev_pos.y > node.data.y && node.parent.x < node.data.x)
+		{
+			if (node.data != selected_unit->position)
+			{
+				prev_pos = App->map->MapToWorld(node.data.x, node.data.y);
+				App->render->Blit(graphic, prev_pos.x, prev_pos.y, &arrow[ARROW_UP_LEFT]);
+			}
+		}
+		//DOWN_RIGHT
+		else if (prev_pos.x > node.data.x && node.parent.y < node.data.y || prev_pos.y < node.data.y && node.parent.x > node.data.x)
+		{
+			if (node.data != selected_unit->position)
+			{
+				prev_pos = App->map->MapToWorld(node.data.x, node.data.y);
+				App->render->Blit(graphic, prev_pos.x, prev_pos.y, &arrow[ARROW_DOWN_RIGHT]);
+			}
+		}
+		//DOWN_LEFT
+		else if (prev_pos.x < node.data.x && node.parent.y < node.data.y || prev_pos.y < node.data.y && node.parent.x < node.data.x)
+		{
+			if (node.data != selected_unit->position)
+			{
+				prev_pos = App->map->MapToWorld(node.data.x, node.data.y);
+				App->render->Blit(graphic, prev_pos.x, prev_pos.y, &arrow[ARROW_DOWN_LEFT]);
+			}
+		}
+	}
 }
 
 bool Player::Save(pugi::xml_node& data) const

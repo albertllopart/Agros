@@ -57,7 +57,7 @@
 
   <entities>
     <units>
-      <cani>-------------CANI
+      <cani move="3">-------------CANI
         <animation>
           <idle_right speed="5.0">
             <frame_1 x="0" y="0" w="16" h="17"/>

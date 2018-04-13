@@ -61,17 +61,14 @@ bool Player::Update(float dt)
 	LOG("Updating Player");
 
 	Input(dt);
-
-	if (state == UNIT_SELECTED)
-		App->map->DrawBFS();
-
-	Draw();
 	
 	return true;
 }
 
 bool Player::PostUpdate()
 {
+	Draw();
+
 	return true;
 }
 
@@ -114,10 +111,6 @@ void Player::Input(float dt)
 				selected_unit = item->data;
 				selected_unit->OnSelection();
 				state = UNIT_SELECTED;
-
-				//BFS
-				App->map->ResetBFS(position);
-				App->map->PropagateBFS();
 				break;
 			}
 		}

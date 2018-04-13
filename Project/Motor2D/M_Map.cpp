@@ -66,7 +66,7 @@ void Map::ResetBFS(iPoint position)
 	backtrack.add(node);
 }
 
-void Map::PropagateBFS()
+void Map::PropagateBFS(Unit* unit)
 {
 	
 	while (frontier.start != NULL)
@@ -85,25 +85,25 @@ void Map::PropagateBFS()
 			BFS_node west(popped.data, popped.data);
 			west.data.x -= 1;
 
-			if (visited.find(north.data) == -1 && IsWalkable(north.data.x, north.data.y))
+			if (visited.find(north.data) == -1 && IsWalkable(north.data.x, north.data.y) && IsInMoveRange(unit->move_range, visited.start->data, north.data))
 			{
 				frontier.Push(north);
 				visited.add(north.data);
 				backtrack.add(north);
 			}
-			if (visited.find(south.data) == -1 && IsWalkable(south.data.x, south.data.y))
+			if (visited.find(south.data) == -1 && IsWalkable(south.data.x, south.data.y) && IsInMoveRange(unit->move_range, visited.start->data, south.data))
 			{
 				frontier.Push(south);
 				visited.add(south.data);
 				backtrack.add(south);
 			}
-			if (visited.find(east.data) == -1 && IsWalkable(east.data.x, east.data.y))
+			if (visited.find(east.data) == -1 && IsWalkable(east.data.x, east.data.y) && IsInMoveRange(unit->move_range, visited.start->data, east.data))
 			{
 				frontier.Push(east);
 				visited.add(east.data);
 				backtrack.add(east);
 			}
-			if (visited.find(west.data) == -1 && IsWalkable(west.data.x, west.data.y))
+			if (visited.find(west.data) == -1 && IsWalkable(west.data.x, west.data.y) && IsInMoveRange(unit->move_range, visited.start->data, west.data))
 			{
 				frontier.Push(west);
 				visited.add(west.data);
@@ -111,6 +111,16 @@ void Map::PropagateBFS()
 			}
 		}
 	}
+}
+
+bool Map::IsInMoveRange(int range, iPoint origin, iPoint node) const
+{
+	int check = (abs(node.x - origin.x)) + (abs(node.y - origin.y));
+
+	if (check > range)
+		return false;
+
+	return true;
 }
 
 void Map::DrawBFS()

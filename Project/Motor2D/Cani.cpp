@@ -13,6 +13,9 @@ Cani::~Cani()
 
 bool Cani::Awake(pugi::xml_node& config)
 {
+	move_range = config.child("units").child("cani").attribute("move").as_uint();
+
+	//Animations
 	pugi::xml_node node = config.child("units").child("cani").child("animation");
 
 	idle_right.PushBack({ node.child("idle_right").child("frame_1").attribute("x").as_int(), node.child("idle_right").child("frame_1").attribute("y").as_int(), node.child("idle_right").child("frame_1").attribute("w").as_int(), node.child("idle_right").child("frame_1").attribute("h").as_int(), });
@@ -55,6 +58,9 @@ bool Cani::Start()
 
 bool Cani::Update(float dt)
 {
+	if (state == SELECTED)
+		App->map->DrawBFS();
+
 	Draw();
 
 	return true;
@@ -113,6 +119,10 @@ iPoint Cani::GetPosition() const
 bool Cani::OnSelection()
 {
 	state = SELECTED;
+
+	//BFS
+	App->map->ResetBFS(position);
+	App->map->PropagateBFS(this);
 
 	return true;
 }

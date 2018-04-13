@@ -6,6 +6,7 @@
 #include "p2Point.h"
 #include "Module.h"
 #include "p2Queue.h"
+#include "Unit.h"
 
 struct BFS_node
 {
@@ -121,10 +122,11 @@ public:
 	iPoint WorldToMap(int x, int y) const;
 
 	//BFS
-	void PropagateBFS();
+	void ResetBFS(iPoint position);
+	void PropagateBFS(Unit* unit);
+	bool IsInMoveRange(int range, iPoint origin, iPoint node) const;
 	void DrawBFS();
 	bool IsWalkable(int x, int y) const;
-	void ResetBFS(iPoint position);
 
 private:
 

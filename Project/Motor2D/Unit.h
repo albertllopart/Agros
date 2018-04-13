@@ -33,6 +33,7 @@ public:
 	// Called before render is available
 	virtual bool				 Awake(pugi::xml_node& config)
 	{
+
 		return true;
 	}
 
@@ -72,6 +73,7 @@ public:
 
 	unit_direction		direction;
 	unit_type			unit_type;
+	uint				move_range;
 
 	Animation			idle_right;
 	Animation			walk_right;

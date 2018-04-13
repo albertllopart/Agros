@@ -123,7 +123,7 @@ public:
 	//BFS
 	void ResetBFS(iPoint position);
 	void PropagateBFS(Unit* unit);
-	bool IsInMoveRange(int range, iPoint origin, iPoint node) const;
+	bool IsInMoveRange(int range, iPoint origin, BFS_node node) const;
 	void DrawBFS();
 	bool IsWalkable(int x, int y) const;
 

@@ -85,25 +85,25 @@ void Map::PropagateBFS(Unit* unit)
 			BFS_node west(popped.data, popped.data);
 			west.data.x -= 1;
 
-			if (visited.find(north.data) == -1 && IsWalkable(north.data.x, north.data.y) && IsInMoveRange(unit->move_range, visited.start->data, north.data))
+			if (visited.find(north.data) == -1 && IsWalkable(north.data.x, north.data.y) && IsInMoveRange(unit->move_range, visited.start->data, north))
 			{
 				frontier.Push(north);
 				visited.add(north.data);
 				backtrack.add(north);
 			}
-			if (visited.find(south.data) == -1 && IsWalkable(south.data.x, south.data.y) && IsInMoveRange(unit->move_range, visited.start->data, south.data))
+			if (visited.find(south.data) == -1 && IsWalkable(south.data.x, south.data.y) && IsInMoveRange(unit->move_range, visited.start->data, south))
 			{
 				frontier.Push(south);
 				visited.add(south.data);
 				backtrack.add(south);
 			}
-			if (visited.find(east.data) == -1 && IsWalkable(east.data.x, east.data.y) && IsInMoveRange(unit->move_range, visited.start->data, east.data))
+			if (visited.find(east.data) == -1 && IsWalkable(east.data.x, east.data.y) && IsInMoveRange(unit->move_range, visited.start->data, east))
 			{
 				frontier.Push(east);
 				visited.add(east.data);
 				backtrack.add(east);
 			}
-			if (visited.find(west.data) == -1 && IsWalkable(west.data.x, west.data.y) && IsInMoveRange(unit->move_range, visited.start->data, west.data))
+			if (visited.find(west.data) == -1 && IsWalkable(west.data.x, west.data.y) && IsInMoveRange(unit->move_range, visited.start->data, west))
 			{
 				frontier.Push(west);
 				visited.add(west.data);
@@ -113,11 +113,45 @@ void Map::PropagateBFS(Unit* unit)
 	}
 }
 
-bool Map::IsInMoveRange(int range, iPoint origin, iPoint node) const
+bool Map::IsInMoveRange(int range, iPoint origin, BFS_node node) const
 {
-	int check = (abs(node.x - origin.x)) + (abs(node.y - origin.y));
+	int count = 1;
 
-	if (check > range)
+	if (backtrack.count() >= 1)
+	{
+		p2List_item<BFS_node>* iterator = backtrack.start;
+		BFS_node current_position = node;
+
+		while (iterator != NULL)
+		{
+			if (iterator->data.data == node.parent)
+			{
+				current_position = iterator->data;
+				break;
+			}
+
+			iterator = iterator->next;
+		}
+
+		while (current_position.data != origin)
+		{
+			while (iterator != NULL && iterator->data.data != current_position.parent)
+			{
+				iterator = iterator->prev;
+
+				if (iterator != NULL && iterator->data.data == current_position.parent)
+				{
+					current_position = iterator->data;
+					count++;
+					break;
+				}
+			}
+		}
+	}
+
+	if (count <= range)
+		return true;
+	else
 		return false;
 
 	return true;

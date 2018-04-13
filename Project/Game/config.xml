@@ -47,6 +47,7 @@
 
   <player>
     <position x="15" y="10"/>
+    <offset x="-3" y="-3"/>
     <animation>
       <idle speed="5.0">
         <frame_1 x="0" y="0" w="22" h="22"/>
@@ -69,7 +70,7 @@
 
   <entities>
     <units>
-      <cani move="8">-------------CANI
+      <cani move="3">-------------CANI
         <animation>
           <idle_right speed="5.0">
             <frame_1 x="0" y="0" w="16" h="17"/>

@@ -30,6 +30,8 @@ bool Player::Awake(pugi::xml_node& config)
 
 	position.x = config.child("position").attribute("x").as_int();
 	position.y = config.child("position").attribute("y").as_int();
+	offset.x = config.child("offset").attribute("x").as_int();
+	offset.y = config.child("offset").attribute("y").as_int();
 
 	pugi::xml_node node = config.child("animation");
 
@@ -158,7 +160,7 @@ void Player::Draw()
 
 	SDL_Rect r = current_animation->GetCurrentFrame();
 	iPoint world_position = App->map->MapToWorld(position.x, position.y);
-	App->render->Blit(graphic, PLAYER_OFFSET + world_position.x, PLAYER_OFFSET + world_position.y, &r);
+	App->render->Blit(graphic, offset.x + world_position.x, offset.y + world_position.y, &r);
 }
 
 void Player::DrawArrow() const

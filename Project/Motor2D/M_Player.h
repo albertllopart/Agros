@@ -13,7 +13,6 @@
 #define		TILE_WIDTH	16
 #define		PLAYER_WIDTH 22
 #define		PLAYER_HIGHT 22
-#define		PLAYER_OFFSET -3
 
 struct SDL_texture;
 struct SDL_Rect;
@@ -68,6 +67,7 @@ private:
 	SDL_Texture*		graphic = nullptr;
 
 	iPoint				position;
+	iPoint				offset;
 
 	//Animations
 	Animation			navigating;

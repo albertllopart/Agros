@@ -58,10 +58,12 @@ void Map::Draw()
 //BFS
 void Map::ResetBFS(iPoint position)
 {
+	BFS_node node(position);
 	frontier.Clear();
 	visited.clear();
-	frontier.Push(position);
-	visited.add(position);
+	frontier.Push(node);
+	visited.add(node.data);
+	backtrack.add(node);
 }
 
 void Map::PropagateBFS()
@@ -69,35 +71,43 @@ void Map::PropagateBFS()
 	
 	while (frontier.start != NULL)
 	{
-		iPoint popped = frontier.start->data;
+		BFS_node popped = frontier.start->data;
 		frontier.Pop(popped);
 
-		if (IsWalkable(popped.x, popped.y))
+		if (IsWalkable(popped.data.x, popped.data.y))
 		{
-			iPoint north(popped.x, popped.y - 1);
-			iPoint south(popped.x, popped.y + 1);
-			iPoint east(popped.x + 1, popped.y);
-			iPoint west(popped.x - 1, popped.y);
+			BFS_node north(popped.data, popped.data);
+			north.data.y -= 1;
+			BFS_node south(popped.data, popped.data);
+			south.data.y += 1;
+			BFS_node east(popped.data, popped.data);
+			east.data.x += 1;
+			BFS_node west(popped.data, popped.data);
+			west.data.x -= 1;
 
-			if (visited.find(north) == -1 && IsWalkable(north.x, north.y))
+			if (visited.find(north.data) == -1 && IsWalkable(north.data.x, north.data.y))
 			{
 				frontier.Push(north);
-				visited.add(north);
+				visited.add(north.data);
+				backtrack.add(north);
 			}
-			if (visited.find(south) == -1 && IsWalkable(south.x, south.y))
+			if (visited.find(south.data) == -1 && IsWalkable(south.data.x, south.data.y))
 			{
 				frontier.Push(south);
-				visited.add(south);
+				visited.add(south.data);
+				backtrack.add(south);
 			}
-			if (visited.find(east) == -1 && IsWalkable(east.x, east.y))
+			if (visited.find(east.data) == -1 && IsWalkable(east.data.x, east.data.y))
 			{
 				frontier.Push(east);
-				visited.add(east);
+				visited.add(east.data);
+				backtrack.add(east);
 			}
-			if (visited.find(west) == -1 && IsWalkable(west.x, west.y))
+			if (visited.find(west.data) == -1 && IsWalkable(west.data.x, west.data.y))
 			{
 				frontier.Push(west);
-				visited.add(west);
+				visited.add(west.data);
+				backtrack.add(west);
 			}
 		}
 	}
@@ -105,7 +115,7 @@ void Map::PropagateBFS()
 
 void Map::DrawBFS()
 {
-	iPoint point;
+	BFS_node point;
 
 	// Draw visited
 	p2List_item<iPoint>* item = visited.start;
@@ -116,7 +126,7 @@ void Map::DrawBFS()
 		tileset* tileset = GetTilesetFromTileId(137);
 
 		SDL_Rect r = tileset->GetTileRect(137);
-		iPoint pos = MapToWorld(point.x, point.y);
+		iPoint pos = MapToWorld(point.data.x, point.data.y);
 
 		App->render->Blit(tileset->texture, pos.x, pos.y, &r);
 
@@ -130,7 +140,7 @@ void Map::DrawBFS()
 		tileset* tileset = GetTilesetFromTileId(138);
 
 		SDL_Rect r = tileset->GetTileRect(138);
-		iPoint pos = MapToWorld(point.x, point.y);
+		iPoint pos = MapToWorld(point.data.x, point.data.y);
 
 		App->render->Blit(tileset->texture, pos.x, pos.y, &r);
 	}
@@ -139,8 +149,6 @@ void Map::DrawBFS()
 
 bool Map::IsWalkable(int x, int y) const
 {
-	// TODO 3: return true only if x and y are within map limits
-	// and the tile is walkable (tile id 138 in the navigation layer)
 	p2List_item<map_layer*>* walkability = map_data.layers.start;
 	
 	while (walkability->data->name != "walkability" && walkability != NULL)

@@ -7,6 +7,27 @@
 #include "Module.h"
 #include "p2Queue.h"
 
+struct BFS_node
+{
+	BFS_node(){}
+	BFS_node(iPoint data, iPoint parent = { -1, -1 })
+	{
+		this->data = data;
+		this->parent = parent;
+	}
+	~BFS_node(){}
+
+	iPoint data;
+	iPoint parent;
+
+	bool operator ==(const BFS_node &other)
+	{
+		if (other.data == data && other.parent == parent)
+			return true;
+
+		return false;
+	}
+};
 
 struct tileset
 {
@@ -119,8 +140,10 @@ private:
 	bool				map_loaded;
 
 	//BFS
-	p2Queue<iPoint>		frontier;
-	p2List<iPoint>		visited;
+	p2Queue<BFS_node>		frontier;
+	p2List<iPoint>			visited;
+	p2List<BFS_node>		backtrack;
+
 };
 
 #endif

@@ -21,7 +21,8 @@ struct SDL_Rect;
 enum player_state
 {
 	NAVIGATING,
-	UNIT_SELECTED
+	UNIT_SELECTED,
+	BUILDING_SELECTED
 };
 
 enum arrow_frame

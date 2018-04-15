@@ -103,18 +103,28 @@ void Player::Input(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 	{
 		position.y -= 1;
+		App->audio->PlayFx(1);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 	{
 		position.y += 1;
+		App->audio->PlayFx(1);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 	{
 		position.x += 1;
+		App->audio->PlayFx(1);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 	{
+		iPoint world_position = App->map->MapToWorld(position.x, position.y);
+		if (world_position.x < abs(App->render->camera.x + 32))
+		{
+			App->render->camera.x += 48;
+		}
+
 		position.x -= 1;
+		App->audio->PlayFx(1);
 	}
 
 	//controlling units
@@ -126,7 +136,12 @@ void Player::Input(float dt)
 			{
 				selected_unit = item->data;
 				selected_unit->OnSelection();
-				state = UNIT_SELECTED;
+				
+				if (selected_unit->entity_type == UNIT)
+					state = UNIT_SELECTED;
+				else if (selected_unit->entity_type == BUILDING)
+					state = BUILDING_SELECTED;
+
 				break;
 			}
 		}
@@ -135,16 +150,14 @@ void Player::Input(float dt)
 			//obrir el menú
 		}
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && selected_unit != NULL)
+
+	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && selected_unit != NULL)
 	{
-		if (position != selected_unit->position)
+		if (selected_unit->entity_type == UNIT && App->map->visited.find(position) != -1)
 		{
-			if (App->map->visited.find(position) != -1)
-			{
-				selected_unit->GetPath(position);
-				selected_unit->state = MOVING;
-				this->active = false;
-			}
+			selected_unit->GetPath(position);
+			selected_unit->state = MOVING;
+			this->active = false;
 		}
 	}
 

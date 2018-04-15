@@ -1,7 +1,14 @@
+#include <iostream> 
+#include <sstream> 
+
+#include "p2Defs.h"
+#include "p2Log.h"
+
 #include "Cani.h"
 #include "M_Textures.h"
 #include "M_Render.h"
 #include "M_Map.h"
+#include "M_Player.h"
 
 Cani::Cani() : Unit()
 {
@@ -53,6 +60,11 @@ bool Cani::Start()
 	state = IDLE;
 	direction = RIGHT;
 
+	current_moving_position.x = position.x * 16;
+	current_moving_position.y = position.y * 16;
+
+	prev_position = position;
+
 	return true;
 }
 
@@ -60,6 +72,11 @@ bool Cani::Update(float dt)
 {
 	if (state == SELECTED)
 		App->map->DrawBFS();
+
+	if (state == MOVING)
+	{
+		Move(dt);
+	}
 
 	Draw();
 
@@ -107,8 +124,7 @@ void Cani::Draw()
 	}
 
 	SDL_Rect r = current_animation->GetCurrentFrame();
-	iPoint world_position = App->map->MapToWorld(position.x, position.y);
-	App->render->Blit(graphic, world_position.x, world_position.y + OFFSET, &r);
+	App->render->Blit(graphic, current_moving_position.x, current_moving_position.y + OFFSET, &r);
 }
 
 iPoint Cani::GetPosition() const
@@ -140,6 +156,8 @@ void Cani::GetPath(iPoint goal)
 	{
 		path.clear();
 	}
+
+	this->goal = goal;
 
 	if (App->map->backtrack.count() > 0)
 	{
@@ -173,8 +191,77 @@ void Cani::GetPath(iPoint goal)
 	}
 }
 
-void Cani::Move(iPoint goal)
+void Cani::Move(float dt)
 {
-	position = goal;
-	state = MOVING;
+	if (position != goal && path.count() > 0)
+	{
+		p2List_item<iPoint>* node = path.end;
+		iPoint check_left_up = App->map->WorldToMap(current_moving_position.x + 15, current_moving_position.y + 15);
+		iPoint check_right_down = App->map->WorldToMap(current_moving_position.x, current_moving_position.y);
+		
+		if (node != NULL)
+		{
+			if (check_left_up.x > node->data.x)
+			{
+				current_moving_position.x -= 2 * dt;
+				direction = LEFT;
+			}
+			else if (check_right_down.x < node->data.x)
+			{
+				current_moving_position.x += 2 * dt;
+				direction = RIGHT;
+			}
+			else if (check_left_up.y > node->data.y)
+			{
+				current_moving_position.y -= 2 * dt;
+				direction = UP;
+			}
+			else if (check_right_down.y < node->data.y)
+			{
+				current_moving_position.y += 2 * dt;
+				direction = DOWN;
+			}
+
+			iPoint check_left_up_2 = App->map->WorldToMap(current_moving_position.x + 15, current_moving_position.y + 15);
+			iPoint check_right_down_2 = App->map->WorldToMap(current_moving_position.x, current_moving_position.y);
+
+			if (direction == LEFT || direction == UP)
+			{
+				if (check_left_up_2 == node->data)
+				{
+					position.x = check_left_up_2.x;
+					position.y = check_left_up_2.y;
+					LOG("position: %d %d", position.x, position.y);
+					path.del(node);
+				}
+			}
+			else if (direction == RIGHT || direction == DOWN)
+			{
+				if (check_right_down_2 == node->data)
+				{
+					position.x = check_right_down_2.x;
+					position.y = check_right_down_2.y;
+					LOG("position: %d %d", position.x, position.y);
+					path.del(node);
+				}
+			}
+		}	
+	}
+
+	if (position == goal)
+	{
+		state = WAITING;
+		App->player->active = true;
+	}
+}
+
+void Cani::CancelAction()
+{
+	position = prev_position;
+	current_moving_position.x = position.x * 16;
+	current_moving_position.y = position.y * 16;
+	state = SELECTED;
+
+	App->map->ResetBFS(position);
+	App->map->PropagateBFS(this);
 }

@@ -8,7 +8,8 @@ enum entity_state
 {
 	IDLE,
 	SELECTED,
-	MOVING
+	MOVING,
+	WAITING
 };
 
 enum entity_type
@@ -75,6 +76,16 @@ public:
 	{
 		return true;
 	}
+
+	virtual void CancelAction()
+	{}
+
+	//pathfinding
+	virtual void GetPath(iPoint goal)
+	{}
+
+	virtual void Move(float dt)
+	{}
 
 	//virtual load/save function
 	virtual bool Load(pugi::xml_node&)

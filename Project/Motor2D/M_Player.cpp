@@ -141,20 +141,24 @@ void Player::Input(float dt)
 		{
 			if (App->map->visited.find(position) != -1)
 			{
-				Unit* moving_unit = (Unit*)selected_unit;
-				moving_unit->GetPath(position);
-				moving_unit->Move(position);
+				selected_unit->GetPath(position);
+				selected_unit->state = MOVING;
+				this->active = false;
 			}
 		}
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
 	{
-		if (selected_unit != NULL)
+		if (selected_unit != NULL && selected_unit->state == SELECTED)
 		{
 			selected_unit->OnRelease();
 			selected_unit = nullptr;
 			state = NAVIGATING;
+		}
+		else if (selected_unit != NULL && selected_unit->state != SELECTED)
+		{
+			selected_unit->CancelAction();
 		}
 	}
 }

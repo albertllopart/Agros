@@ -37,8 +37,10 @@ public:
 	bool				OnRelease();
 
 	//pathfinding
-	virtual void						GetPath(iPoint goal);
-	virtual void						Move(iPoint goal);
+	void						GetPath(iPoint goal);
+	void						Move(float dt);
+
+	void						CancelAction();
 
 public:
 

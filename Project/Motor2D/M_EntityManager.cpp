@@ -56,9 +56,9 @@ bool EntityManager::CleanUp()
 Entity* EntityManager::CreateCani(iPoint position)
 {
 	Cani* cani = new Cani();
+	cani->position = position;
 	cani->Awake(App->GetConfigNode("entities"));
 	cani->Start();
-	cani->position = position;
 
 	entities.add(cani);
 

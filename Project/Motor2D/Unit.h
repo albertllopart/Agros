@@ -73,7 +73,10 @@ public:
 	virtual void						GetPath(iPoint goal)
 	{}
 
-	virtual void						Move(iPoint goal)
+	virtual void						Move(float dt)
+	{}
+
+	virtual void						CancelAction()
 	{}
 
 public:
@@ -89,4 +92,7 @@ public:
 
 	//pathfinding
 	p2List<iPoint>		path;
+	iPoint				goal;
+	iPoint				prev_position;
+	fPoint				current_moving_position;
 };

@@ -61,6 +61,7 @@ void Map::ResetBFS(iPoint position)
 	BFS_node node(position);
 	frontier.Clear();
 	visited.clear();
+	backtrack.clear();
 	frontier.Push(node);
 	visited.add(node.data);
 	backtrack.add(node);

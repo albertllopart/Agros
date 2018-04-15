@@ -8,6 +8,7 @@
 #include	"M_Textures.h"
 #include	"Animation.h"
 #include	"Entity.h"
+#include	"Unit.h"
 
 
 #define		TILE_WIDTH	16

@@ -59,15 +59,22 @@ public:
 	{}
 
 	//interaction with player
-	bool				OnSelection()
+	virtual bool						OnSelection()
 	{
 		return true;
 	}
 
-	bool				OnRelease()
+	virtual bool						OnRelease()
 	{
 		return true;
 	}
+
+	//pathfinding
+	virtual void						GetPath(iPoint goal)
+	{}
+
+	virtual void						Move(iPoint goal)
+	{}
 
 public:
 
@@ -80,4 +87,6 @@ public:
 	Animation			walk_up;
 	Animation*			current_animation;
 
+	//pathfinding
+	p2List<iPoint>		path;
 };

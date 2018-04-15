@@ -133,3 +133,48 @@ bool Cani::OnRelease()
 
 	return true;
 }
+
+void Cani::GetPath(iPoint goal)
+{
+	if (path.count() > 0)
+	{
+		path.clear();
+	}
+
+	if (App->map->backtrack.count() > 0)
+	{
+		p2List_item<BFS_node>* iterator = App->map->backtrack.start;
+		BFS_node node;
+
+		while (iterator != NULL)
+		{
+			if (iterator->data.data == goal)
+			{
+				node = iterator->data;
+				break;
+			}
+			iterator = iterator->next;
+		}
+
+		while (node.data != position)
+		{
+			path.add(node.data);
+
+			while (iterator != NULL)
+			{
+				if (iterator->data.data == node.parent)
+				{
+					node = iterator->data;
+					break;
+				}
+				iterator = iterator->prev;
+			}
+		}
+	}
+}
+
+void Cani::Move(iPoint goal)
+{
+	position = goal;
+	state = MOVING;
+}

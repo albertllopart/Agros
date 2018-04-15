@@ -75,7 +75,7 @@ bool Player::Update(float dt)
 
 	Input(dt);
 
-	if (selected_unit != NULL && selected_unit->entity_type == UNIT)
+	if (selected_unit != NULL && selected_unit->entity_type == UNIT && selected_unit->state == SELECTED)
 		DrawArrow();
 	
 	return true;
@@ -133,6 +133,18 @@ void Player::Input(float dt)
 		if (selected_unit == NULL)
 		{
 			//obrir el menú
+		}
+	}
+	else if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && selected_unit != NULL)
+	{
+		if (position != selected_unit->position)
+		{
+			if (App->map->visited.find(position) != -1)
+			{
+				Unit* moving_unit = (Unit*)selected_unit;
+				moving_unit->GetPath(position);
+				moving_unit->Move(position);
+			}
 		}
 	}
 

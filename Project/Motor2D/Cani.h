@@ -36,6 +36,10 @@ public:
 	bool				OnSelection();
 	bool				OnRelease();
 
+	//pathfinding
+	virtual void						GetPath(iPoint goal);
+	virtual void						Move(iPoint goal);
+
 public:
 
 

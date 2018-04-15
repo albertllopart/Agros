@@ -86,8 +86,11 @@ public:
 	uint				move_range;
 
 	Animation			idle_right;
+	Animation			wait_right;
 	Animation			walk_right;
+	Animation			walk_left;
 	Animation			walk_up;
+	Animation			walk_down;
 	Animation*			current_animation;
 
 	//pathfinding

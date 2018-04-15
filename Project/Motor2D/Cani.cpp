@@ -32,6 +32,13 @@ bool Cani::Awake(pugi::xml_node& config)
 
 	idle_right.speed = node.child("idle_right").attribute("speed").as_float();
 
+	wait_right.PushBack({ node.child("wait_right").child("frame_1").attribute("x").as_int(), node.child("wait_right").child("frame_1").attribute("y").as_int(), node.child("wait_right").child("frame_1").attribute("w").as_int(), node.child("wait_right").child("frame_1").attribute("h").as_int(), });
+	wait_right.PushBack({ node.child("wait_right").child("frame_2").attribute("x").as_int(), node.child("wait_right").child("frame_2").attribute("y").as_int(), node.child("wait_right").child("frame_2").attribute("w").as_int(), node.child("wait_right").child("frame_2").attribute("h").as_int(), });
+	wait_right.PushBack({ node.child("wait_right").child("frame_3").attribute("x").as_int(), node.child("wait_right").child("frame_3").attribute("y").as_int(), node.child("wait_right").child("frame_3").attribute("w").as_int(), node.child("wait_right").child("frame_3").attribute("h").as_int(), });
+	wait_right.PushBack({ node.child("wait_right").child("frame_4").attribute("x").as_int(), node.child("wait_right").child("frame_4").attribute("y").as_int(), node.child("wait_right").child("frame_4").attribute("w").as_int(), node.child("wait_right").child("frame_4").attribute("h").as_int(), });
+
+	wait_right.speed = node.child("wait_right").attribute("speed").as_float();
+
 	walk_right.PushBack({ node.child("walk_right").child("frame_1").attribute("x").as_int(), node.child("walk_right").child("frame_1").attribute("y").as_int(), node.child("walk_right").child("frame_1").attribute("w").as_int(), node.child("walk_right").child("frame_1").attribute("h").as_int(), });
 	walk_right.PushBack({ node.child("walk_right").child("frame_2").attribute("x").as_int(), node.child("walk_right").child("frame_2").attribute("y").as_int(), node.child("walk_right").child("frame_2").attribute("w").as_int(), node.child("walk_right").child("frame_2").attribute("h").as_int(), });
 	walk_right.PushBack({ node.child("walk_right").child("frame_3").attribute("x").as_int(), node.child("walk_right").child("frame_3").attribute("y").as_int(), node.child("walk_right").child("frame_3").attribute("w").as_int(), node.child("walk_right").child("frame_3").attribute("h").as_int(), });
@@ -39,12 +46,26 @@ bool Cani::Awake(pugi::xml_node& config)
 
 	walk_right.speed = node.child("walk_right").attribute("speed").as_float();
 
+	walk_left.PushBack({ node.child("walk_left").child("frame_1").attribute("x").as_int(), node.child("walk_left").child("frame_1").attribute("y").as_int(), node.child("walk_left").child("frame_1").attribute("w").as_int(), node.child("walk_left").child("frame_1").attribute("h").as_int(), });
+	walk_left.PushBack({ node.child("walk_left").child("frame_2").attribute("x").as_int(), node.child("walk_left").child("frame_2").attribute("y").as_int(), node.child("walk_left").child("frame_2").attribute("w").as_int(), node.child("walk_left").child("frame_2").attribute("h").as_int(), });
+	walk_left.PushBack({ node.child("walk_left").child("frame_3").attribute("x").as_int(), node.child("walk_left").child("frame_3").attribute("y").as_int(), node.child("walk_left").child("frame_3").attribute("w").as_int(), node.child("walk_left").child("frame_3").attribute("h").as_int(), });
+	walk_left.PushBack({ node.child("walk_left").child("frame_4").attribute("x").as_int(), node.child("walk_left").child("frame_4").attribute("y").as_int(), node.child("walk_left").child("frame_4").attribute("w").as_int(), node.child("walk_left").child("frame_4").attribute("h").as_int(), });
+		 
+	walk_left.speed = node.child("walk_left").attribute("speed").as_float();
+
 	walk_up.PushBack({ node.child("walk_up").child("frame_1").attribute("x").as_int(), node.child("walk_up").child("frame_1").attribute("y").as_int(), node.child("walk_up").child("frame_1").attribute("w").as_int(), node.child("walk_up").child("frame_1").attribute("h").as_int(), });
 	walk_up.PushBack({ node.child("walk_up").child("frame_2").attribute("x").as_int(), node.child("walk_up").child("frame_2").attribute("y").as_int(), node.child("walk_up").child("frame_2").attribute("w").as_int(), node.child("walk_up").child("frame_2").attribute("h").as_int(), });
 	walk_up.PushBack({ node.child("walk_up").child("frame_3").attribute("x").as_int(), node.child("walk_up").child("frame_3").attribute("y").as_int(), node.child("walk_up").child("frame_3").attribute("w").as_int(), node.child("walk_up").child("frame_3").attribute("h").as_int(), });
 	walk_up.PushBack({ node.child("walk_up").child("frame_4").attribute("x").as_int(), node.child("walk_up").child("frame_4").attribute("y").as_int(), node.child("walk_up").child("frame_4").attribute("w").as_int(), node.child("walk_up").child("frame_4").attribute("h").as_int(), });
 
-	walk_up.speed = node.child("walk_right").attribute("speed").as_float();
+	walk_up.speed = node.child("walk_up").attribute("speed").as_float();
+
+	walk_down.PushBack({ node.child("walk_down").child("frame_1").attribute("x").as_int(), node.child("walk_down").child("frame_1").attribute("y").as_int(), node.child("walk_down").child("frame_1").attribute("w").as_int(), node.child("walk_down").child("frame_1").attribute("h").as_int(), });
+	walk_down.PushBack({ node.child("walk_down").child("frame_2").attribute("x").as_int(), node.child("walk_down").child("frame_2").attribute("y").as_int(), node.child("walk_down").child("frame_2").attribute("w").as_int(), node.child("walk_down").child("frame_2").attribute("h").as_int(), });
+	walk_down.PushBack({ node.child("walk_down").child("frame_3").attribute("x").as_int(), node.child("walk_down").child("frame_3").attribute("y").as_int(), node.child("walk_down").child("frame_3").attribute("w").as_int(), node.child("walk_down").child("frame_3").attribute("h").as_int(), });
+	walk_down.PushBack({ node.child("walk_down").child("frame_4").attribute("x").as_int(), node.child("walk_down").child("frame_4").attribute("y").as_int(), node.child("walk_down").child("frame_4").attribute("w").as_int(), node.child("walk_down").child("frame_4").attribute("h").as_int(), });
+
+	walk_down.speed = node.child("walk_down").attribute("speed").as_float();
 
 	return true;
 }
@@ -94,11 +115,8 @@ void Cani::Draw()
 	{
 		case IDLE:
 		{
-			if (direction == RIGHT)
-			{
-				current_animation = &idle_right;
-				break;
-			}
+			current_animation = &idle_right;
+			break;
 		}
 		case SELECTED:
 		{
@@ -118,6 +136,16 @@ void Cani::Draw()
 			else if (direction == UP)
 			{
 				current_animation = &walk_up;
+				break;
+			}
+			else if (direction == DOWN)
+			{
+				current_animation = &walk_down;
+				break;
+			}
+			else if (direction == LEFT)
+			{
+				current_animation = &walk_left;
 				break;
 			}
 		}

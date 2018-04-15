@@ -70,7 +70,7 @@
 
   <entities>
     <units>
-      <cani move="3">-------------CANI
+      <cani move="7">-------------CANI
         <animation>
           <idle_right speed="5.0">
             <frame_1 x="0" y="0" w="16" h="17"/>
@@ -78,18 +78,48 @@
             <frame_3 x="32" y="0" w="16" h="17"/>
             <frame_4 x="16" y="0" w="16" h="17"/>
           </idle_right>
+          <idle_left speed="5.0">
+            <frame_1 x="80" y="0" w="16" h="17"/>
+            <frame_2 x="64" y="0" w="16" h="17"/>
+            <frame_3 x="48" y="0" w="16" h="17"/>
+            <frame_4 x="64" y="0" w="16" h="17"/>
+          </idle_left>
           <walk_right speed="6.5">
             <frame_1 x="0" y="17" w="16" h="17"/>
             <frame_2 x="16" y="17" w="16" h="17"/>
             <frame_3 x="32" y="17" w="16" h="17"/>
             <frame_4 x="48" y="17" w="16" h="17"/>
           </walk_right>
+          <walk_left speed="6.5">
+            <frame_1 x="112" y="17" w="16" h="17"/>
+            <frame_2 x="96" y="17" w="16" h="17"/>
+            <frame_3 x="80" y="17" w="16" h="17"/>
+            <frame_4 x="64" y="17" w="16" h="17"/>
+          </walk_left>
           <walk_up speed="6.5">
             <frame_1 x="0" y="34" w="16" h="17"/>
             <frame_2 x="16" y="34" w="16" h="17"/>
             <frame_3 x="32" y="34" w="16" h="17"/>
             <frame_4 x="48" y="34" w="16" h="17"/>
           </walk_up>
+          <walk_down speed="6.5">
+            <frame_1 x="64" y="34" w="16" h="17"/>
+            <frame_2 x="80" y="34" w="16" h="17"/>
+            <frame_3 x="96" y="34" w="16" h="17"/>
+            <frame_4 x="112" y="34" w="16" h="17"/>
+          </walk_down>
+          <wait_right speed="5.0">
+            <frame_1 x="0" y="51" w="16" h="17"/>
+            <frame_2 x="16" y="51" w="16" h="17"/>
+            <frame_3 x="32" y="51" w="16" h="17"/>
+            <frame_4 x="16" y="51" w="16" h="17"/>
+          </wait_right>
+          <wait_left speed="5.0">
+            <frame_1 x="80" y="51" w="16" h="17"/>
+            <frame_2 x="64" y="51" w="16" h="17"/>
+            <frame_3 x="48" y="51" w="16" h="17"/>
+            <frame_4 x="64" y="51" w="16" h="17"/>
+          </wait_left>
         </animation>
       </cani>
     </units>

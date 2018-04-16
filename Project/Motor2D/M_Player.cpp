@@ -150,8 +150,7 @@ void Player::Input(float dt)
 			//obrir el menú
 		}
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && selected_unit != NULL)
+	else if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && selected_unit != NULL)
 	{
 		if (selected_unit->entity_type == UNIT && App->map->visited.find(position) != -1)
 		{

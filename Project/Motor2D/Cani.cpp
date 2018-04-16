@@ -231,22 +231,22 @@ void Cani::Move(float dt)
 		{
 			if (check_left_up.x > node->data.x)
 			{
-				current_moving_position.x -= 2 * dt;
+				current_moving_position.x -= 4 * dt;
 				direction = LEFT;
 			}
 			else if (check_right_down.x < node->data.x)
 			{
-				current_moving_position.x += 2 * dt;
+				current_moving_position.x += 4 * dt;
 				direction = RIGHT;
 			}
 			else if (check_left_up.y > node->data.y)
 			{
-				current_moving_position.y -= 2 * dt;
+				current_moving_position.y -= 4 * dt;
 				direction = UP;
 			}
 			else if (check_right_down.y < node->data.y)
 			{
-				current_moving_position.y += 2 * dt;
+				current_moving_position.y += 4 * dt;
 				direction = DOWN;
 			}
 

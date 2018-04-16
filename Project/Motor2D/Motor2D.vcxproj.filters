@@ -117,6 +117,9 @@
     <ClInclude Include="Building.h">
       <Filter>SRC\Entities\Buildings</Filter>
     </ClInclude>
+    <ClInclude Include="M_Gui.h">
+      <Filter>SRC\Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="p2Log.cpp">
@@ -172,6 +175,9 @@
     </ClCompile>
     <ClCompile Include="CaniBase.cpp">
       <Filter>SRC\Entities\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="M_Gui.cpp">
+      <Filter>SRC\Modules</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

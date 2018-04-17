@@ -18,6 +18,7 @@
 #include "M_Map.h"
 #include "M_Player.h"
 #include "M_EntityManager.h"
+#include "M_Gui.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -35,9 +36,9 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	map = new Map();
 	entities = new EntityManager();
 	player = new Player();
+	gui = new Gui();
 	
 	
-
 	AddModule(win);
 	AddModule(input);
 	AddModule(tex);
@@ -46,6 +47,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(entities);
 	AddModule(player);
+	AddModule(gui);
 	
 
 	// render last to swap buffer

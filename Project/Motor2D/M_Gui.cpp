@@ -3,21 +3,13 @@
 #include "Application.h"
 #include "M_Render.h"
 #include "M_Textures.h"
-//#include "j1Fonts.h"
 #include "M_Input.h"
 #include "M_EntityManager.h"
 #include "M_Map.h"
 #include "M_Audio.h"
 #include "M_Gui.h"
-
-//#include "GuiElement.h"
-//#include "GuiImage.h"
-//#include "GuiButton.h"
-//#include "GuiText.h"
-//#include "GuiNumber.h"
-//#include "GuiSlider.h"
-
-
+#include "GuiElement.h"
+#include "GuiButton.h"
 
 Gui::Gui() : Module()
 {
@@ -37,6 +29,14 @@ bool Gui::Awake(pugi::xml_node& conf)
 	bool ret = true;
 
 	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
+
+	SDL_Rect temp;
+	temp.x = conf.child("buttons").child("command_button").attribute("x").as_int();
+	temp.y = conf.child("buttons").child("command_button").attribute("y").as_int();
+	temp.w = conf.child("buttons").child("command_button").attribute("w").as_int();
+	temp.h = conf.child("buttons").child("command_button").attribute("h").as_int();
+
+	CreateButton(0, 0, temp, WAIT, App->entities, true);
 
 	return ret;
 }
@@ -58,6 +58,12 @@ bool Gui::PreUpdate()
 // Called after all Updates
 bool Gui::PostUpdate()
 {
+	p2List_item<GuiElement*>* element = elements.start;
+	while (element != NULL)
+	{
+		element->data->Draw();
+		element = element->next;
+	}
 	return true;
 }
 
@@ -75,57 +81,17 @@ SDL_Texture* Gui::GetAtlas() const
 	return atlas;
 }
 
-/*GuiImage* Gui::CreateImage(int x, int y, SDL_Rect rect, menu_type mtype, uint index, bool follows_camera)
+GuiButton* Gui::CreateButton(int x, int y, SDL_Rect rect, button_type btype, Module* callback, bool follows_camera)
 {
 	iPoint position = { x,y };
-	GuiImage* item = new GuiImage(position, rect, mtype, index, follows_camera);
+	GuiButton* item = new GuiButton(position, rect, btype, callback, follows_camera);
 
 	elements.add(item);
 
 	return item;
 }
 
-GuiButton* j1Gui::CreateButton(int x, int y, SDL_Rect rect, SDL_Rect mover, SDL_Rect pressed, button_type btype, menu_type mtype, j1Module* callback, bool follows_camera)
-{
-	iPoint position = { x,y };
-	GuiButton* item = new GuiButton(position, rect, mover, pressed, btype, mtype, callback, follows_camera);
-
-	elements.add(item);
-
-	return item;
-}
-
-GuiElement* j1Gui::CreateText(int x, int y, char* string, SDL_Color color, _TTF_Font* font, menu_type mtype, bool follows_camera)
-{
-	iPoint position = { x,y };
-	GuiElement* item = new GuiText(position, string, color, font, mtype, follows_camera);
-
-	elements.add(item);
-
-	return item;
-}
-
-GuiElement* j1Gui::CreateNumber(int x, int y, uint* number, SDL_Color color, _TTF_Font* font, menu_type mtype, bool follows_camera)
-{
-	iPoint position = { x,y };
-	GuiElement* item = new GuiNumber(position, number, color, font, mtype, follows_camera);
-
-	elements.add(item);
-
-	return item;
-}
-
-GuiElement* j1Gui::CreateSlider(int x, int y, SDL_Rect rect, SDL_Rect bar_rect, slider_type stype, menu_type mtype, j1Module* callback, bool follows_camera)
-{
-	iPoint position = { x,y };
-	GuiElement* item = new GuiSlider(position, rect, bar_rect, stype, mtype, callback, follows_camera);
-
-	elements.add(item);
-
-	return item;
-}
-
-void j1Gui::DeleteElement(GuiElement* element)
+void Gui::DeleteElement(GuiElement* element)
 {
 	if (element != nullptr)
 	{
@@ -143,7 +109,7 @@ void j1Gui::DeleteElement(GuiElement* element)
 			current_position++;
 		}
 	}
-}*/
+}
 
 bool Gui::MouseOnRect(SDL_Rect rect)
 {
@@ -158,9 +124,9 @@ bool Gui::MouseOnRect(SDL_Rect rect)
 		return false;
 }
 
-bool Gui::GuiTrigger(GuiElement* element)
+void Gui::GuiTrigger(GuiElement* element)
 {
-	return true;
+
 }
 
 // class Gui ---------------------------------------------------

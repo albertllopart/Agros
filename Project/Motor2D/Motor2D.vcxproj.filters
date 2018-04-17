@@ -28,6 +28,9 @@
     <Filter Include="SRC\Entities\Buildings">
       <UniqueIdentifier>{4db80dfa-39b3-4d7d-a642-a5e78c45d257}</UniqueIdentifier>
     </Filter>
+    <Filter Include="SRC\GUI">
+      <UniqueIdentifier>{52b1e07b-f152-47a0-9016-4c9c1d99fdc1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -120,6 +123,12 @@
     <ClInclude Include="M_Gui.h">
       <Filter>SRC\Modules</Filter>
     </ClInclude>
+    <ClInclude Include="GuiButton.h">
+      <Filter>SRC\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiElement.h">
+      <Filter>SRC\GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="p2Log.cpp">
@@ -178,6 +187,12 @@
     </ClCompile>
     <ClCompile Include="M_Gui.cpp">
       <Filter>SRC\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiButton.cpp">
+      <Filter>SRC\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiElement.cpp">
+      <Filter>SRC\GUI</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

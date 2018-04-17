@@ -17,6 +17,7 @@ class Scene;
 class Map;
 class Player;
 class EntityManager;
+class Gui;
 
 class Application
 {
@@ -93,6 +94,7 @@ public:
 	Map* map;
 	Player* player;
 	EntityManager* entities;
+	Gui* gui;
 
 private:
 

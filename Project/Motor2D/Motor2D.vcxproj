@@ -129,6 +129,8 @@
     <ClInclude Include="CaniBase.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Factory.h" />
+    <ClInclude Include="GuiButton.h" />
+    <ClInclude Include="GuiElement.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="M_Audio.h" />
     <ClInclude Include="M_EntityManager.h" />
@@ -158,6 +160,8 @@
     <ClCompile Include="Cani.cpp" />
     <ClCompile Include="CaniBase.cpp" />
     <ClCompile Include="Factory.cpp" />
+    <ClCompile Include="GuiButton.cpp" />
+    <ClCompile Include="GuiElement.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="M_Audio.cpp" />
     <ClCompile Include="M_EntityManager.cpp" />

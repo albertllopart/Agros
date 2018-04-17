@@ -6,6 +6,7 @@
 #include "M_Render.h"
 #include "M_Input.h"
 #include "M_Map.h"
+#include "M_Window.h"
 #include "M_Audio.h"
 #include "M_Scene.h"
 #include "M_EntityManager.h"
@@ -100,31 +101,79 @@ bool Player::CleanUp()
 void Player::Input(float dt)
 {
 	//moving
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
-	{
-		position.y -= 1;
-		App->audio->PlayFx(1);
-	}
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 	{
-		position.y += 1;
-		App->audio->PlayFx(1);
+		iPoint world_position = App->map->MapToWorld(position.x, position.y);
+		uint camy = abs(App->render->camera.y);
+		uint scale = App->win->GetScale();
+		uint width, height;
+		App->win->GetWindowSize(width, height);
+		camy += height;
+
+		if (camy < (App->map->map_data.height * 16 * scale) && world_position.y >(camy / scale) - 47)
+		{
+			App->render->camera.y -= 16 * scale;
+		}
+
+		if (position.y < App->map->map_data.height - 1)
+		{
+			position.y += 1;
+			App->audio->PlayFx(1);
+		}
+	}
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+	{
+		iPoint world_position = App->map->MapToWorld(position.x, position.y);
+		uint camy = abs(App->render->camera.y);
+		uint scale = App->win->GetScale();
+
+		if (camy > 0 && world_position.y + 1 < (camy / scale) + 32)
+		{
+			App->render->camera.y += 16 * scale;
+		}
+
+		if (position.y > 0)
+		{
+			position.y -= 1;
+			App->audio->PlayFx(1);
+		}
 	}
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 	{
-		position.x += 1;
-		App->audio->PlayFx(1);
+		iPoint world_position = App->map->MapToWorld(position.x, position.y);
+		uint camx = abs(App->render->camera.x);
+		uint scale = App->win->GetScale();
+		uint width, height;
+		App->win->GetWindowSize(width, height);
+		camx += width;
+
+		if (camx < (App->map->map_data.width * 16 * scale) && world_position.x > (camx / scale) - 47)
+		{
+			App->render->camera.x -= 16 * scale;
+		}
+
+		if (position.x < App->map->map_data.width - 1)
+		{
+			position.x += 1;
+			App->audio->PlayFx(1);
+		}
 	}
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 	{
 		iPoint world_position = App->map->MapToWorld(position.x, position.y);
-		if (world_position.x < abs(App->render->camera.x + 32))
+		uint camx = abs(App->render->camera.x);
+		uint scale = App->win->GetScale();
+
+		if (camx > 0 && world_position.x + 1 < (camx / scale) + 32)
 		{
-			App->render->camera.x += 48;
+			App->render->camera.x += 16 * scale;
 		}
 
-		position.x -= 1;
-		App->audio->PlayFx(1);
+		if (position.x > 0)
+		{
+			position.x -= 1;
+			App->audio->PlayFx(1);
+		}
 	}
 
 	//controlling units

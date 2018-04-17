@@ -11,8 +11,8 @@
 
   <window>
     <title>Warpolis project by Albert Llopart</title>
-    <resolution width="960" height="540" scale="3"/>
-    <fullscreen value="false"/>
+    <resolution width="960" height="528" scale="3"/>
+    <fullscreen value="true"/>
     <borderless value="false"/>
     <resizable value="false"/>
     <fullscreen_window value="false"/>
@@ -38,6 +38,9 @@
 
   <gui>
     <atlas file="gui/atlas.png"/>
+    <buttons>
+      <command_button x="0" y="0" w="73" h="27"/>
+    </buttons>
   </gui>
 
   <map>

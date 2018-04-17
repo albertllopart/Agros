@@ -10,6 +10,7 @@
 #include "PugiXml\src\pugixml.hpp"
 
 class Application;
+class GuiElement;
 
 class Module
 {
@@ -58,6 +59,9 @@ public:
 	{
 		return true;
 	}
+
+	virtual void GuiTrigger(GuiElement* element)
+	{}
 
 	virtual bool Load(pugi::xml_node&)
 	{

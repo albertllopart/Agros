@@ -10,6 +10,7 @@
 #include "M_Gui.h"
 #include "GuiElement.h"
 #include "GuiButton.h"
+#include "M_Window.h"
 
 Gui::Gui() : Module()
 {
@@ -29,6 +30,12 @@ bool Gui::Awake(pugi::xml_node& conf)
 	bool ret = true;
 
 	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
+
+	uint scale = App->win->GetScale();
+	uint width, height;
+	App->win->GetWindowSize(width, height);
+	uint camx = (App->render->camera.x / 16) / scale;
+	uint camy = (App->render->camera.y / 16) / scale;
 
 	SDL_Rect temp;
 	temp.x = conf.child("buttons").child("command_button").attribute("x").as_int();

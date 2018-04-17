@@ -50,6 +50,12 @@ public:
 
 	p2List<GuiElement*> elements;
 	p2List<GuiButton*> command_buttons;
+
+	//follow camera
+	uint scale;
+	uint camx;
+	uint camy;
+
 };
 
 #endif

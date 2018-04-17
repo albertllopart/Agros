@@ -103,14 +103,13 @@ void Player::Input(float dt)
 	//moving
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 	{
-		iPoint world_position = App->map->MapToWorld(position.x, position.y);
-		uint camy = abs(App->render->camera.y);
 		uint scale = App->win->GetScale();
+		uint camy = abs(App->render->camera.y) / 16;
 		uint width, height;
 		App->win->GetWindowSize(width, height);
-		camy += height;
+		camy += (height / 16);
 
-		if (camy < (App->map->map_data.height * 16 * scale) && world_position.y >(camy / scale) - 47)
+		if (camy / scale < App->map->map_data.height && position.y > (camy / scale) - 3)
 		{
 			App->render->camera.y -= 16 * scale;
 		}
@@ -123,11 +122,10 @@ void Player::Input(float dt)
 	}
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 	{
-		iPoint world_position = App->map->MapToWorld(position.x, position.y);
-		uint camy = abs(App->render->camera.y);
 		uint scale = App->win->GetScale();
+		uint camy = abs(App->render->camera.y) / 16;
 
-		if (camy > 0 && world_position.y + 1 < (camy / scale) + 32)
+		if (camy > 0 && position.y < (camy / scale) + 2)
 		{
 			App->render->camera.y += 16 * scale;
 		}
@@ -140,14 +138,13 @@ void Player::Input(float dt)
 	}
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 	{
-		iPoint world_position = App->map->MapToWorld(position.x, position.y);
-		uint camx = abs(App->render->camera.x);
 		uint scale = App->win->GetScale();
+		uint camx = abs(App->render->camera.x) / 16;
 		uint width, height;
 		App->win->GetWindowSize(width, height);
-		camx += width;
+		camx += (width / 16);
 
-		if (camx < (App->map->map_data.width * 16 * scale) && world_position.x > (camx / scale) - 47)
+		if (camx / scale < App->map->map_data.width && position.x > (camx / scale) - 3)
 		{
 			App->render->camera.x -= 16 * scale;
 		}
@@ -160,11 +157,10 @@ void Player::Input(float dt)
 	}
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 	{
-		iPoint world_position = App->map->MapToWorld(position.x, position.y);
-		uint camx = abs(App->render->camera.x);
 		uint scale = App->win->GetScale();
+		uint camx = abs(App->render->camera.x) / 16;
 
-		if (camx > 0 && world_position.x + 1 < (camx / scale) + 32)
+		if (camx > 0 && position.x < (camx / scale) + 2)
 		{
 			App->render->camera.x += 16 * scale;
 		}

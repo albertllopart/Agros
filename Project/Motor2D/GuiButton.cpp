@@ -1,6 +1,8 @@
 #include "GuiButton.h"
 #include "M_Render.h"
 #include "M_Audio.h"
+#include "M_Map.h"
+#include "M_Window.h"
 
 GuiButton::GuiButton() {};
 
@@ -21,7 +23,15 @@ GuiButton::~GuiButton() {};
 
 void GuiButton::Draw()
 {
-	App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &rect);
+	uint scale = App->win->GetScale();
+	uint camx = abs(App->render->camera.x) / 16 / scale;
+	uint camy = abs(App->render->camera.y) / 16 / scale;
+
+	position.x = camx + 1;
+	position.y = camy + 1;
+
+	iPoint world_position = App->map->MapToWorld(position.x, position.y);
+	App->render->Blit(App->gui->GetAtlas(), world_position.x, world_position.y, &rect);
 }
 
 void GuiButton::OnClick()

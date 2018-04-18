@@ -184,7 +184,7 @@ void Gui::DisableMenu(menu_type mtype)
 					item->data->active = false;
 					if (item->data->selected == true)
 						item->data->selected = false;
-					active_elements--;
+					active_elements = 0;
 				}
 				item = item->next;
 			}

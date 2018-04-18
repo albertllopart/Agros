@@ -48,8 +48,8 @@ bool Render::Awake(pugi::xml_node& config)
 	{
 		camera.w = App->win->screen_surface->w;
 		camera.h = App->win->screen_surface->h;
-		camera.x = -80;
-		camera.y = -80;
+		camera.x = 0;
+		camera.y = 0;
 	}
 
 	return ret;
@@ -266,4 +266,14 @@ void Render::Input()
 			App->map->logic = false;
 		}
 	}*/
+}
+
+iPoint Render::CameraToMapPosition() const
+{
+	uint scale = App->win->GetScale();
+	iPoint ret;
+	ret.x = (abs(camera.x) / 16) / scale;
+	ret.y = (abs(camera.y) / 16) / scale;
+
+	return ret;
 }

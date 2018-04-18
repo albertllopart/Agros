@@ -35,6 +35,7 @@ public:
 	//interaction with player
 	bool				OnSelection();
 	bool				OnRelease();
+	bool				OnWait();
 
 	//pathfinding
 	void						GetPath(iPoint goal);

@@ -77,6 +77,11 @@ public:
 		return true;
 	}
 
+	virtual bool OnWait()
+	{
+		return true;
+	}
+
 	virtual void CancelAction()
 	{}
 

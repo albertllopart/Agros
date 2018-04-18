@@ -43,7 +43,7 @@ bool Gui::Awake(pugi::xml_node& conf)
 	temp.w = conf.child("buttons").child("command_button").attribute("w").as_int();
 	temp.h = conf.child("buttons").child("command_button").attribute("h").as_int();
 
-	CreateButton(0, 0, temp, WAIT, App->entities, true);
+	CreateButton(0, 0, temp, WAIT, COMMAND, App->entities, true);
 
 	return ret;
 }
@@ -65,6 +65,8 @@ bool Gui::PreUpdate()
 // Called after all Updates
 bool Gui::PostUpdate()
 {
+	Input();
+
 	p2List_item<GuiElement*>* element = elements.start;
 	while (element != NULL)
 	{
@@ -88,12 +90,15 @@ SDL_Texture* Gui::GetAtlas() const
 	return atlas;
 }
 
-GuiButton* Gui::CreateButton(int x, int y, SDL_Rect rect, button_type btype, Module* callback, bool follows_camera)
+GuiButton* Gui::CreateButton(int x, int y, SDL_Rect rect, button_type btype, menu_type mtype, Module* callback, bool follows_camera)
 {
 	iPoint position = { x,y };
-	GuiButton* item = new GuiButton(position, rect, btype, callback, follows_camera);
+	GuiButton* item = new GuiButton(position, rect, btype, mtype, callback, follows_camera);
 
 	elements.add(item);
+
+	if (mtype == COMMAND)
+		command_buttons.add(item);
 
 	return item;
 }
@@ -134,6 +139,98 @@ bool Gui::MouseOnRect(SDL_Rect rect)
 void Gui::GuiTrigger(GuiElement* element)
 {
 
+}
+
+void Gui::ActivateMenu(menu_type mtype)
+{
+	switch (mtype)
+	{
+		case COMMAND:
+		{
+			p2List_item<GuiButton*>* item = command_buttons.start;
+
+			while (item != NULL)
+			{
+				if (1)//conditions to attack, capture, etc
+				{
+					item->data->active = true;
+
+					if (active_elements == 0)
+					{
+						item->data->selected = true;
+					}
+
+					active_elements++;
+				}
+				item = item->next;
+			}
+			break;
+		}
+	}
+}
+
+void Gui::DisableMenu(menu_type mtype)
+{
+	switch (mtype)
+	{
+		case COMMAND:
+		{
+			p2List_item<GuiButton*>* item = command_buttons.start;
+	
+			while (item != NULL)
+			{
+				if (1)//conditions to attack, capture, etc
+				{
+					item->data->active = false;
+					if (item->data->selected == true)
+						item->data->selected = false;
+					active_elements--;
+				}
+				item = item->next;
+			}
+			break;
+		}
+	}
+}
+
+void Gui::Input()
+{
+	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+	{
+		p2List_item<GuiElement*>* item = elements.start;
+
+		while (item != NULL)
+		{
+			if (item->data->etype == BUTTON)
+			{
+				GuiButton* button = (GuiButton*)item->data;
+				if (button->selected == true)
+				{
+					button->OnClick();
+				}
+				
+			}
+			item = item->next;
+		}
+	}
+	/*if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+	{
+		p2List_item<GuiElement*>* item = elements.start;
+
+		while (item != NULL)
+		{
+			if (item->data->etype == BUTTON)
+			{
+				GuiButton* button = (GuiButton*)item->data;
+				if (button->selected == true)
+				{
+					button->OnClick();
+				}
+
+			}
+			item = item->next;
+		}
+	}*/
 }
 
 // class Gui ---------------------------------------------------

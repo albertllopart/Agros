@@ -34,6 +34,9 @@ public:
 	Entity* CreateCanibase(iPoint position);
 	Entity* CreateFactory(iPoint position);
 
+	//GUI
+	void GuiTrigger(GuiElement* element);
+
 	bool Load(pugi::xml_node& data);
 	bool Save(pugi::xml_node& data) const;
 

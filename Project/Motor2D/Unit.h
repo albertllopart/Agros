@@ -69,6 +69,11 @@ public:
 		return true;
 	}
 
+	virtual bool						OnWait()
+	{
+		return true;
+	}
+
 	//pathfinding
 	virtual void						GetPath(iPoint goal)
 	{}

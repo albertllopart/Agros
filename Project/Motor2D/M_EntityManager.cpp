@@ -2,6 +2,10 @@
 #include "Application.h"
 #include "M_Input.h"
 #include "p2Defs.h"
+#include "GuiElement.h"
+#include "GuiButton.h"
+#include "M_Gui.h"
+#include "M_Player.h"
 
 EntityManager::EntityManager() : Module()
 {
@@ -88,6 +92,28 @@ Entity* EntityManager::CreateFactory(iPoint position)
 	entities.add(factory);
 
 	return factory;
+}
+
+void EntityManager::GuiTrigger(GuiElement* element)
+{
+	switch (element->etype)
+	{
+		case BUTTON:
+		{
+			GuiButton* button = (GuiButton*)element;
+
+			switch (button->btype)
+			{
+				case WAIT:
+				{
+					App->player->selected_unit->OnWait();
+					App->gui->DisableMenu(button->mtype);
+				}
+				break;
+			}
+			break;
+		}
+	}
 }
 
 bool EntityManager::Load(pugi::xml_node& data)

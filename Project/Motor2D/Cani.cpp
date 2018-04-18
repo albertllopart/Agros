@@ -9,6 +9,8 @@
 #include "M_Render.h"
 #include "M_Map.h"
 #include "M_Player.h"
+#include "M_Gui.h"
+#include "GuiElement.h"
 
 Cani::Cani() : Unit()
 {
@@ -149,6 +151,10 @@ void Cani::Draw()
 				break;
 			}
 		}
+		case WAITING:
+		{
+			current_animation = &wait_right;
+		}
 	}
 
 	SDL_Rect r = current_animation->GetCurrentFrame();
@@ -174,6 +180,15 @@ bool Cani::OnSelection()
 bool Cani::OnRelease()
 {
 	state = IDLE;
+
+	return true;
+}
+
+bool Cani::OnWait()
+{
+	state = WAITING;
+	App->player->selected_unit = nullptr;
+	App->player->active = true;
 
 	return true;
 }
@@ -278,8 +293,7 @@ void Cani::Move(float dt)
 
 	if (position == goal)
 	{
-		state = WAITING;
-		App->player->active = true;
+		App->gui->ActivateMenu(COMMAND);
 	}
 }
 

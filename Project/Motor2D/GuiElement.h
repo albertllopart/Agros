@@ -12,7 +12,7 @@ struct SDL_Rect;
 
 enum element_type
 {
-	BUTTON,
+	BUTTON
 };
 
 enum button_type
@@ -23,11 +23,7 @@ enum button_type
 enum menu_type
 {
 	MAINMENU,
-	SETTINGSMENU,
-	CREDITSMENU,
-	PAUSEMENU,
-	INGAMEMENU,
-	OTHER
+	COMMAND
 };
 
 class GuiElement
@@ -53,13 +49,12 @@ public:
 
 public:
 
-	element_type		element_type;
+	element_type		etype;
+	menu_type			mtype;
 
 	iPoint				position;
 
-	bool				mouseover;
 	bool				active;
-	bool				selected;
 	bool				follows_camera;
 
 	SDL_Rect			rect;

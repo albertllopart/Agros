@@ -77,10 +77,12 @@ private:
 
 	SDL_Rect			arrow[10];
 
-	//controlling units
-	Entity*				selected_unit = nullptr;
+	
 
 public:
+
+	//controlling units
+	Entity*				selected_unit = nullptr;
 
 	player_state		state;
 

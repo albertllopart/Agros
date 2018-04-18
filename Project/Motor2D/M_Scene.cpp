@@ -40,6 +40,8 @@ bool Scene::Start()
 	App->map->CreateEntitiesFromTMX();
 
 	App->entities->CreateCani(iPoint(15, 10));
+	App->entities->CreateCani(iPoint(14, 10));
+	App->entities->CreateCani(iPoint(13, 10));
 
 	return true;
 }

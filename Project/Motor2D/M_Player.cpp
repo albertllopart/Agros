@@ -179,15 +179,18 @@ void Player::Input(float dt)
 		{
 			if (item->data->position == position)
 			{
-				selected_unit = item->data;
-				selected_unit->OnSelection();
-				
-				if (selected_unit->entity_type == UNIT)
-					state = UNIT_SELECTED;
-				else if (selected_unit->entity_type == BUILDING)
-					state = BUILDING_SELECTED;
+				if (item->data->state != WAITING)
+				{
+					selected_unit = item->data;
+					selected_unit->OnSelection();
 
-				break;
+					if (selected_unit->entity_type == UNIT)
+						state = UNIT_SELECTED;
+					else if (selected_unit->entity_type == BUILDING)
+						state = BUILDING_SELECTED;
+
+					break;
+				}
 			}
 		}
 		if (selected_unit == NULL)

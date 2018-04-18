@@ -46,6 +46,8 @@ public:
 	//LOGIC INPUT
 	void Input();
 
+	iPoint CameraToMapPosition() const;
+
 public:
 
 	SDL_Renderer*	renderer = nullptr;

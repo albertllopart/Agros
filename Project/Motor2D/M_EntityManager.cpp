@@ -108,6 +108,7 @@ void EntityManager::GuiTrigger(GuiElement* element)
 				{
 					App->player->selected_unit->OnWait();
 					App->gui->DisableMenu(button->mtype);
+					App->input->state = PLAYER_INPUT;
 				}
 				break;
 			}

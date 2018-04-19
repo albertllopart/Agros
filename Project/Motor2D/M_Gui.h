@@ -15,6 +15,12 @@ enum slider_type;
 class GuiElement;
 class GuiButton;
 
+enum GUI_state
+{
+	GUI_COMMAND,
+	GUI_SHOP
+};
+
 class Gui : public Module
 {
 public:
@@ -59,6 +65,8 @@ public:
 	p2List<GuiButton*> command_buttons;
 
 	uint active_elements = 0;
+
+	GUI_state state;
 };
 
 #endif

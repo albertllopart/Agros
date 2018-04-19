@@ -11,6 +11,7 @@
 #include "GuiElement.h"
 #include "GuiButton.h"
 #include "M_Window.h"
+#include "M_Player.h"
 
 Gui::Gui() : Module()
 {
@@ -65,7 +66,8 @@ bool Gui::PreUpdate()
 // Called after all Updates
 bool Gui::PostUpdate()
 {
-	Input();
+	if (App->input->state == UI_INPUT)
+		Input();
 
 	p2List_item<GuiElement*>* element = elements.start;
 	while (element != NULL)
@@ -164,6 +166,7 @@ void Gui::ActivateMenu(menu_type mtype)
 				}
 				item = item->next;
 			}
+			state = GUI_COMMAND;
 			break;
 		}
 	}
@@ -213,24 +216,16 @@ void Gui::Input()
 			item = item->next;
 		}
 	}
-	/*if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
 	{
-		p2List_item<GuiElement*>* item = elements.start;
-
-		while (item != NULL)
+		if (state == GUI_COMMAND)
 		{
-			if (item->data->etype == BUTTON)
-			{
-				GuiButton* button = (GuiButton*)item->data;
-				if (button->selected == true)
-				{
-					button->OnClick();
-				}
-
-			}
-			item = item->next;
+			DisableMenu(COMMAND);
+			App->player->selected_unit->CancelAction();
+			App->input->state = PLAYER_INPUT;
+			App->player->active = true;
 		}
-	}*/
+	}
 }
 
 // class Gui ---------------------------------------------------

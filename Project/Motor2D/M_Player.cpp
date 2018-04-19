@@ -74,7 +74,8 @@ bool Player::Update(float dt)
 {
 	LOG("Updating Player");
 
-	Input(dt);
+	if (App->input->state == PLAYER_INPUT)
+		Input(dt);
 
 	if (selected_unit != NULL && selected_unit->entity_type == UNIT && selected_unit->state == SELECTED)
 		DrawArrow();
@@ -215,10 +216,6 @@ void Player::Input(float dt)
 			selected_unit->OnRelease();
 			selected_unit = nullptr;
 			state = NAVIGATING;
-		}
-		else if (selected_unit != NULL && selected_unit->state != SELECTED)
-		{
-			selected_unit->CancelAction();
 		}
 	}
 }

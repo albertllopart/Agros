@@ -11,6 +11,12 @@
 
 struct SDL_Rect;
 
+enum input_state
+{
+	UI_INPUT,
+	PLAYER_INPUT
+};
+
 enum j1EventWindow
 {
 	WE_QUIT = 0,
@@ -88,6 +94,11 @@ private:
 	SDL_GameController*		controller = nullptr;
 	SDL_Joystick*			joystick = nullptr;
 	j1KeyState				controller_buttons[NUM_CONTROLLER_BUTTONS];
+
+public:
+
+	input_state state;
+
 };
 
 #endif // __M_INPUT_H__

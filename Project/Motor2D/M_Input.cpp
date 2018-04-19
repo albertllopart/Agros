@@ -39,6 +39,8 @@ bool Input::Awake(pugi::xml_node& config)
 		ret = false;
 	}
 
+	state = PLAYER_INPUT;
+
 	return ret;
 }
 

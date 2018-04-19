@@ -11,6 +11,7 @@
 #include "M_Player.h"
 #include "M_Gui.h"
 #include "GuiElement.h"
+#include "M_Input.h"
 
 Cani::Cani() : Unit()
 {
@@ -293,6 +294,7 @@ void Cani::Move(float dt)
 
 	if (position == goal)
 	{
+		App->input->state = UI_INPUT;
 		App->gui->ActivateMenu(COMMAND);
 	}
 }

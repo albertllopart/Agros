@@ -129,6 +129,12 @@
     <ClInclude Include="GuiElement.h">
       <Filter>SRC\GUI</Filter>
     </ClInclude>
+    <ClInclude Include="GuiImage.h">
+      <Filter>SRC\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiShop.h">
+      <Filter>SRC\GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="p2Log.cpp">
@@ -192,6 +198,12 @@
       <Filter>SRC\GUI</Filter>
     </ClCompile>
     <ClCompile Include="GuiElement.cpp">
+      <Filter>SRC\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiImage.cpp">
+      <Filter>SRC\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiShop.cpp">
       <Filter>SRC\GUI</Filter>
     </ClCompile>
   </ItemGroup>

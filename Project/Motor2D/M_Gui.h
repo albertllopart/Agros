@@ -14,6 +14,7 @@ enum button_type;
 enum slider_type;
 class GuiElement;
 class GuiButton;
+class GuiShop;
 
 enum GUI_state
 {
@@ -45,7 +46,8 @@ public:
 
 	void GuiTrigger(GuiElement* element);
 
-	GuiButton* CreateButton(int x, int y, SDL_Rect rect, button_type btype, menu_type mtype, Module* callback, bool follows_camera = false);
+	GuiButton* CreateButton(int x, int y, SDL_Rect rect, SDL_Rect selected_rect, button_type btype, menu_type mtype, Module* callback, bool follows_camera = false);
+	GuiShop* CreateShop(int x, int y, SDL_Rect rect, menu_type mtype, bool follows_camera = false);
 
 	void DeleteElement(GuiElement* element);
 
@@ -63,6 +65,9 @@ public:
 
 	p2List<GuiElement*> elements;
 	p2List<GuiButton*> command_buttons;
+	p2List<GuiButton*> active_buttons;
+
+	GuiButton* selected_button = nullptr;
 
 	uint active_elements = 0;
 

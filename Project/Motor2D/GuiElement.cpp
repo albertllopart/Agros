@@ -10,7 +10,7 @@ GuiElement::~GuiElement() {};
 
 void GuiElement::Start() {};
 
-void GuiElement::Update(float dt)
+void GuiElement::Update()
 {
 
 };

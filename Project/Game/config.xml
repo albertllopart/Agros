@@ -38,9 +38,25 @@
 
   <gui>
     <atlas file="gui/atlas.png"/>
-    <buttons>
-      <command_button x="0" y="0" w="73" h="27"/>
-    </buttons>
+    <shop>
+      <images>
+        <background x="154" y="0" w="145" h="113"/>
+      </images>
+      <buttons>
+        <cani>
+          <idle x="154" y="115" w="130" h="20"/>
+          <selected x="154" y="136" w="130" h="20"/>
+        </cani>
+      </buttons>
+    </shop>
+    <command>
+      <buttons>
+        <wait>
+          <idle x="0" y="0" w="73" h="27"/>
+          <selected x ="73" y="0" w="80" h="27"/>
+        </wait>
+      </buttons>
+    </command>
   </gui>
 
   <map>

@@ -6,10 +6,11 @@
 
 GuiButton::GuiButton() {};
 
-GuiButton::GuiButton(iPoint position, SDL_Rect rect, button_type btype, menu_type mtype, Module* callback, bool follows_camera) : GuiElement()
+GuiButton::GuiButton(iPoint position, SDL_Rect rect, SDL_Rect selected_rect, button_type btype, menu_type mtype, Module* callback, bool follows_camera) : GuiElement()
 {
 	this->position = position;
 	this->rect = rect;
+	this->selected_rect = selected_rect;
 	this->btype = btype;
 	this->mtype = mtype;
 	this->callback = callback;
@@ -25,12 +26,23 @@ GuiButton::~GuiButton() {};
 
 void GuiButton::Draw()
 {
-	if (active == true)
-	{
-		PositionUpdate();
+	PositionUpdate();
 
-		iPoint world_position = App->map->MapToWorld(position.x, position.y);
-		App->render->Blit(App->gui->GetAtlas(), world_position.x, world_position.y, &rect);
+	iPoint world_position = App->map->MapToWorld(position.x, position.y);
+
+	if (App->gui->selected_button == this)
+	{
+		if (mtype == COMMAND_MENU)
+			App->render->Blit(App->gui->GetAtlas(), world_position.x, world_position.y, &selected_rect);
+		else
+			App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &selected_rect);
+	}
+	else
+	{
+		if (mtype == COMMAND_MENU)
+			App->render->Blit(App->gui->GetAtlas(), world_position.x, world_position.y, &rect);
+		else
+			App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &rect);
 	}
 }
 

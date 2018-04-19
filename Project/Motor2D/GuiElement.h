@@ -12,18 +12,22 @@ struct SDL_Rect;
 
 enum element_type
 {
-	BUTTON
+	BUTTON,
+	IMAGE,
+	SHOP
 };
 
 enum button_type
 {
-	WAIT
+	WAIT,
+	BUY_CANI
 };
 
 enum menu_type
 {
-	MAINMENU,
-	COMMAND
+	MAIN_MENU,
+	COMMAND_MENU,
+	SHOP_MENU
 };
 
 class GuiElement
@@ -35,7 +39,7 @@ public:
 
 	virtual void Start();
 
-	void Update(float dt);
+	virtual void Update();
 
 	virtual void Draw();
 

@@ -2,6 +2,9 @@
 #include "M_Textures.h"
 #include "M_Render.h"
 #include "M_Map.h"
+#include "M_Gui.h"
+#include "GuiElement.h"
+#include "M_Input.h"
 
 Canibase::Canibase() : Building()
 {
@@ -51,3 +54,5 @@ void Canibase::Draw()
 	iPoint world_position = App->map->MapToWorld(position.x, position.y);
 	App->render->Blit(graphic, world_position.x, world_position.y + OFFSET, &sprite);
 }
+
+

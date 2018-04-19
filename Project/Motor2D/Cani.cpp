@@ -295,7 +295,7 @@ void Cani::Move(float dt)
 	if (position == goal)
 	{
 		App->input->state = UI_INPUT;
-		App->gui->ActivateMenu(COMMAND);
+		App->gui->ActivateMenu(COMMAND_MENU);
 	}
 }
 

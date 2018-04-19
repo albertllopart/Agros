@@ -31,6 +31,9 @@ public:
 
 	void				Draw();
 
+	bool				OnSelection();
+
+	bool				OnRelease();
 
 public:
 

@@ -2,6 +2,10 @@
 #include "M_Textures.h"
 #include "M_Render.h"
 #include "M_Map.h"
+#include "M_Gui.h"
+#include "GuiElement.h"
+#include "M_Input.h"
+#include "M_Player.h"
 
 Factory::Factory() : Building()
 {
@@ -50,4 +54,26 @@ void Factory::Draw()
 {
 	iPoint world_position = App->map->MapToWorld(position.x, position.y);
 	App->render->Blit(graphic, world_position.x, world_position.y + OFFSET, &sprite);
+}
+
+bool Factory::OnSelection()
+{
+	state = SELECTED;
+
+	App->player->active = false;
+	App->input->state = UI_INPUT;
+	App->gui->ActivateMenu(SHOP_MENU);
+
+	return true;
+}
+
+bool Factory::OnRelease()
+{
+	state = IDLE;
+
+	App->player->selected_unit = nullptr;
+	App->player->active = true;
+	App->player->state = NAVIGATING;
+
+	return true;
 }

@@ -183,13 +183,19 @@ void Player::Input(float dt)
 				if (item->data->state != WAITING)
 				{
 					selected_unit = item->data;
-					selected_unit->OnSelection();
 
 					if (selected_unit->entity_type == UNIT)
+					{
 						state = UNIT_SELECTED;
+						selected_unit->OnSelection();
+					}
+						
 					else if (selected_unit->entity_type == BUILDING)
+					{
 						state = BUILDING_SELECTED;
-
+						App->input->keyboard[SDL_SCANCODE_O] = KEY_UP;
+						selected_unit->OnSelection();
+					}
 					break;
 				}
 			}

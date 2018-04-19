@@ -48,6 +48,16 @@ public:
 	virtual void				Draw()
 	{}
 
+	virtual bool				OnSelection()
+	{
+		return true;
+	}
+
+	virtual bool				OnRelease()
+	{
+		return true;
+	}
+
 public:
 
 	building_type		building_type;

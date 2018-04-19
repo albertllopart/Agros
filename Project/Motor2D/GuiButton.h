@@ -16,7 +16,7 @@ class GuiButton : public GuiElement
 public:
 
 	GuiButton();
-	GuiButton(iPoint position, SDL_Rect rect, button_type btype, menu_type mtype, Module* callback, bool follows_camera = false);
+	GuiButton(iPoint position, SDL_Rect rect, SDL_Rect selected_rect, button_type btype, menu_type mtype, Module* callback, bool follows_camera = false);
 	~GuiButton();
 
 	void Draw();
@@ -29,6 +29,8 @@ public:
 	button_type btype;
 
 	bool selected;
+
+	SDL_Rect selected_rect;
 
 	Module* callback = nullptr;
 	GuiImage* imgcallback = nullptr;

@@ -182,7 +182,7 @@ void Player::Input(float dt)
 		{
 			if (item->data->position == position)
 			{
-				if (item->data->state != WAITING)
+				if (item->data->state != WAITING_TURN)
 				{
 					selected_unit = item->data;
 
@@ -190,6 +190,7 @@ void Player::Input(float dt)
 					{
 						state = UNIT_SELECTED;
 						selected_unit->OnSelection();
+						App->audio->PlayFx(2);
 					}
 						
 					else if (selected_unit->entity_type == BUILDING)
@@ -197,6 +198,7 @@ void Player::Input(float dt)
 						state = BUILDING_SELECTED;
 						App->input->keyboard[SDL_SCANCODE_O] = KEY_UP;
 						selected_unit->OnSelection();
+						App->audio->PlayFx(2);
 					}
 					break;
 				}
@@ -208,6 +210,7 @@ void Player::Input(float dt)
 			active = false;
 			App->input->state = UI_INPUT;
 			App->gui->ActivateMenu(INGAME_OPTIONS_MENU);
+			App->audio->PlayFx(2);
 		}
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && selected_unit != NULL)
@@ -217,6 +220,7 @@ void Player::Input(float dt)
 			selected_unit->GetPath(position);
 			selected_unit->state = MOVING;
 			this->active = false;
+			App->audio->PlayFx(2);
 		}
 	}
 

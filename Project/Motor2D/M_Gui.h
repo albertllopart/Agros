@@ -67,7 +67,6 @@ public:
 	p2SString atlas_file_name;
 
 	p2List<GuiElement*> elements;
-	p2List<GuiButton*> command_buttons;
 	p2List<GuiButton*> active_buttons;
 
 	GuiButton* selected_button = nullptr;

@@ -62,12 +62,13 @@ bool Audio::Awake(pugi::xml_node& config)
 	//Mix_AllocateChannels(MAX_CHANNELS);
 	Mix_VolumeMusic(music_volume);
 
-	/*for (int i = 0; i <= MAX_CHANNELS; i++)
+	for (int i = 0; i <= MAX_CHANNELS; i++)
 	{
 		Mix_Volume(i, fx_volume);
-	}*/
+	}
 
 	LoadFx("audio/player.wav");//1
+	LoadFx("audio/button.wav");//2
 
 	return ret;
 }

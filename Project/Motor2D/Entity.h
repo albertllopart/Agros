@@ -9,7 +9,8 @@ enum entity_state
 	IDLE,
 	SELECTED,
 	MOVING,
-	WAITING
+	WAITING_COMMAND,
+	WAITING_TURN
 };
 
 enum entity_type

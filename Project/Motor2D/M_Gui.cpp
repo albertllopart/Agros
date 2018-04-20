@@ -110,7 +110,6 @@ bool Gui::PreUpdate()
 
 		element = element->next;
 	}
-	return true;
 	
 	return true;
 }
@@ -152,9 +151,6 @@ GuiButton* Gui::CreateButton(int x, int y, SDL_Rect rect, SDL_Rect selected_rect
 	GuiButton* item = new GuiButton(position, rect, selected_rect, btype, mtype, callback, follows_camera);
 
 	elements.add(item);
-
-	if (mtype == COMMAND_MENU)
-		command_buttons.add(item);
 
 	return item;
 }
@@ -214,23 +210,29 @@ void Gui::ActivateMenu(menu_type mtype)
 	{
 		case COMMAND_MENU:
 		{
-			p2List_item<GuiButton*>* item = command_buttons.start;
+			p2List_item<GuiElement*>* item = elements.start;
 
 			while (item != NULL)
 			{
-				if (1)//conditions to attack, capture, etc
+				if (item->data->etype == BUTTON)
 				{
-					item->data->active = true;
+					GuiButton* button = (GuiButton*)item->data;
 
-					if (active_elements == 0)
+					if (button->mtype == COMMAND_MENU)
 					{
-						selected_button = item->data;
-					}
+						button->active = true;
+						active_buttons.add(button);
 
-					active_elements++;
+						if (active_elements == 0)
+						{
+							selected_button = button;
+						}
+						active_elements++;
+					}
 				}
 				item = item->next;
 			}
+			UpdateActiveButtonsPosition();
 			state = GUI_COMMAND;
 			break;
 		}
@@ -290,19 +292,16 @@ void Gui::DisableMenu(menu_type mtype)
 	{
 		case COMMAND_MENU:
 		{
-			p2List_item<GuiButton*>* item = command_buttons.start;
-	
-			while (item != NULL)
+			p2List_item<GuiButton*>* button = active_buttons.start;
+
+			while (button != NULL)
 			{
-				if (1)//conditions to attack, capture, etc
-				{
-					item->data->active = false;
-					if (item->data->selected == true)
-						item->data->selected = false;
-					active_elements = 0;
-				}
-				item = item->next;
+				button->data->active = false;
+				button = button->next;
 			}
+			active_buttons.clear();
+			selected_button = nullptr;
+			active_elements = 0;
 			break;
 		}
 
@@ -346,6 +345,8 @@ void Gui::Input()
 	{
 		if(selected_button != NULL)
 			selected_button->OnClick();
+
+		App->audio->PlayFx(2);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
 	{
@@ -373,34 +374,44 @@ void Gui::Input()
 
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 	{
-		int button_position = active_buttons.find(selected_button);
-		p2List_item<GuiButton*>* item = active_buttons.start;
-
-		for (int i = 0; i < button_position; i++)
+		if (active_buttons.count() > 1)
 		{
-			item = item->next;
-		}
+			int button_position = active_buttons.find(selected_button);
+			p2List_item<GuiButton*>* item = active_buttons.start;
 
-		if (item->next != NULL)
-			selected_button = item->next->data;
-		else
-			selected_button = active_buttons.start->data;
+			for (int i = 0; i < button_position; i++)
+			{
+				item = item->next;
+			}
+
+			if (item->next != NULL)
+				selected_button = item->next->data;
+			else
+				selected_button = active_buttons.start->data;
+
+			App->audio->PlayFx(1);
+		}
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 	{
-		int button_position = active_buttons.find(selected_button);
-		p2List_item<GuiButton*>* item = active_buttons.start;
-
-		for (int i = 0; i < button_position; i++)
+		if (active_buttons.count() > 1)
 		{
-			item = item->next;
-		}
+			int button_position = active_buttons.find(selected_button);
+			p2List_item<GuiButton*>* item = active_buttons.start;
 
-		if (item->prev != NULL)
-			selected_button = item->prev->data;
-		else
-			selected_button = active_buttons.end->data;
+			for (int i = 0; i < button_position; i++)
+			{
+				item = item->next;
+			}
+
+			if (item->prev != NULL)
+				selected_button = item->prev->data;
+			else
+				selected_button = active_buttons.end->data;
+
+			App->audio->PlayFx(1);
+		}
 	}
 }
 

@@ -152,7 +152,7 @@ void Cani::Draw()
 				break;
 			}
 		}
-		case WAITING:
+		case WAITING_TURN:
 		{
 			current_animation = &wait_right;
 		}
@@ -187,7 +187,7 @@ bool Cani::OnRelease()
 
 bool Cani::OnWait()
 {
-	state = WAITING;
+	state = WAITING_TURN;
 	App->player->selected_unit = nullptr;
 	App->player->active = true;
 
@@ -294,6 +294,7 @@ void Cani::Move(float dt)
 
 	if (position == goal)
 	{
+		state = WAITING_COMMAND;
 		App->input->state = UI_INPUT;
 		App->gui->ActivateMenu(COMMAND_MENU);
 	}

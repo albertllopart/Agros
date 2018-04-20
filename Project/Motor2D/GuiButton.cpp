@@ -32,17 +32,11 @@ void GuiButton::Draw()
 
 	if (App->gui->selected_button == this)
 	{
-		if (mtype == COMMAND_MENU)
-			App->render->Blit(App->gui->GetAtlas(), world_position.x, world_position.y, &selected_rect);
-		else
-			App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &selected_rect);
+		App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &selected_rect);
 	}
 	else
 	{
-		if (mtype == COMMAND_MENU)
-			App->render->Blit(App->gui->GetAtlas(), world_position.x, world_position.y, &rect);
-		else
-			App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &rect);
+		App->render->Blit(App->gui->GetAtlas(), position.x, position.y, &rect);
 	}
 }
 

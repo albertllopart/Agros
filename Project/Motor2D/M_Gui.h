@@ -19,7 +19,8 @@ class GuiShop;
 enum GUI_state
 {
 	GUI_COMMAND,
-	GUI_SHOP
+	GUI_SHOP,
+	GUI_INGAME_OPTIONS
 };
 
 class Gui : public Module
@@ -57,6 +58,8 @@ public:
 	void DisableMenu(menu_type mtype);
 
 	void Input();
+
+	void UpdateActiveButtonsPosition();
 
 public:
 

@@ -20,6 +20,8 @@ enum element_type
 enum button_type
 {
 	WAIT,
+	QUIT,
+	END_TURN,
 	BUY_CANI
 };
 
@@ -27,7 +29,8 @@ enum menu_type
 {
 	MAIN_MENU,
 	COMMAND_MENU,
-	SHOP_MENU
+	SHOP_MENU,
+	INGAME_OPTIONS_MENU
 };
 
 class GuiElement

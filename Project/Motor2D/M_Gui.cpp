@@ -13,6 +13,7 @@
 #include "GuiShop.h"
 #include "M_Window.h"
 #include "M_Player.h"
+#include "M_Scene.h"
 
 Gui::Gui() : Module()
 {
@@ -53,6 +54,32 @@ bool Gui::Awake(pugi::xml_node& conf)
 	temp2.h = conf.child("command").child("buttons").child("wait").child("selected").attribute("h").as_int();
 
 	CreateButton(0, 0, temp, temp2, WAIT, COMMAND_MENU, App->entities, true);
+
+	//QUIT BUTTON
+	temp.x = conf.child("ingame_options").child("buttons").child("quit").child("idle").attribute("x").as_int();
+	temp.y = conf.child("ingame_options").child("buttons").child("quit").child("idle").attribute("y").as_int();
+	temp.w = conf.child("ingame_options").child("buttons").child("quit").child("idle").attribute("w").as_int();
+	temp.h = conf.child("ingame_options").child("buttons").child("quit").child("idle").attribute("h").as_int();
+
+	temp2.x = conf.child("ingame_options").child("buttons").child("quit").child("selected").attribute("x").as_int();
+	temp2.y = conf.child("ingame_options").child("buttons").child("quit").child("selected").attribute("y").as_int();
+	temp2.w = conf.child("ingame_options").child("buttons").child("quit").child("selected").attribute("w").as_int();
+	temp2.h = conf.child("ingame_options").child("buttons").child("quit").child("selected").attribute("h").as_int();
+
+	CreateButton(0, 0, temp, temp2, QUIT, INGAME_OPTIONS_MENU, App->scene, true);
+
+	//END TURN BUTTON
+	temp.x = conf.child("ingame_options").child("buttons").child("end_turn").child("idle").attribute("x").as_int();
+	temp.y = conf.child("ingame_options").child("buttons").child("end_turn").child("idle").attribute("y").as_int();
+	temp.w = conf.child("ingame_options").child("buttons").child("end_turn").child("idle").attribute("w").as_int();
+	temp.h = conf.child("ingame_options").child("buttons").child("end_turn").child("idle").attribute("h").as_int();
+
+	temp2.x = conf.child("ingame_options").child("buttons").child("end_turn").child("selected").attribute("x").as_int();
+	temp2.y = conf.child("ingame_options").child("buttons").child("end_turn").child("selected").attribute("y").as_int();
+	temp2.w = conf.child("ingame_options").child("buttons").child("end_turn").child("selected").attribute("w").as_int();
+	temp2.h = conf.child("ingame_options").child("buttons").child("end_turn").child("selected").attribute("h").as_int();
+
+	CreateButton(0, 0, temp, temp2, END_TURN, INGAME_OPTIONS_MENU, App->entities, true);
 
 	//SHOP
 	temp.x = conf.child("shop").child("images").child("background").attribute("x").as_int();
@@ -225,6 +252,35 @@ void Gui::ActivateMenu(menu_type mtype)
 			state = GUI_SHOP;
 			break;
 		}
+
+		case INGAME_OPTIONS_MENU:
+		{
+			p2List_item<GuiElement*>* item = elements.start;
+
+			while (item != NULL)
+			{
+				if (item->data->etype == BUTTON)
+				{
+					GuiButton* button = (GuiButton*)item->data;
+					
+					if (button->mtype == INGAME_OPTIONS_MENU)
+					{
+						button->active = true;
+						active_buttons.add(button);
+
+						if (active_elements == 0)
+						{
+							selected_button = button;
+						}
+						active_elements++;
+					}
+				}
+				item = item->next;
+			}
+			UpdateActiveButtonsPosition();
+			state = GUI_INGAME_OPTIONS;
+			break;
+		}
 	}
 }
 
@@ -266,6 +322,21 @@ void Gui::DisableMenu(menu_type mtype)
 			}
 			break;
 		}
+
+		case INGAME_OPTIONS_MENU:
+		{
+			p2List_item<GuiButton*>* button = active_buttons.start;
+
+			while (button != NULL)
+			{
+					button->data->active = false;
+					button = button->next;
+			}
+			active_buttons.clear();
+			selected_button = nullptr;
+			active_elements = 0;
+			break;
+		}
 	}
 }
 
@@ -292,7 +363,14 @@ void Gui::Input()
 			App->input->state = PLAYER_INPUT;
 			App->player->active = true;
 		}
+		else if (state == GUI_INGAME_OPTIONS)
+		{
+			DisableMenu(INGAME_OPTIONS_MENU);
+			App->input->state = PLAYER_INPUT;
+			App->player->active = true;
+		}
 	}
+
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 	{
 		int button_position = active_buttons.find(selected_button);
@@ -307,6 +385,41 @@ void Gui::Input()
 			selected_button = item->next->data;
 		else
 			selected_button = active_buttons.start->data;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+	{
+		int button_position = active_buttons.find(selected_button);
+		p2List_item<GuiButton*>* item = active_buttons.start;
+
+		for (int i = 0; i < button_position; i++)
+		{
+			item = item->next;
+		}
+
+		if (item->prev != NULL)
+			selected_button = item->prev->data;
+		else
+			selected_button = active_buttons.end->data;
+	}
+}
+
+void Gui::UpdateActiveButtonsPosition()
+{
+	p2List_item<GuiButton*>* button = active_buttons.start;
+	int i = 0;
+
+	while (button != NULL)
+	{
+		uint scale = App->win->GetScale();
+		iPoint temp_position;
+		temp_position.x = abs(App->render->camera.x) / scale + 16;
+		temp_position.y = abs(App->render->camera.y) / scale + 16;
+
+		button->data->position.x = temp_position.x;
+		button->data->position.y = temp_position.y + (button->data->rect.h - 1) * i++;
+
+		button = button->next;
 	}
 }
 

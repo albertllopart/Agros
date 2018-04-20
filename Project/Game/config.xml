@@ -57,6 +57,18 @@
         </wait>
       </buttons>
     </command>
+    <ingame_options>
+      <buttons>
+        <quit>
+          <idle x="0" y="140" w="73" h="27"/>
+          <selected x="73" y="140" w="80" h="27"/>
+        </quit>
+        <end_turn>
+          <idle x="0" y="112" w="73" h="27"/>
+          <selected x="73" y="112" w="80" h="27"/>
+        </end_turn>
+      </buttons>
+    </ingame_options>
   </gui>
 
   <map>

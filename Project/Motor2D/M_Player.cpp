@@ -10,6 +10,8 @@
 #include "M_Audio.h"
 #include "M_Scene.h"
 #include "M_EntityManager.h"
+#include "M_Gui.h"
+#include "GuiElement.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -202,7 +204,10 @@ void Player::Input(float dt)
 		}
 		if (selected_unit == NULL)
 		{
-			//obrir el menú
+			App->input->keyboard[SDL_SCANCODE_O] = KEY_UP;
+			active = false;
+			App->input->state = UI_INPUT;
+			App->gui->ActivateMenu(INGAME_OPTIONS_MENU);
 		}
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && selected_unit != NULL)

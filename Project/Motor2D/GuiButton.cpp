@@ -26,7 +26,7 @@ GuiButton::~GuiButton() {};
 
 void GuiButton::Draw()
 {
-	PositionUpdate();
+	//PositionUpdate();
 
 	iPoint world_position = App->map->MapToWorld(position.x, position.y);
 

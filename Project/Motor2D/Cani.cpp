@@ -94,9 +94,6 @@ bool Cani::Start()
 
 bool Cani::Update(float dt)
 {
-	if (state == SELECTED)
-		App->map->DrawBFS();
-
 	if (state == MOVING)
 	{
 		Move(dt);
@@ -123,11 +120,8 @@ void Cani::Draw()
 		}
 		case SELECTED:
 		{
-			if (direction == RIGHT)
-			{
-				current_animation = &walk_right;
-				break;
-			}
+			current_animation = &walk_right;
+			break;
 		}
 		case MOVING:
 		{
@@ -247,22 +241,22 @@ void Cani::Move(float dt)
 		{
 			if (check_left_up.x > node->data.x)
 			{
-				current_moving_position.x -= 4 * dt;
+				current_moving_position.x -= 4;
 				direction = LEFT;
 			}
 			else if (check_right_down.x < node->data.x)
 			{
-				current_moving_position.x += 4 * dt;
+				current_moving_position.x += 4;
 				direction = RIGHT;
 			}
 			else if (check_left_up.y > node->data.y)
 			{
-				current_moving_position.y -= 4 * dt;
+				current_moving_position.y -= 4;
 				direction = UP;
 			}
 			else if (check_right_down.y < node->data.y)
 			{
-				current_moving_position.y += 4 * dt;
+				current_moving_position.y += 4;
 				direction = DOWN;
 			}
 

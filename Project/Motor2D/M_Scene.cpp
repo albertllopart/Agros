@@ -10,6 +10,9 @@
 #include "M_Map.h"
 #include "M_Player.h"
 #include "M_EntityManager.h"
+#include "M_Gui.h"
+#include "GuiButton.h"
+#include "GuiElement.h"
 
 Scene::Scene() : Module()
 {
@@ -82,12 +85,6 @@ bool Scene::Update(float dt)
 		App->map->map_data.tilesets.count(), App->map->map_data.layers.count());
 
 	App->win->SetTitle(title.GetString());
-	if (App->input->GetControllerButton(SDL_CONTROLLER_BUTTON_A) == KEY_REPEAT)
-	{
-		iPoint cani(15, 10);
-		App->entities->CreateCani(cani);
-	}
-	
 
 	return true;
 }
@@ -97,7 +94,7 @@ bool Scene::PostUpdate()
 {
 	bool ret = true;
 
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if (quit == true)
 		ret = false;
 
 	return ret;
@@ -109,4 +106,18 @@ bool Scene::CleanUp()
 	LOG("Freeing scene");
 
 	return true;
+}
+
+void Scene::GuiTrigger(GuiElement* element)
+{
+	GuiButton* button = (GuiButton*)element;
+
+	switch (button->btype)
+	{
+		case QUIT:
+		{
+			quit = true;
+			break;
+		}
+	}
 }

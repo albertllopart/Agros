@@ -32,8 +32,13 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void GuiTrigger(GuiElement* element);
+
 private:
+
 	SDL_Texture* img;
+
+	bool quit = false;
 };
 
 #endif // __M_SCENE_H__

@@ -81,14 +81,17 @@ bool Player::Update(float dt)
 
 	if (selected_unit != NULL && selected_unit->entity_type == UNIT && selected_unit->state == SELECTED)
 		DrawArrow();
+
+	if (selected_unit != NULL)
+		selected_unit->Update(dt);
+
+	Draw();
 	
 	return true;
 }
 
 bool Player::PostUpdate()
 {
-	Draw();
-
 	return true;
 }
 

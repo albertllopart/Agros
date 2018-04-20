@@ -43,6 +43,8 @@ public:
 public:
 
 	p2List<Entity*>			entities;
+	p2List<Unit*>			units;
+	p2List<Building*>		buildings;
 
 };
 

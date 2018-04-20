@@ -6,6 +6,7 @@
 #include "GuiButton.h"
 #include "M_Gui.h"
 #include "M_Player.h"
+#include "M_Map.h"
 
 EntityManager::EntityManager() : Module()
 {
@@ -27,27 +28,39 @@ bool EntityManager::Start()
 
 bool EntityManager::Update(float dt)
 {
-	p2List_item<Entity*>* item = entities.start;
-	while (item != NULL)
+	//PRINTING ORDER SHOULD BE: BUILDINGS -> BFS -> UNITS -> ARROW
+	p2List_item<Building*>* building = buildings.start;
+	while (building != NULL)
 	{
-		if (item->data->entity_type == BUILDING)
-			item->data->Update(dt);
+		building->data->Update(dt);
 
-		item = item->next;
+		building = building->next;
 	}
+
+	if (App->player->selected_unit != NULL && App->player->selected_unit->state == SELECTED && App->player->selected_unit->entity_type == UNIT)
+	{
+		App->map->DrawBFS();
+	}
+
+	p2List_item<Unit*>* unit = units.start;
+	while (unit != NULL)
+	{
+		if (unit->data != App->player->selected_unit)
+			unit->data->Update(dt);
+
+		unit = unit->next;
+	}
+
+	if (App->player->active == false && App->player->selected_unit != NULL)
+	{
+		App->player->selected_unit->Update(dt);
+	}
+
 	return true;
 }
 
 bool EntityManager::PostUpdate()
 {
-	p2List_item<Entity*>* item = entities.start;
-	while (item != NULL)
-	{
-		if (item->data->entity_type == UNIT)
-			item->data->Update(1.0f);
-
-		item = item->next;
-	}
 	return true;
 }
 
@@ -65,6 +78,7 @@ Entity* EntityManager::CreateCani(iPoint position)
 	cani->Start();
 
 	entities.add(cani);
+	units.add(cani);
 
 	return cani;
 }
@@ -78,6 +92,7 @@ Entity* EntityManager::CreateCanibase(iPoint position)
 	canibase->position = position;
 
 	entities.add(canibase);
+	buildings.add(canibase);
 
 	return canibase;
 }
@@ -90,6 +105,7 @@ Entity* EntityManager::CreateFactory(iPoint position)
 	factory->position = position;
 
 	entities.add(factory);
+	buildings.add(factory);
 
 	return factory;
 }
@@ -118,6 +134,21 @@ void EntityManager::GuiTrigger(GuiElement* element)
 					App->player->selected_unit->OnRelease();
 					App->gui->DisableMenu(button->mtype);
 					App->input->state = PLAYER_INPUT;
+					break;
+				}
+				
+				case END_TURN:
+				{
+					p2List_item<Entity*>* item = entities.start;
+
+					while (item != NULL)
+					{
+						item->data->state = IDLE;
+						item = item->next;
+					}
+					App->gui->DisableMenu(button->mtype);
+					App->input->state = PLAYER_INPUT;
+					App->player->active = true;
 					break;
 				}
 			}

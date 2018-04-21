@@ -42,10 +42,6 @@ bool Scene::Start()
 	App->map->LoadMapFromTMX(node.child("level_1").attribute("file").as_string());
 	App->map->CreateEntitiesFromTMX();
 
-	App->entities->CreateCani(iPoint(15, 10));
-	App->entities->CreateCani(iPoint(14, 10));
-	App->entities->CreateCani(iPoint(13, 10));
-
 	return true;
 }
 

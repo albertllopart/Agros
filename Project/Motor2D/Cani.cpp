@@ -81,7 +81,7 @@ bool Cani::Start()
 	graphic = App->tex->Load("textures/cani.png");
 	current_animation = &idle_right;
 
-	state = IDLE;
+	state = WAITING_TURN;
 	direction = RIGHT;
 
 	current_moving_position.x = position.x * 16;

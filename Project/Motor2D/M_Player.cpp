@@ -181,32 +181,44 @@ void Player::Input(float dt)
 	//controlling units
 	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && selected_unit == NULL)
 	{
-		for (p2List_item<Entity*>* item = App->entities->entities.start; item; item = item->next)
-		{
-			if (item->data->position == position)
-			{
-				if (item->data->state != WAITING_TURN)
-				{
-					selected_unit = item->data;
+		bool available_square = true;
 
-					if (selected_unit->entity_type == UNIT)
+		for (p2List_item<Unit*>* unit = App->entities->units.start; unit; unit = unit->next)
+		{
+			if (unit->data->position == position)
+			{
+				if (unit->data->state != WAITING_TURN)
+				{
+					selected_unit = unit->data;
+					state = UNIT_SELECTED;
+					selected_unit->OnSelection();
+					App->audio->PlayFx(2);
+					break;
+				}
+				else if (unit->data->state == WAITING_TURN)
+					available_square = false;
+			}
+		}
+
+		if (selected_unit == NULL && available_square == true)
+		{
+			for (p2List_item<Building*>* building = App->entities->buildings.start; building; building = building->next)
+			{
+				if (building->data->position == position)
+				{
+					if (building->data->state != WAITING_TURN)
 					{
-						state = UNIT_SELECTED;
-						selected_unit->OnSelection();
-						App->audio->PlayFx(2);
-					}
-						
-					else if (selected_unit->entity_type == BUILDING)
-					{
+						selected_unit = building->data;
 						state = BUILDING_SELECTED;
 						App->input->keyboard[SDL_SCANCODE_O] = KEY_UP;
 						selected_unit->OnSelection();
 						App->audio->PlayFx(2);
+						break;
 					}
-					break;
 				}
 			}
 		}
+		
 		if (selected_unit == NULL)
 		{
 			App->input->keyboard[SDL_SCANCODE_O] = KEY_UP;

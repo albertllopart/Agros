@@ -19,10 +19,21 @@ bool Factory::Awake(pugi::xml_node& config)
 {
 	pugi::xml_node node = config.child("buildings").child("factory").child("animation");
 
-	sprite.x = node.child("idle").child("frame_1").attribute("x").as_int();
-	sprite.y = node.child("idle").child("frame_1").attribute("y").as_int();
-	sprite.w = node.child("idle").child("frame_1").attribute("w").as_int();
-	sprite.h = node.child("idle").child("frame_1").attribute("h").as_int();
+	if (entity_army == CANI)
+	{
+		sprite.x = node.child("cani").child("idle").child("frame_1").attribute("x").as_int();
+		sprite.y = node.child("cani").child("idle").child("frame_1").attribute("y").as_int();
+		sprite.w = node.child("cani").child("idle").child("frame_1").attribute("w").as_int();
+		sprite.h = node.child("cani").child("idle").child("frame_1").attribute("h").as_int();
+	}
+
+	else if (entity_army == HIPSTER)
+	{
+		sprite.x = node.child("hipster").child("idle").child("frame_1").attribute("x").as_int();
+		sprite.y = node.child("hipster").child("idle").child("frame_1").attribute("y").as_int();
+		sprite.w = node.child("hipster").child("idle").child("frame_1").attribute("w").as_int();
+		sprite.h = node.child("hipster").child("idle").child("frame_1").attribute("h").as_int();
+	}
 
 	return true;
 }
@@ -62,7 +73,11 @@ bool Factory::OnSelection()
 
 	App->player->active = false;
 	App->input->state = UI_INPUT;
-	App->gui->ActivateMenu(SHOP_MENU);
+
+	if (entity_army == CANI)
+		App->gui->ActivateMenu(CANI_SHOP_MENU);
+	else if (entity_army == HIPSTER)
+		App->gui->ActivateMenu(HIPSTER_SHOP_MENU);
 
 	return true;
 }

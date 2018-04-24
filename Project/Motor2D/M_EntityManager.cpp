@@ -70,36 +70,39 @@ bool EntityManager::CleanUp()
 }
 
 //UNITS
-Entity* EntityManager::CreateCani(iPoint position)
+Entity* EntityManager::CreateInfantry(iPoint position, entity_army army)
 {
-	Cani* cani = new Cani();
-	cani->position = position;
-	cani->Awake(App->GetConfigNode("entities"));
-	cani->Start();
+	Infantry* infantry = new Infantry();
+	infantry->position = position;
+	infantry->entity_army = army;
+	infantry->Awake(App->GetConfigNode("entities"));
+	infantry->Start();
 
-	entities.add(cani);
-	units.add(cani);
+	entities.add(infantry);
+	units.add(infantry);
 
-	return cani;
+	return infantry;
 }
 
 //BUILDINGS
-Entity* EntityManager::CreateCanibase(iPoint position)
+Entity* EntityManager::CreateBase(iPoint position, entity_army army)
 {
-	Canibase* canibase = new Canibase();
-	canibase->Awake(App->GetConfigNode("entities"));
-	canibase->Start();
-	canibase->position = position;
+	Base* base = new Base();
+	base->entity_army = army;
+	base->Awake(App->GetConfigNode("entities"));
+	base->Start();
+	base->position = position;
 
-	entities.add(canibase);
-	buildings.add(canibase);
+	entities.add(base);
+	buildings.add(base);
 
-	return canibase;
+	return base;
 }
 
-Entity* EntityManager::CreateFactory(iPoint position)
+Entity* EntityManager::CreateFactory(iPoint position, entity_army army)
 {
 	Factory* factory = new Factory();
+	factory->entity_army = army;
 	factory->Awake(App->GetConfigNode("entities"));
 	factory->Start();
 	factory->position = position;
@@ -128,9 +131,18 @@ void EntityManager::GuiTrigger(GuiElement* element)
 					break;
 				}
 
-				case BUY_CANI:
+				case BUY_CANI_INFANTRY:
 				{
-					CreateCani(App->player->selected_unit->position);
+					CreateInfantry(App->player->selected_unit->position, CANI);
+					App->player->selected_unit->OnRelease();
+					App->gui->DisableMenu(button->mtype);
+					App->input->state = PLAYER_INPUT;
+					break;
+				}
+
+				case BUY_HIPSTER_INFANTRY:
+				{
+					CreateInfantry(App->player->selected_unit->position, HIPSTER);
 					App->player->selected_unit->OnRelease();
 					App->gui->DisableMenu(button->mtype);
 					App->input->state = PLAYER_INPUT;

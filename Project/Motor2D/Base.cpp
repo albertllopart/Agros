@@ -1,4 +1,4 @@
-#include "CaniBase.h"
+#include "Base.h"
 #include "M_Textures.h"
 #include "M_Render.h"
 #include "M_Map.h"
@@ -6,17 +6,17 @@
 #include "GuiElement.h"
 #include "M_Input.h"
 
-Canibase::Canibase() : Building()
+Base::Base() : Building()
 {
-	name.create("Canibase");
+	name.create("base");
 }
 
-Canibase::~Canibase()
+Base::~Base()
 {}
 
-bool Canibase::Awake(pugi::xml_node& config)
+bool Base::Awake(pugi::xml_node& config)
 {
-	pugi::xml_node node = config.child("buildings").child("canibase").child("animation");
+	pugi::xml_node node = config.child("buildings").child("Base").child("animation");
 
 	sprite.x = node.child("idle").child("frame_1").attribute("x").as_int();
 	sprite.y = node.child("idle").child("frame_1").attribute("y").as_int();
@@ -26,30 +26,30 @@ bool Canibase::Awake(pugi::xml_node& config)
 	return true;
 }
 
-bool Canibase::Start()
+bool Base::Start()
 {
 	graphic = App->tex->Load("textures/buildings_cani.png");
 
 	state = IDLE;
 	entity_type = BUILDING;
-	building_type = CANIBASE;
+	building_type = BASE;
 
 	return true;
 }
 
-bool Canibase::Update(float dt)
+bool Base::Update(float dt)
 {
 	Draw();
 
 	return true;
 }
 
-bool Canibase::CleanUp()
+bool Base::CleanUp()
 {
 	return true;
 }
 
-void Canibase::Draw()
+void Base::Draw()
 {
 	iPoint world_position = App->map->MapToWorld(position.x, position.y);
 	App->render->Blit(graphic, world_position.x, world_position.y + OFFSET, &sprite);

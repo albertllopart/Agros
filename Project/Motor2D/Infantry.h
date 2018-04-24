@@ -9,12 +9,12 @@
 
 struct SDL_Texture;
 
-class Cani : public Unit
+class Infantry : public Unit
 {
 public:
 
-	Cani();
-	virtual~Cani();
+	Infantry();
+	virtual~Infantry();
 
 	// Called before render is available
 	bool				 Awake(pugi::xml_node& config);

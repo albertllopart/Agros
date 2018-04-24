@@ -26,43 +26,44 @@ void GuiShop::Start()
 {
 	pugi::xml_node node = App->GetConfigNode("gui");
 
-	SDL_Rect temp;
-	temp.x = node.child("shop").child("buttons").child("cani").child("idle").attribute("x").as_int();
-	temp.y = node.child("shop").child("buttons").child("cani").child("idle").attribute("y").as_int();
-	temp.w = node.child("shop").child("buttons").child("cani").child("idle").attribute("w").as_int();
-	temp.h = node.child("shop").child("buttons").child("cani").child("idle").attribute("h").as_int();
+	if (mtype == CANI_SHOP_MENU)
+	{
+		SDL_Rect temp;
+		temp.x = node.child("shop").child("buttons").child("infantry").child("cani").child("idle").attribute("x").as_int();
+		temp.y = node.child("shop").child("buttons").child("infantry").child("cani").child("idle").attribute("y").as_int();
+		temp.w = node.child("shop").child("buttons").child("infantry").child("cani").child("idle").attribute("w").as_int();
+		temp.h = node.child("shop").child("buttons").child("infantry").child("cani").child("idle").attribute("h").as_int();
 
-	SDL_Rect temp2;
-	temp2.x = node.child("shop").child("buttons").child("cani").child("selected").attribute("x").as_int();
-	temp2.y = node.child("shop").child("buttons").child("cani").child("selected").attribute("y").as_int();
-	temp2.w = node.child("shop").child("buttons").child("cani").child("selected").attribute("w").as_int();
-	temp2.h = node.child("shop").child("buttons").child("cani").child("selected").attribute("h").as_int();
+		SDL_Rect temp2;
+		temp2.x = node.child("shop").child("buttons").child("infantry").child("cani").child("selected").attribute("x").as_int();
+		temp2.y = node.child("shop").child("buttons").child("infantry").child("cani").child("selected").attribute("y").as_int();
+		temp2.w = node.child("shop").child("buttons").child("infantry").child("cani").child("selected").attribute("w").as_int();
+		temp2.h = node.child("shop").child("buttons").child("infantry").child("cani").child("selected").attribute("h").as_int();
 
-	iPoint temp_position;
-	temp_position.x = position.x + SHOP_OFFSET;
-	temp_position.y = position.y + SHOP_OFFSET + (23 * elements);
+		attached_buttons.add(App->gui->CreateButton(0, 0, temp, temp2, BUY_CANI_INFANTRY, CANI_SHOP_MENU, App->entities));
 
-	attached_buttons.add(App->gui->CreateButton(temp_position.x, temp_position.y, temp, temp2, BUY_CANI, SHOP_MENU, App->entities));
+		elements++;
+	}
+	
+	else if (mtype == HIPSTER_SHOP_MENU)
+	{
+		SDL_Rect temp;
+		temp.x = node.child("shop").child("buttons").child("infantry").child("hipster").child("idle").attribute("x").as_int();
+		temp.y = node.child("shop").child("buttons").child("infantry").child("hipster").child("idle").attribute("y").as_int();
+		temp.w = node.child("shop").child("buttons").child("infantry").child("hipster").child("idle").attribute("w").as_int();
+		temp.h = node.child("shop").child("buttons").child("infantry").child("hipster").child("idle").attribute("h").as_int();
 
-	elements++;
+		SDL_Rect temp2;
+		temp2.x = node.child("shop").child("buttons").child("infantry").child("hipster").child("selected").attribute("x").as_int();
+		temp2.y = node.child("shop").child("buttons").child("infantry").child("hipster").child("selected").attribute("y").as_int();
+		temp2.w = node.child("shop").child("buttons").child("infantry").child("hipster").child("selected").attribute("w").as_int();
+		temp2.h = node.child("shop").child("buttons").child("infantry").child("hipster").child("selected").attribute("h").as_int();
 
-	//2
-	temp.x = node.child("shop").child("buttons").child("cani").child("idle").attribute("x").as_int();
-	temp.y = node.child("shop").child("buttons").child("cani").child("idle").attribute("y").as_int();
-	temp.w = node.child("shop").child("buttons").child("cani").child("idle").attribute("w").as_int();
-	temp.h = node.child("shop").child("buttons").child("cani").child("idle").attribute("h").as_int();
+		attached_buttons.add(App->gui->CreateButton(0, 0, temp, temp2, BUY_HIPSTER_INFANTRY, HIPSTER_SHOP_MENU, App->entities));
 
-	temp2.x = node.child("shop").child("buttons").child("cani").child("selected").attribute("x").as_int();
-	temp2.y = node.child("shop").child("buttons").child("cani").child("selected").attribute("y").as_int();
-	temp2.w = node.child("shop").child("buttons").child("cani").child("selected").attribute("w").as_int();
-	temp2.h = node.child("shop").child("buttons").child("cani").child("selected").attribute("h").as_int();
-
-	temp_position.x = position.x + SHOP_OFFSET;
-	temp_position.y = position.y + SHOP_OFFSET + (23 * elements);
-
-	attached_buttons.add(App->gui->CreateButton(temp_position.x, temp_position.y, temp, temp2, BUY_CANI, SHOP_MENU, App->entities));
-
-	elements++;
+		elements++;
+	}
+	
 }
 
 void GuiShop::Update()

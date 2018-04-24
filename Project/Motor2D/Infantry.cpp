@@ -4,7 +4,7 @@
 #include "p2Defs.h"
 #include "p2Log.h"
 
-#include "Cani.h"
+#include "Infantry.h"
 #include "M_Textures.h"
 #include "M_Render.h"
 #include "M_Map.h"
@@ -13,21 +13,24 @@
 #include "GuiElement.h"
 #include "M_Input.h"
 
-Cani::Cani() : Unit()
+Infantry::Infantry() : Unit()
 {
-	name.create("cani");
+	name.create("infantry");
 }
 
-Cani::~Cani()
+Infantry::~Infantry()
 {}
 
-bool Cani::Awake(pugi::xml_node& config)
+bool Infantry::Awake(pugi::xml_node& config)
 {
-	move_range = config.child("units").child("cani").attribute("move").as_uint();
+	move_range = config.child("units").child("infantry").attribute("move").as_uint();
 
 	//Animations
-	pugi::xml_node node = config.child("units").child("cani").child("animation");
+	pugi::xml_node node = config.child("units").child("infantry").child("animation").child("hipster");
 
+	if (entity_army == CANI)
+		node = config.child("units").child("infantry").child("animation").child("cani");
+		
 	idle_right.PushBack({ node.child("idle_right").child("frame_1").attribute("x").as_int(), node.child("idle_right").child("frame_1").attribute("y").as_int(), node.child("idle_right").child("frame_1").attribute("w").as_int(), node.child("idle_right").child("frame_1").attribute("h").as_int(), });
 	idle_right.PushBack({ node.child("idle_right").child("frame_2").attribute("x").as_int(), node.child("idle_right").child("frame_2").attribute("y").as_int(), node.child("idle_right").child("frame_2").attribute("w").as_int(), node.child("idle_right").child("frame_2").attribute("h").as_int(), });
 	idle_right.PushBack({ node.child("idle_right").child("frame_3").attribute("x").as_int(), node.child("idle_right").child("frame_3").attribute("y").as_int(), node.child("idle_right").child("frame_3").attribute("w").as_int(), node.child("idle_right").child("frame_3").attribute("h").as_int(), });
@@ -35,12 +38,26 @@ bool Cani::Awake(pugi::xml_node& config)
 
 	idle_right.speed = node.child("idle_right").attribute("speed").as_float();
 
+	idle_left.PushBack({ node.child("idle_left").child("frame_1").attribute("x").as_int(), node.child("idle_left").child("frame_1").attribute("y").as_int(), node.child("idle_left").child("frame_1").attribute("w").as_int(), node.child("idle_left").child("frame_1").attribute("h").as_int(), });
+	idle_left.PushBack({ node.child("idle_left").child("frame_2").attribute("x").as_int(), node.child("idle_left").child("frame_2").attribute("y").as_int(), node.child("idle_left").child("frame_2").attribute("w").as_int(), node.child("idle_left").child("frame_2").attribute("h").as_int(), });
+	idle_left.PushBack({ node.child("idle_left").child("frame_3").attribute("x").as_int(), node.child("idle_left").child("frame_3").attribute("y").as_int(), node.child("idle_left").child("frame_3").attribute("w").as_int(), node.child("idle_left").child("frame_3").attribute("h").as_int(), });
+	idle_left.PushBack({ node.child("idle_left").child("frame_4").attribute("x").as_int(), node.child("idle_left").child("frame_4").attribute("y").as_int(), node.child("idle_left").child("frame_4").attribute("w").as_int(), node.child("idle_left").child("frame_4").attribute("h").as_int(), });
+
+	idle_left.speed = node.child("idle_left").attribute("speed").as_float();
+
 	wait_right.PushBack({ node.child("wait_right").child("frame_1").attribute("x").as_int(), node.child("wait_right").child("frame_1").attribute("y").as_int(), node.child("wait_right").child("frame_1").attribute("w").as_int(), node.child("wait_right").child("frame_1").attribute("h").as_int(), });
 	wait_right.PushBack({ node.child("wait_right").child("frame_2").attribute("x").as_int(), node.child("wait_right").child("frame_2").attribute("y").as_int(), node.child("wait_right").child("frame_2").attribute("w").as_int(), node.child("wait_right").child("frame_2").attribute("h").as_int(), });
 	wait_right.PushBack({ node.child("wait_right").child("frame_3").attribute("x").as_int(), node.child("wait_right").child("frame_3").attribute("y").as_int(), node.child("wait_right").child("frame_3").attribute("w").as_int(), node.child("wait_right").child("frame_3").attribute("h").as_int(), });
 	wait_right.PushBack({ node.child("wait_right").child("frame_4").attribute("x").as_int(), node.child("wait_right").child("frame_4").attribute("y").as_int(), node.child("wait_right").child("frame_4").attribute("w").as_int(), node.child("wait_right").child("frame_4").attribute("h").as_int(), });
 
 	wait_right.speed = node.child("wait_right").attribute("speed").as_float();
+
+	wait_left.PushBack({ node.child("wait_left").child("frame_1").attribute("x").as_int(), node.child("wait_left").child("frame_1").attribute("y").as_int(), node.child("wait_left").child("frame_1").attribute("w").as_int(), node.child("wait_left").child("frame_1").attribute("h").as_int(), });
+	wait_left.PushBack({ node.child("wait_left").child("frame_2").attribute("x").as_int(), node.child("wait_left").child("frame_2").attribute("y").as_int(), node.child("wait_left").child("frame_2").attribute("w").as_int(), node.child("wait_left").child("frame_2").attribute("h").as_int(), });
+	wait_left.PushBack({ node.child("wait_left").child("frame_3").attribute("x").as_int(), node.child("wait_left").child("frame_3").attribute("y").as_int(), node.child("wait_left").child("frame_3").attribute("w").as_int(), node.child("wait_left").child("frame_3").attribute("h").as_int(), });
+	wait_left.PushBack({ node.child("wait_left").child("frame_4").attribute("x").as_int(), node.child("wait_left").child("frame_4").attribute("y").as_int(), node.child("wait_left").child("frame_4").attribute("w").as_int(), node.child("wait_left").child("frame_4").attribute("h").as_int(), });
+
+	wait_left.speed = node.child("wait_left").attribute("speed").as_float();
 
 	walk_right.PushBack({ node.child("walk_right").child("frame_1").attribute("x").as_int(), node.child("walk_right").child("frame_1").attribute("y").as_int(), node.child("walk_right").child("frame_1").attribute("w").as_int(), node.child("walk_right").child("frame_1").attribute("h").as_int(), });
 	walk_right.PushBack({ node.child("walk_right").child("frame_2").attribute("x").as_int(), node.child("walk_right").child("frame_2").attribute("y").as_int(), node.child("walk_right").child("frame_2").attribute("w").as_int(), node.child("walk_right").child("frame_2").attribute("h").as_int(), });
@@ -53,7 +70,7 @@ bool Cani::Awake(pugi::xml_node& config)
 	walk_left.PushBack({ node.child("walk_left").child("frame_2").attribute("x").as_int(), node.child("walk_left").child("frame_2").attribute("y").as_int(), node.child("walk_left").child("frame_2").attribute("w").as_int(), node.child("walk_left").child("frame_2").attribute("h").as_int(), });
 	walk_left.PushBack({ node.child("walk_left").child("frame_3").attribute("x").as_int(), node.child("walk_left").child("frame_3").attribute("y").as_int(), node.child("walk_left").child("frame_3").attribute("w").as_int(), node.child("walk_left").child("frame_3").attribute("h").as_int(), });
 	walk_left.PushBack({ node.child("walk_left").child("frame_4").attribute("x").as_int(), node.child("walk_left").child("frame_4").attribute("y").as_int(), node.child("walk_left").child("frame_4").attribute("w").as_int(), node.child("walk_left").child("frame_4").attribute("h").as_int(), });
-		 
+
 	walk_left.speed = node.child("walk_left").attribute("speed").as_float();
 
 	walk_up.PushBack({ node.child("walk_up").child("frame_1").attribute("x").as_int(), node.child("walk_up").child("frame_1").attribute("y").as_int(), node.child("walk_up").child("frame_1").attribute("w").as_int(), node.child("walk_up").child("frame_1").attribute("h").as_int(), });
@@ -73,16 +90,20 @@ bool Cani::Awake(pugi::xml_node& config)
 	return true;
 }
 
-bool Cani::Start()
+bool Infantry::Start()
 {
 	entity_type = UNIT;
-	unit_type = CANI;
+	unit_type = INFANTRY;
 
-	graphic = App->tex->Load("textures/cani.png");
+	graphic = App->tex->Load("textures/infantry.png");
 	current_animation = &idle_right;
 
 	state = WAITING_TURN;
-	direction = RIGHT;
+
+	if (entity_army == CANI)
+		direction = RIGHT;
+	else if (entity_army == HIPSTER)
+		direction = LEFT;
 
 	current_moving_position.x = position.x * 16;
 	current_moving_position.y = position.y * 16;
@@ -92,7 +113,7 @@ bool Cani::Start()
 	return true;
 }
 
-bool Cani::Update(float dt)
+bool Infantry::Update(float dt)
 {
 	if (state == MOVING)
 	{
@@ -104,23 +125,29 @@ bool Cani::Update(float dt)
 	return true;
 }
 
-bool Cani::CleanUp()
+bool Infantry::CleanUp()
 {
 	return true;
 }
 
-void Cani::Draw()
+void Infantry::Draw()
 {
 	switch (state)
 	{
 		case IDLE:
 		{
-			current_animation = &idle_right;
+			if (direction == RIGHT)
+				current_animation = &idle_right;
+			else if (direction == LEFT)
+				current_animation = &idle_left;
 			break;
 		}
 		case SELECTED:
 		{
-			current_animation = &walk_right;
+			if (direction == RIGHT)
+				current_animation = &walk_right;
+			else if (direction == LEFT)
+				current_animation = &walk_left;
 			break;
 		}
 		case MOVING:
@@ -148,7 +175,11 @@ void Cani::Draw()
 		}
 		case WAITING_TURN:
 		{
-			current_animation = &wait_right;
+			if (direction == RIGHT)
+				current_animation = &wait_right;
+			else if (direction == LEFT)
+				current_animation = &wait_left;
+			break;
 		}
 	}
 
@@ -156,12 +187,12 @@ void Cani::Draw()
 	App->render->Blit(graphic, current_moving_position.x, current_moving_position.y + OFFSET, &r);
 }
 
-iPoint Cani::GetPosition() const
+iPoint Infantry::GetPosition() const
 {
 	return position;
 }
 
-bool Cani::OnSelection()
+bool Infantry::OnSelection()
 {
 	state = SELECTED;
 
@@ -172,23 +203,29 @@ bool Cani::OnSelection()
 	return true;
 }
 
-bool Cani::OnRelease()
+bool Infantry::OnRelease()
 {
 	state = IDLE;
 
 	return true;
 }
 
-bool Cani::OnWait()
+bool Infantry::OnWait()
 {
 	state = WAITING_TURN;
+
+	if (entity_army == CANI)
+		direction = RIGHT;
+	else if (entity_army == HIPSTER)
+		direction = LEFT;
+
 	App->player->selected_unit = nullptr;
 	App->player->active = true;
 
 	return true;
 }
 
-void Cani::GetPath(iPoint goal)
+void Infantry::GetPath(iPoint goal)
 {
 	if (path.count() > 0)
 	{
@@ -229,7 +266,7 @@ void Cani::GetPath(iPoint goal)
 	}
 }
 
-void Cani::Move(float dt)
+void Infantry::Move(float dt)
 {
 	if (position != goal && path.count() > 0)
 	{
@@ -294,7 +331,7 @@ void Cani::Move(float dt)
 	}
 }
 
-void Cani::CancelAction()
+void Infantry::CancelAction()
 {
 	position = prev_position;
 	current_moving_position.x = position.x * 16;

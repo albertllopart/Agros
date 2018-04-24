@@ -459,15 +459,25 @@ void Map::CreateEntitiesFromTMX() const
 		{
 			uint current_gid = item->data->GetGid(x, y);
 
-			if (current_gid == 37)//canibase
+			if (current_gid == 37)//Base cani
 			{
 				iPoint pos(x, y);
-				App->entities->CreateCanibase(pos);
+				App->entities->CreateBase(pos, CANI);
 			}
-			else if (current_gid == 38)//factory
+			else if (current_gid == 38)//factory cani
 			{
 				iPoint pos(x, y);
-				App->entities->CreateFactory(pos);
+				App->entities->CreateFactory(pos, CANI);
+			}
+			if (current_gid == 39)//Base hipster
+			{
+				iPoint pos(x, y);
+				App->entities->CreateBase(pos, HIPSTER);
+			}
+			else if (current_gid == 40)//factory hipster
+			{
+				iPoint pos(x, y);
+				App->entities->CreateFactory(pos, HIPSTER);
 			}
 		}
 	}

@@ -125,8 +125,8 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="Building.h" />
-    <ClInclude Include="Cani.h" />
-    <ClInclude Include="CaniBase.h" />
+    <ClInclude Include="Infantry.h" />
+    <ClInclude Include="Base.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Factory.h" />
     <ClInclude Include="GuiButton.h" />
@@ -159,8 +159,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
-    <ClCompile Include="Cani.cpp" />
-    <ClCompile Include="CaniBase.cpp" />
+    <ClCompile Include="Infantry.cpp" />
+    <ClCompile Include="Base.cpp" />
     <ClCompile Include="Factory.cpp" />
     <ClCompile Include="GuiButton.cpp" />
     <ClCompile Include="GuiElement.cpp" />

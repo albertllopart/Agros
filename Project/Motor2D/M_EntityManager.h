@@ -6,8 +6,8 @@
 #include "p2List.h"
 #include "p2Point.h"
 #include "Entity.h"
-#include "Cani.h"
-#include "CaniBase.h"
+#include "Infantry.h"
+#include "Base.h"
 #include "Factory.h"
 
 class EntityManager : public Module
@@ -28,11 +28,11 @@ public:
 	bool CleanUp();
 
 	//UNITS
-	Entity* CreateCani(iPoint position);
+	Entity* CreateInfantry(iPoint position, entity_army army);
 
 	//BUILDINGS
-	Entity* CreateCanibase(iPoint position);
-	Entity* CreateFactory(iPoint position);
+	Entity* CreateBase(iPoint position, entity_army army);
+	Entity* CreateFactory(iPoint position, entity_army army);
 
 	//GUI
 	void GuiTrigger(GuiElement* element);

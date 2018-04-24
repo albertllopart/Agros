@@ -4,6 +4,7 @@
 #include "p2Point.h"
 #include "Application.h"
 #include "GuiElement.h"
+#include "Entity.h"
 #include "SDL\include\SDL.h"
 #include "p2Defs.h"
 

@@ -9,7 +9,7 @@ struct SDL_Rect;
 enum building_type
 {
 	FACTORY,
-	CANIBASE
+	BASE
 };
 
 class Building : public Entity

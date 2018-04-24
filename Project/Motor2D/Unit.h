@@ -18,7 +18,7 @@ enum unit_direction
 
 enum unit_type
 {
-	CANI
+	INFANTRY
 };
 
 class Unit : public Entity
@@ -91,7 +91,9 @@ public:
 	uint				move_range;
 
 	Animation			idle_right;
+	Animation			idle_left;
 	Animation			wait_right;
+	Animation			wait_left;
 	Animation			walk_right;
 	Animation			walk_left;
 	Animation			walk_up;

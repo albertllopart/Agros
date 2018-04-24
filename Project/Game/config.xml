@@ -43,10 +43,16 @@
         <background x="154" y="0" w="145" h="113"/>
       </images>
       <buttons>
-        <cani>
-          <idle x="154" y="115" w="130" h="20"/>
-          <selected x="154" y="136" w="130" h="20"/>
-        </cani>
+        <infantry>
+          <cani>
+            <idle x="154" y="115" w="130" h="20"/>
+            <selected x="154" y="136" w="130" h="20"/>
+          </cani>
+          <hipster>
+            <idle x="154" y="157" w="130" h="20"/>
+            <selected x="154" y="178" w="130" h="20"/>
+          </hipster>
+        </infantry>
       </buttons>
     </shop>
     <command>
@@ -101,72 +107,138 @@
 
   <entities>
     <units>
-      <cani move="7">-------------CANI
+      <infantry move="7">-------------INFANTRY
         <animation>
-          <idle_right speed="5.0">
-            <frame_1 x="0" y="0" w="16" h="17"/>
-            <frame_2 x="16" y="0" w="16" h="17"/>
-            <frame_3 x="32" y="0" w="16" h="17"/>
-            <frame_4 x="16" y="0" w="16" h="17"/>
-          </idle_right>
-          <idle_left speed="5.0">
-            <frame_1 x="80" y="0" w="16" h="17"/>
-            <frame_2 x="64" y="0" w="16" h="17"/>
-            <frame_3 x="48" y="0" w="16" h="17"/>
-            <frame_4 x="64" y="0" w="16" h="17"/>
-          </idle_left>
-          <walk_right speed="6.5">
-            <frame_1 x="0" y="17" w="16" h="17"/>
-            <frame_2 x="16" y="17" w="16" h="17"/>
-            <frame_3 x="32" y="17" w="16" h="17"/>
-            <frame_4 x="48" y="17" w="16" h="17"/>
-          </walk_right>
-          <walk_left speed="6.5">
-            <frame_1 x="112" y="17" w="16" h="17"/>
-            <frame_2 x="96" y="17" w="16" h="17"/>
-            <frame_3 x="80" y="17" w="16" h="17"/>
-            <frame_4 x="64" y="17" w="16" h="17"/>
-          </walk_left>
-          <walk_up speed="6.5">
-            <frame_1 x="0" y="34" w="16" h="17"/>
-            <frame_2 x="16" y="34" w="16" h="17"/>
-            <frame_3 x="32" y="34" w="16" h="17"/>
-            <frame_4 x="48" y="34" w="16" h="17"/>
-          </walk_up>
-          <walk_down speed="6.5">
-            <frame_1 x="64" y="34" w="16" h="17"/>
-            <frame_2 x="80" y="34" w="16" h="17"/>
-            <frame_3 x="96" y="34" w="16" h="17"/>
-            <frame_4 x="112" y="34" w="16" h="17"/>
-          </walk_down>
-          <wait_right speed="5.0">
-            <frame_1 x="0" y="51" w="16" h="17"/>
-            <frame_2 x="16" y="51" w="16" h="17"/>
-            <frame_3 x="32" y="51" w="16" h="17"/>
-            <frame_4 x="16" y="51" w="16" h="17"/>
-          </wait_right>
-          <wait_left speed="5.0">
-            <frame_1 x="80" y="51" w="16" h="17"/>
-            <frame_2 x="64" y="51" w="16" h="17"/>
-            <frame_3 x="48" y="51" w="16" h="17"/>
-            <frame_4 x="64" y="51" w="16" h="17"/>
-          </wait_left>
+          <cani>
+            <idle_right speed="5.0">
+              <frame_1 x="0" y="0" w="16" h="17"/>
+              <frame_2 x="16" y="0" w="16" h="17"/>
+              <frame_3 x="32" y="0" w="16" h="17"/>
+              <frame_4 x="16" y="0" w="16" h="17"/>
+            </idle_right>
+            <idle_left speed="5.0">
+              <frame_1 x="80" y="0" w="16" h="17"/>
+              <frame_2 x="64" y="0" w="16" h="17"/>
+              <frame_3 x="48" y="0" w="16" h="17"/>
+              <frame_4 x="64" y="0" w="16" h="17"/>
+            </idle_left>
+            <walk_right speed="6.5">
+              <frame_1 x="0" y="17" w="16" h="17"/>
+              <frame_2 x="16" y="17" w="16" h="17"/>
+              <frame_3 x="32" y="17" w="16" h="17"/>
+              <frame_4 x="48" y="17" w="16" h="17"/>
+            </walk_right>
+            <walk_left speed="6.5">
+              <frame_1 x="112" y="17" w="16" h="17"/>
+              <frame_2 x="96" y="17" w="16" h="17"/>
+              <frame_3 x="80" y="17" w="16" h="17"/>
+              <frame_4 x="64" y="17" w="16" h="17"/>
+            </walk_left>
+            <walk_up speed="6.5">
+              <frame_1 x="0" y="34" w="16" h="17"/>
+              <frame_2 x="16" y="34" w="16" h="17"/>
+              <frame_3 x="32" y="34" w="16" h="17"/>
+              <frame_4 x="48" y="34" w="16" h="17"/>
+            </walk_up>
+            <walk_down speed="6.5">
+              <frame_1 x="64" y="34" w="16" h="17"/>
+              <frame_2 x="80" y="34" w="16" h="17"/>
+              <frame_3 x="96" y="34" w="16" h="17"/>
+              <frame_4 x="112" y="34" w="16" h="17"/>
+            </walk_down>
+            <wait_right speed="5.0">
+              <frame_1 x="0" y="51" w="16" h="17"/>
+              <frame_2 x="16" y="51" w="16" h="17"/>
+              <frame_3 x="32" y="51" w="16" h="17"/>
+              <frame_4 x="16" y="51" w="16" h="17"/>
+            </wait_right>
+            <wait_left speed="5.0">
+              <frame_1 x="80" y="51" w="16" h="17"/>
+              <frame_2 x="64" y="51" w="16" h="17"/>
+              <frame_3 x="48" y="51" w="16" h="17"/>
+              <frame_4 x="64" y="51" w="16" h="17"/>
+            </wait_left>
+          </cani>
+          <hipster>
+            <idle_right speed="5.0">
+              <frame_1 x="0" y="68" w="16" h="17"/>
+              <frame_2 x="16" y="68" w="16" h="17"/>
+              <frame_3 x="32" y="68" w="16" h="17"/>
+              <frame_4 x="16" y="68" w="16" h="17"/>
+            </idle_right>
+            <idle_left speed="5.0">
+              <frame_1 x="80" y="68" w="16" h="17"/>
+              <frame_2 x="64" y="68" w="16" h="17"/>
+              <frame_3 x="48" y="68" w="16" h="17"/>
+              <frame_4 x="64" y="68" w="16" h="17"/>
+            </idle_left>
+            <walk_right speed="6.5">
+              <frame_1 x="0" y="85" w="16" h="17"/>
+              <frame_2 x="16" y="85" w="16" h="17"/>
+              <frame_3 x="32" y="85" w="16" h="17"/>
+              <frame_4 x="48" y="85" w="16" h="17"/>
+            </walk_right>
+            <walk_left speed="6.5">
+              <frame_1 x="112" y="85" w="16" h="17"/>
+              <frame_2 x="96" y="85" w="16" h="17"/>
+              <frame_3 x="80" y="85" w="16" h="17"/>
+              <frame_4 x="64" y="85" w="16" h="17"/>
+            </walk_left>
+            <walk_up speed="6.5">
+              <frame_1 x="0" y="102" w="16" h="17"/>
+              <frame_2 x="16" y="102" w="16" h="17"/>
+              <frame_3 x="32" y="102" w="16" h="17"/>
+              <frame_4 x="48" y="102" w="16" h="17"/>
+            </walk_up>
+            <walk_down speed="6.5">
+              <frame_1 x="64" y="102" w="16" h="17"/>
+              <frame_2 x="80" y="102" w="16" h="17"/>
+              <frame_3 x="96" y="102" w="16" h="17"/>
+              <frame_4 x="112" y="102" w="16" h="17"/>
+            </walk_down>
+            <wait_right speed="5.0">
+              <frame_1 x="0" y="119" w="16" h="17"/>
+              <frame_2 x="16" y="119" w="16" h="17"/>
+              <frame_3 x="32" y="119" w="16" h="17"/>
+              <frame_4 x="16" y="119" w="16" h="17"/>
+            </wait_right>
+            <wait_left speed="5.0">
+              <frame_1 x="80" y="119" w="16" h="17"/>
+              <frame_2 x="64" y="119" w="16" h="17"/>
+              <frame_3 x="48" y="119" w="16" h="17"/>
+              <frame_4 x="64" y="119" w="16" h="17"/>
+            </wait_left>
+          </hipster>
         </animation>
-      </cani>
+      </infantry>
     </units>
     <buildings>
-      <canibase>--------CANI BASE
+      <base>--------  BASE
         <animation>
-          <idle>
-            <frame_1 x="0" y="0" w="16" h="32"/>
-          </idle>
+          <cani>
+            <idle>
+              <frame_1 x="0" y="0" w="16" h="32"/>
+            </idle>
+          </cani>
+          <hipster>
+            <idle>
+              <frame_1 x="32" y="0" w="16" h="32"/>
+            </idle>
+          </hipster>
         </animation>
-      </canibase>
-      <factory>---------FACTORY
+      </base>
+      <factory>---------  FACTORY
         <animation>
-          <idle>
-            <frame_1 x ="16" y="0" w="16" h="16"/>
-          </idle>
+          <cani>
+            <idle>
+              <frame_1 x ="16" y="0" w="16" h="16"/>
+            </idle>
+          </cani>
+          <hipster>
+            <idle>
+              <frame_1 x ="48" y="0" w="16" h="16"/>
+            </idle>
+          </hipster>
         </animation>
       </factory>
     </buildings>

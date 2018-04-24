@@ -5,6 +5,7 @@
 #include "M_Textures.h"
 #include "M_Input.h"
 #include "M_EntityManager.h"
+#include "Entity.h"
 #include "M_Map.h"
 #include "M_Audio.h"
 #include "M_Gui.h"
@@ -87,7 +88,8 @@ bool Gui::Awake(pugi::xml_node& conf)
 	temp.w = conf.child("shop").child("images").child("background").attribute("w").as_int();
 	temp.h = conf.child("shop").child("images").child("background").attribute("h").as_int();
 
-	CreateShop(0, 0, temp, SHOP_MENU, true);
+	CreateShop(0, 0, temp, CANI_SHOP_MENU, true);
+	CreateShop(0, 0, temp, HIPSTER_SHOP_MENU, true);
 
 	return ret;
 }
@@ -237,13 +239,31 @@ void Gui::ActivateMenu(menu_type mtype)
 			break;
 		}
 
-		case SHOP_MENU:
+		case CANI_SHOP_MENU:
 		{
 			p2List_item<GuiElement*>* item = elements.start;
 
 			while (item != NULL)
 			{
-				if (item->data->etype == SHOP)
+				if (item->data->etype == SHOP && item->data->mtype == CANI_SHOP_MENU)
+				{
+					GuiShop* shop = (GuiShop*)item->data;
+					shop->OnActivation();
+					break;
+				}
+				item = item->next;
+			}
+			state = GUI_SHOP;
+			break;
+		}
+
+		case HIPSTER_SHOP_MENU:
+		{
+			p2List_item<GuiElement*>* item = elements.start;
+
+			while (item != NULL)
+			{
+				if (item->data->etype == SHOP && item->data->mtype == HIPSTER_SHOP_MENU)
 				{
 					GuiShop* shop = (GuiShop*)item->data;
 					shop->OnActivation();
@@ -305,13 +325,30 @@ void Gui::DisableMenu(menu_type mtype)
 			break;
 		}
 
-		case SHOP_MENU:
+		case CANI_SHOP_MENU:
 		{
 			p2List_item<GuiElement*>* item = elements.start;
 
 			while (item != NULL)
 			{
-				if (item->data->etype == SHOP)
+				if (item->data->etype == SHOP && item->data->mtype == CANI_SHOP_MENU)
+				{
+					GuiShop* shop = (GuiShop*)item->data;
+					shop->OnDisable();
+					break;
+				}
+				item = item->next;
+			}
+			break;
+		}
+
+		case HIPSTER_SHOP_MENU:
+		{
+			p2List_item<GuiElement*>* item = elements.start;
+
+			while (item != NULL)
+			{
+				if (item->data->etype == SHOP && item->data->mtype == HIPSTER_SHOP_MENU)
 				{
 					GuiShop* shop = (GuiShop*)item->data;
 					shop->OnDisable();
@@ -359,7 +396,8 @@ void Gui::Input()
 		}
 		else if (state == GUI_SHOP)
 		{
-			DisableMenu(SHOP_MENU);
+			DisableMenu(CANI_SHOP_MENU);
+			DisableMenu(HIPSTER_SHOP_MENU);
 			App->player->selected_unit->OnRelease();
 			App->input->state = PLAYER_INPUT;
 			App->player->active = true;

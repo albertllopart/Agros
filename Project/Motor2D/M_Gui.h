@@ -4,6 +4,7 @@
 #include "Application.h"
 #include "Module.h"
 #include "p2List.h"
+#include "Entity.h"
 
 #define CURSOR_WIDTH 2
 

@@ -4,6 +4,13 @@
 
 struct SDL_Texture;
 
+enum entity_army
+{
+	CANI,
+	HIPSTER,
+	NEUTRAL
+};
+
 enum entity_state
 {
 	IDLE,
@@ -109,6 +116,7 @@ public:
 	p2SString					name;
 
 	entity_type					entity_type;
+	entity_army					entity_army;
 	entity_state				state;
 
 	iPoint						position;

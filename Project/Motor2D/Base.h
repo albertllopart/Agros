@@ -9,12 +9,12 @@
 struct SDL_Texture;
 struct SDL_Rect;
 
-class Canibase : public Building
+class Base : public Building
 {
 public:
 
-	Canibase();
-	virtual~Canibase();
+	Base();
+	virtual~Base();
 
 	// Called before render is available
 	bool				 Awake(pugi::xml_node& config);

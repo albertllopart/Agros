@@ -203,11 +203,41 @@ bool Map::IsWalkable(int x, int y) const
 
 	if (walkability != NULL)
 	{
-		if (walkability->data->GetGid(x, y) == 138 || x > map_data.width || x < 0 || y > map_data.height || y < 0)
+		if (walkability->data->GetGid(x, y) == 138 || x > map_data.width || x < 0 || y > map_data.height || y < 0) //138 == non walkable
 			return false;
 	}
 
 	return true;
+}
+
+void Map::RewriteWalkability(entity_army to_walkable, entity_army to_unwalkable)
+{
+	p2List_item<map_layer*>* walkability = map_data.layers.start;
+
+	while (walkability->data->name != "walkability" && walkability != NULL)
+	{
+		walkability = walkability->next;
+	}
+
+	p2List_item<Unit*>* unit = App->entities->units.start;
+
+	int x = 0;
+	int y = 0;
+	int i = 0;
+
+	while (unit != NULL)
+	{
+		x = unit->data->position.x;
+		y = unit->data->position.y;
+		i = y * map_data.width + x;
+
+		if (unit->data->entity_army == to_walkable)
+			walkability->data->gid[i] = 137;
+		else if (unit->data->entity_army == to_unwalkable)
+			walkability->data->gid[i] = 138;
+
+		unit = unit->next;
+	}
 }
 
 // Called before quitting

@@ -126,6 +126,7 @@ public:
 	bool IsInMoveRange(int range, iPoint origin, BFS_node node) const;
 	void DrawBFS();
 	bool IsWalkable(int x, int y) const;
+	void RewriteWalkability(entity_army to_walkable, entity_army to_unwalkable);
 
 public:
 

@@ -62,6 +62,12 @@ bool Scene::Update(float dt)
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 		App->SaveGame();
 
+	//tsting
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+		App->map->RewriteWalkability(CANI, HIPSTER);
+	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+		App->map->RewriteWalkability(HIPSTER, CANI);
+
 
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 		App->render->camera.y += 1000 * dt;

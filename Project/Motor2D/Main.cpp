@@ -1,6 +1,6 @@
 #include <stdlib.h>
-#ifdef _MSC_VER
 #include <crtdbg.h>
+#ifdef _MSC_VER
 #else
 #define _ASSERT(expr) ((void)0)
 

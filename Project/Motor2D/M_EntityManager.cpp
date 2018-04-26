@@ -161,6 +161,12 @@ void EntityManager::GuiTrigger(GuiElement* element)
 					App->gui->DisableMenu(button->mtype);
 					App->input->state = PLAYER_INPUT;
 					App->player->active = true;
+					
+					if (App->player->turn == CANI)
+						App->player->turn = HIPSTER;
+					else if (App->player->turn == HIPSTER)
+						App->player->turn = CANI;
+
 					break;
 				}
 			}

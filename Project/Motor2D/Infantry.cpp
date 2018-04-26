@@ -196,6 +196,11 @@ bool Infantry::OnSelection()
 {
 	state = SELECTED;
 
+	if (entity_army == CANI)
+		App->map->RewriteWalkability(CANI, HIPSTER);
+	else if (entity_army == HIPSTER)
+		App->map->RewriteWalkability(HIPSTER, CANI);
+
 	//BFS
 	App->map->ResetBFS(position);
 	App->map->PropagateBFS(this);
@@ -213,6 +218,7 @@ bool Infantry::OnRelease()
 bool Infantry::OnWait()
 {
 	state = WAITING_TURN;
+	prev_position = position;
 
 	if (entity_army == CANI)
 		direction = RIGHT;

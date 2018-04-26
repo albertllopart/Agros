@@ -68,6 +68,7 @@ bool Player::Start()
 	graphic = App->tex->Load("textures/player.png");
 
 	state = NAVIGATING;
+	turn = CANI;
 
 	return ret;
 }
@@ -79,7 +80,7 @@ bool Player::Update(float dt)
 	if (App->input->state == PLAYER_INPUT)
 		Input(dt);
 
-	if (selected_unit != NULL && selected_unit->entity_type == UNIT && selected_unit->state == SELECTED)
+	if (selected_unit != NULL && selected_unit->entity_type == UNIT && selected_unit->state == SELECTED && selected_unit->entity_army == turn)
 		DrawArrow();
 
 	if (selected_unit != NULL)
@@ -228,7 +229,7 @@ void Player::Input(float dt)
 			App->audio->PlayFx(2);
 		}
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && selected_unit != NULL)
+	else if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && selected_unit != NULL && selected_unit->entity_army == turn)
 	{
 		if (selected_unit->entity_type == UNIT && App->map->visited.find(position) != -1)
 		{

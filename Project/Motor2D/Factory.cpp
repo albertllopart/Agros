@@ -35,6 +35,14 @@ bool Factory::Awake(pugi::xml_node& config)
 		sprite.h = node.child("hipster").child("idle").child("frame_1").attribute("h").as_int();
 	}
 
+	else if (entity_army == NEUTRAL)
+	{
+		sprite.x = node.child("neutral").child("idle").child("frame_1").attribute("x").as_int();
+		sprite.y = node.child("neutral").child("idle").child("frame_1").attribute("y").as_int();
+		sprite.w = node.child("neutral").child("idle").child("frame_1").attribute("w").as_int();
+		sprite.h = node.child("neutral").child("idle").child("frame_1").attribute("h").as_int();
+	}
+
 	return true;
 }
 

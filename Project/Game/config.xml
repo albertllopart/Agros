@@ -61,6 +61,10 @@
           <idle x="0" y="0" w="73" h="27"/>
           <selected x ="73" y="0" w="80" h="27"/>
         </wait>
+        <capture>
+          <idle x="0" y="27" w="73" h="27"/>
+          <selected x ="73" y="27" w="80" h="27"/>
+        </capture>
       </buttons>
     </command>
     <ingame_options>
@@ -107,7 +111,7 @@
 
   <entities>
     <units>
-      <infantry move="7">-------------INFANTRY
+      <infantry move="3">-------------INFANTRY
         <animation>
           <cani>
             <idle_right speed="5.0">
@@ -229,6 +233,11 @@
       </base>
       <factory>---------  FACTORY
         <animation>
+          <neutral>
+            <idle>
+              <frame_1 x ="0" y="32" w="16" h="16"/>
+            </idle>
+          </neutral>
           <cani>
             <idle>
               <frame_1 x ="16" y="0" w="16" h="16"/>

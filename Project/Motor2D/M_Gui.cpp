@@ -56,6 +56,19 @@ bool Gui::Awake(pugi::xml_node& conf)
 
 	CreateButton(0, 0, temp, temp2, WAIT, COMMAND_MENU, App->entities, true);
 
+	//CAPTURE BUTTON
+	temp.x = conf.child("command").child("buttons").child("capture").child("idle").attribute("x").as_int();
+	temp.y = conf.child("command").child("buttons").child("capture").child("idle").attribute("y").as_int();
+	temp.w = conf.child("command").child("buttons").child("capture").child("idle").attribute("w").as_int();
+	temp.h = conf.child("command").child("buttons").child("capture").child("idle").attribute("h").as_int();
+
+	temp2.x = conf.child("command").child("buttons").child("capture").child("selected").attribute("x").as_int();
+	temp2.y = conf.child("command").child("buttons").child("capture").child("selected").attribute("y").as_int();
+	temp2.w = conf.child("command").child("buttons").child("capture").child("selected").attribute("w").as_int();
+	temp2.h = conf.child("command").child("buttons").child("capture").child("selected").attribute("h").as_int();
+
+	CreateButton(0, 0, temp, temp2, CAPTURE, COMMAND_MENU, App->entities, true);
+
 	//QUIT BUTTON
 	temp.x = conf.child("ingame_options").child("buttons").child("quit").child("idle").attribute("x").as_int();
 	temp.y = conf.child("ingame_options").child("buttons").child("quit").child("idle").attribute("y").as_int();

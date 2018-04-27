@@ -211,6 +211,11 @@ bool Infantry::OnSelection()
 bool Infantry::OnRelease()
 {
 	state = IDLE;
+	
+	if (entity_army == CANI)
+		direction = RIGHT;
+	else if (entity_army == HIPSTER)
+		direction = LEFT;
 
 	return true;
 }
@@ -343,6 +348,11 @@ void Infantry::CancelAction()
 	current_moving_position.x = position.x * 16;
 	current_moving_position.y = position.y * 16;
 	state = SELECTED;
+
+	if (entity_army == CANI)
+		direction = RIGHT;
+	else if (entity_army == HIPSTER)
+		direction = LEFT;
 
 	App->map->ResetBFS(position);
 	App->map->PropagateBFS(this);

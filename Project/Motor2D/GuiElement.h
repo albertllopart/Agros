@@ -20,6 +20,7 @@ enum element_type
 enum button_type
 {
 	WAIT,
+	CAPTURE,
 	QUIT,
 	END_TURN,
 	BUY_CANI_INFANTRY,

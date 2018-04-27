@@ -85,23 +85,23 @@ private:
 public:
 
 	// Modules
-	Window* win;
-	Render* render;
-	Input* input;
-	Textures* tex;
-	Audio* audio;
-	Scene* scene;
-	Map* map;
-	Player* player;
-	EntityManager* entities;
-	Gui* gui;
+	Window* win = nullptr;
+	Render* render = nullptr;
+	Input* input = nullptr;
+	Textures* tex = nullptr;
+	Audio* audio = nullptr;
+	Scene* scene = nullptr;
+	Map* map = nullptr;
+	Player* player = nullptr;
+	EntityManager* entities = nullptr;
+	Gui* gui = nullptr;
 
 private:
 
 	p2List<Module*>	modules;
 
 	int					argc;
-	char**				args;
+	char**				args = nullptr;
 
 	p2SString			title;
 	p2SString			organization;

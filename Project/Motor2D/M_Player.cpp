@@ -231,7 +231,17 @@ void Player::Input(float dt)
 	}
 	else if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && selected_unit != NULL && selected_unit->entity_army == turn)
 	{
-		if (selected_unit->entity_type == UNIT && App->map->visited.find(position) != -1)
+		bool available_square = true;
+		p2List_item<Unit*>* unit = App->entities->units.start;
+		while (unit != NULL)
+		{
+			if (unit->data->position == position)
+				available_square = false;
+
+			unit = unit->next;
+		}
+
+		if (selected_unit->entity_type == UNIT && App->map->visited.find(position) != -1 && available_square == true)
 		{
 			selected_unit->GetPath(position);
 			selected_unit->state = MOVING;

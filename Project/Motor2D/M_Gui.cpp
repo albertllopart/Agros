@@ -235,14 +235,33 @@ void Gui::ActivateMenu(menu_type mtype)
 
 					if (button->mtype == COMMAND_MENU)
 					{
-						button->active = true;
-						active_buttons.add(button);
-
-						if (active_elements == 0)
+						if (button->btype == WAIT)
 						{
-							selected_button = button;
+							button->active = true;
+							active_buttons.add(button);
+
+							if (active_elements == 0)
+							{
+								selected_button = button;
+							}
+							active_elements++;
 						}
-						active_elements++;
+						else if (button->btype == CAPTURE && App->player->selected_unit->entity_type == INFANTRY)
+						{
+							Infantry* unit = (Infantry*)App->player->selected_unit;
+
+							if (unit->capture_available == true)
+							{
+								button->active = true;
+								active_buttons.add(button);
+
+								if (active_elements == 0)
+								{
+									selected_button = button;
+								}
+								active_elements++;
+							}
+						}
 					}
 				}
 				item = item->next;

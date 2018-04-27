@@ -38,12 +38,15 @@ public:
 	bool				OnWait();
 
 	//pathfinding
-	void						GetPath(iPoint goal);
-	void						Move(float dt);
+	void				GetPath(iPoint goal);
+	void				Move(float dt);
 
-	void						CancelAction();
+	void				CancelAction();
+
+	void				UpdateCommands();
 
 public:
 
+	bool				capture_available = false;
 
 };

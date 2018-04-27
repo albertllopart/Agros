@@ -12,6 +12,8 @@
 #include "M_Gui.h"
 #include "GuiElement.h"
 #include "M_Input.h"
+#include "Building.h"
+#include "M_EntityManager.h"
 
 Infantry::Infantry() : Unit()
 {
@@ -336,6 +338,7 @@ void Infantry::Move(float dt)
 
 	if (position == goal)
 	{
+		UpdateCommands();
 		state = WAITING_COMMAND;
 		App->input->state = UI_INPUT;
 		App->gui->ActivateMenu(COMMAND_MENU);
@@ -356,4 +359,18 @@ void Infantry::CancelAction()
 
 	App->map->ResetBFS(position);
 	App->map->PropagateBFS(this);
+}
+
+void Infantry::UpdateCommands()
+{
+	p2List_item<Building*>* building = App->entities->buildings.start;
+
+	while (building != NULL)
+	{
+		if (building->data->position == position && building->data->entity_army != entity_army)
+		{
+			capture_available = true;
+		}
+		building = building->next;
+	}
 }

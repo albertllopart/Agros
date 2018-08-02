@@ -61,6 +61,10 @@
           <idle x="0" y="0" w="73" h="27"/>
           <selected x ="73" y="0" w="80" h="27"/>
         </wait>
+        <attack>
+          <idle x="0" y="28" w="73" h="27"/>
+          <selected x ="73" y="28" w="80" h="27"/>
+        </attack>
         <capture>
           <idle x="0" y="27" w="73" h="27"/>
           <selected x ="73" y="27" w="80" h="27"/>

@@ -12,6 +12,7 @@
 #include "M_Gui.h"
 #include "GuiElement.h"
 #include "M_Input.h"
+#include "M_EntityManager.h"
 
 Infantry::Infantry() : Unit()
 {
@@ -252,6 +253,8 @@ bool Infantry::OnWait()
 	state = WAITING_TURN;
 	prev_position = position;
 
+	ClearTargets();
+
 	if (entity_army == CANI)
 		direction = RIGHT;
 	else if (entity_army == HIPSTER)
@@ -363,10 +366,48 @@ void Infantry::Move(float dt)
 
 	if (position == goal)
 	{
+		SearchTargets();
 		state = WAITING_COMMAND;
 		App->input->state = UI_INPUT;
 		App->gui->ActivateMenu(COMMAND_MENU);
 	}
+}
+
+void Infantry::SearchTargets()
+{
+	for (p2List_item<Unit*>* unit = App->entities->units.start; unit; unit = unit->next)
+	{
+		if (unit->data->position.x == position.x && unit->data->position.y == position.y - 1)//north
+		{
+			targets.add(unit->data);
+		}
+	}
+	for (p2List_item<Unit*>* unit = App->entities->units.start; unit; unit = unit->next)
+	{
+		if (unit->data->position.x == position.x + 1 && unit->data->position.y == position.y)//east
+		{
+			targets.add(unit->data);
+		}
+	}
+	for (p2List_item<Unit*>* unit = App->entities->units.start; unit; unit = unit->next)
+	{
+		if (unit->data->position.x == position.x && unit->data->position.y == position.y + 1)//south
+		{
+			targets.add(unit->data);
+		}
+	}
+	for (p2List_item<Unit*>* unit = App->entities->units.start; unit; unit = unit->next)
+	{
+		if (unit->data->position.x == position.x - 1 && unit->data->position.y == position.y)//west
+		{
+			targets.add(unit->data);
+		}
+	}
+}
+
+void Infantry::ClearTargets()
+{
+	targets.clear();
 }
 
 void Infantry::CancelAction()
@@ -375,6 +416,8 @@ void Infantry::CancelAction()
 	current_moving_position.x = position.x * 16;
 	current_moving_position.y = position.y * 16;
 	state = SELECTED;
+
+	ClearTargets();
 
 	App->map->ResetBFS(position);
 	App->map->PropagateBFS(this);

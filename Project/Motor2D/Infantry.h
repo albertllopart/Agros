@@ -41,9 +41,11 @@ public:
 	void						GetPath(iPoint goal);
 	void						Move(float dt);
 
+	void						SearchTargets();
+	void						ClearTargets();
+
 	void						CancelAction();
 
 public:
-
 
 };

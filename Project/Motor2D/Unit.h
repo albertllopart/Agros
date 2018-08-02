@@ -86,6 +86,8 @@ public:
 
 public:
 
+	p2List<Unit*>		targets;
+
 	unit_direction		direction;
 	unit_type			unit_type;
 	uint				move_range;

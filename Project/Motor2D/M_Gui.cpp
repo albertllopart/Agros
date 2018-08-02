@@ -56,6 +56,19 @@ bool Gui::Awake(pugi::xml_node& conf)
 
 	CreateButton(0, 0, temp, temp2, WAIT, COMMAND_MENU, App->entities, true);
 
+	//ATTACK BUTTON
+	temp.x = conf.child("command").child("buttons").child("attack").child("idle").attribute("x").as_int();
+	temp.y = conf.child("command").child("buttons").child("attack").child("idle").attribute("y").as_int();
+	temp.w = conf.child("command").child("buttons").child("attack").child("idle").attribute("w").as_int();
+	temp.h = conf.child("command").child("buttons").child("attack").child("idle").attribute("h").as_int();
+
+	temp2.x = conf.child("command").child("buttons").child("attack").child("selected").attribute("x").as_int();
+	temp2.y = conf.child("command").child("buttons").child("attack").child("selected").attribute("y").as_int();
+	temp2.w = conf.child("command").child("buttons").child("attack").child("selected").attribute("w").as_int();
+	temp2.h = conf.child("command").child("buttons").child("attack").child("selected").attribute("h").as_int();
+
+	CreateButton(0, 0, temp, temp2, ATTACK, COMMAND_MENU, App->entities, true);
+
 	//QUIT BUTTON
 	temp.x = conf.child("ingame_options").child("buttons").child("quit").child("idle").attribute("x").as_int();
 	temp.y = conf.child("ingame_options").child("buttons").child("quit").child("idle").attribute("y").as_int();
@@ -220,7 +233,35 @@ void Gui::ActivateMenu(menu_type mtype)
 				{
 					GuiButton* button = (GuiButton*)item->data;
 
-					if (button->mtype == COMMAND_MENU)
+					if (button->btype == ATTACK)
+					{
+						Unit* unit = (Unit*)App->player->selected_unit;
+
+						if (unit->targets.start != NULL)
+						{
+							button->active = true;
+							active_buttons.add(button);
+
+							if (active_elements == 0)
+							{
+								selected_button = button;
+							}
+							active_elements++;
+						}
+					}
+				}
+				item = item->next;
+			}
+
+			item = elements.start;
+
+			while (item != NULL)
+			{
+				if (item->data->etype == BUTTON)
+				{
+					GuiButton* button = (GuiButton*)item->data;
+
+					if (button->btype == WAIT)
 					{
 						button->active = true;
 						active_buttons.add(button);
@@ -234,6 +275,7 @@ void Gui::ActivateMenu(menu_type mtype)
 				}
 				item = item->next;
 			}
+
 			UpdateActiveButtonsPosition();
 			state = GUI_COMMAND;
 			break;

@@ -23,6 +23,9 @@ Infantry::~Infantry()
 
 bool Infantry::Awake(pugi::xml_node& config)
 {
+	//stats
+
+	hitpoints = config.child("units").attribute("hp").as_uint();
 	move_range = config.child("units").child("infantry").attribute("move").as_uint();
 
 	//Animations
@@ -185,6 +188,35 @@ void Infantry::Draw()
 
 	SDL_Rect r = current_animation->GetCurrentFrame();
 	App->render->Blit(graphic, current_moving_position.x, current_moving_position.y + OFFSET, &r);
+
+	if (hitpoints < 5 && hitpoints > 0 && state != MOVING)
+	{
+		switch (hitpoints)
+		{
+			case 1:
+			{
+				r = App->player->hp[0];
+				break;
+			}
+			case 2:
+			{
+				r = App->player->hp[1];
+				break;
+			}
+			case 3:
+			{
+				r = App->player->hp[2];
+				break;
+			}
+			case 4:
+			{
+				r = App->player->hp[3];
+				break;
+			}
+		}
+		
+		App->render->Blit(App->player->graphic, current_moving_position.x, current_moving_position.y + OFFSET + 10, &r);
+	}
 }
 
 iPoint Infantry::GetPosition() const

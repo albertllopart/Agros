@@ -100,6 +100,9 @@ public:
 	Animation			walk_down;
 	Animation*			current_animation;
 
+	//stats
+	uint				hitpoints;
+
 	//pathfinding
 	p2List<iPoint>		path;
 	iPoint				goal;

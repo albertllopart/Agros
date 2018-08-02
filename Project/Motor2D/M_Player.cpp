@@ -57,6 +57,17 @@ bool Player::Awake(pugi::xml_node& config)
 		i++;
 	}
 
+	i = 0;
+	for (pugi::xml_node hp_node = config.child("stats").child("one"); hp_node; hp_node = hp_node.next_sibling())
+	{
+		hp[i].x = hp_node.attribute("x").as_int();
+		hp[i].y = hp_node.attribute("y").as_int();
+		hp[i].w = hp_node.attribute("w").as_int();
+		hp[i].h = hp_node.attribute("h").as_int();
+
+		i++;
+	}
+
 	return ret;
 }
 

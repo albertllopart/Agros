@@ -35,7 +35,7 @@ bool Scene::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool Scene::Start()
 {
-	App->audio->PlayMusic("audio/andy.ogg");
+	//App->audio->PlayMusic("audio/andy.ogg");
 
 	pugi::xml_node node = App->GetConfigNode("map");
 

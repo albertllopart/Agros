@@ -103,10 +103,16 @@
         <frame_10 x="64" y="48" w="16" h="16"/>
       </arrow>
     </animation>
+    <stats>
+      <one x="0" y="65" w="6" h="6"/>
+      <two x="7" y="65" w="6" h="6"/>
+      <three x="14" y="65" w="6" h="6"/>
+      <four x="21" y="65" w="6" h="6"/>
+    </stats>
   </player>
 
   <entities>
-    <units>
+    <units hp="3">
       <infantry move="7">-------------INFANTRY
         <animation>
           <cani>

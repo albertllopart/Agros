@@ -66,8 +66,6 @@ public:
 
 private:
 
-	SDL_Texture*		graphic = nullptr;
-
 	iPoint				position;
 	iPoint				offset;
 
@@ -78,6 +76,10 @@ private:
 	SDL_Rect			arrow[10];
 
 public:
+
+	SDL_Texture*		graphic = nullptr;
+
+	SDL_Rect			hp[4];
 
 	//controlling units
 	Entity*				selected_unit = nullptr;

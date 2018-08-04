@@ -124,6 +124,26 @@ bool Infantry::Update(float dt)
 		Move(dt);
 	}
 
+	if (targeted_unit != NULL)
+	{
+		if (targeted_unit->position.y < position.y)
+		{
+			direction = UP;
+		}
+		else if (targeted_unit->position.y > position.y)
+		{
+			direction = DOWN;
+		}
+		else if (targeted_unit->position.x > position.x)
+		{
+			direction = RIGHT;
+		}
+		else if (targeted_unit->position.x < position.x)
+		{
+			direction = LEFT;
+		}
+	}
+
 	Draw();
 
 	return true;
@@ -177,6 +197,31 @@ void Infantry::Draw()
 				break;
 			}
 		}
+
+		case WAITING_COMMAND:
+		{
+			if (direction == RIGHT)
+			{
+				current_animation = &walk_right;
+				break;
+			}
+			else if (direction == UP)
+			{
+				current_animation = &walk_up;
+				break;
+			}
+			else if (direction == DOWN)
+			{
+				current_animation = &walk_down;
+				break;
+			}
+			else if (direction == LEFT)
+			{
+				current_animation = &walk_left;
+				break;
+			}
+		}
+
 		case WAITING_TURN:
 		{
 			if (direction == RIGHT)

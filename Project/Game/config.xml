@@ -92,12 +92,19 @@
 
   <player>
     <position x="10" y="5"/>
-    <offset x="-3" y="-3"/>
+    <offset>
+      <navigating x="-3" y="-3"/>
+      <targeting x="-5" y="-5"/>
+    </offset>
     <animation>
       <idle speed="5.0">
         <frame_1 x="0" y="0" w="22" h="22"/>
         <frame_2 x="22" y="0" w="22" h="22"/>
       </idle>
+      <target speed="5.0">
+        <frame_1 x="44" y="0" w="26" h="26"/>
+        <frame_2 x="70" y="0" w="26" h="26"/>
+      </target>
       <arrow>
         <frame_1 x="0" y="32" w="16" h="16"/>
         <frame_2 x="16" y="32" w="16" h="16"/>

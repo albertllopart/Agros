@@ -87,6 +87,7 @@ public:
 public:
 
 	p2List<Unit*>		targets;
+	Unit*				targeted_unit;
 
 	unit_direction		direction;
 	unit_type			unit_type;

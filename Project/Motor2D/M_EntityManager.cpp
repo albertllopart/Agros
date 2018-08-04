@@ -128,6 +128,21 @@ void EntityManager::GuiTrigger(GuiElement* element)
 					App->player->selected_unit->OnWait();
 					App->gui->DisableMenu(button->mtype);
 					App->input->state = PLAYER_INPUT;
+					App->player->state = NAVIGATING;
+					break;
+				}
+
+				case ATTACK:
+				{
+					App->gui->DisableMenu(button->mtype);
+					App->player->state = TARGETING;
+					App->input->state = PLAYER_INPUT;
+
+					Unit* unit = (Unit*)App->player->selected_unit;
+					unit->targeted_unit = unit->targets.start->data;
+					
+					App->player->active = true;
+					App->input->keyboard[SDL_SCANCODE_O] = KEY_UP;
 					break;
 				}
 

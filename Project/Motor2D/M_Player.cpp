@@ -33,8 +33,10 @@ bool Player::Awake(pugi::xml_node& config)
 
 	position.x = config.child("position").attribute("x").as_int();
 	position.y = config.child("position").attribute("y").as_int();
-	offset.x = config.child("offset").attribute("x").as_int();
-	offset.y = config.child("offset").attribute("y").as_int();
+	navigating_offset.x = config.child("offset").child("navigating").attribute("x").as_int();
+	navigating_offset.y = config.child("offset").child("navigating").attribute("y").as_int();
+	targeting_offset.x = config.child("offset").child("targeting").attribute("x").as_int();
+	targeting_offset.y = config.child("offset").child("targeting").attribute("y").as_int();
 
 	pugi::xml_node node = config.child("animation");
 
@@ -45,6 +47,13 @@ bool Player::Awake(pugi::xml_node& config)
 	navigating.PushBack({ node.child("idle").child("frame_2").attribute("x").as_int(), node.child("idle").child("frame_2").attribute("y").as_int(), node.child("idle").child("frame_2").attribute("w").as_int(), node.child("idle").child("frame_2").attribute("h").as_int() });
 
 	navigating.speed = node.child("idle").attribute("speed").as_float();
+
+	targeting.PushBack({ node.child("target").child("frame_1").attribute("x").as_int(), node.child("target").child("frame_1").attribute("y").as_int(), node.child("target").child("frame_1").attribute("w").as_int(), node.child("target").child("frame_1").attribute("h").as_int() });
+	targeting.PushBack({ node.child("target").child("frame_1").attribute("x").as_int(), node.child("target").child("frame_1").attribute("y").as_int(), node.child("target").child("frame_1").attribute("w").as_int(), node.child("target").child("frame_1").attribute("h").as_int() });
+	targeting.PushBack({ node.child("target").child("frame_2").attribute("x").as_int(), node.child("target").child("frame_2").attribute("y").as_int(), node.child("target").child("frame_2").attribute("w").as_int(), node.child("target").child("frame_2").attribute("h").as_int() });
+	targeting.PushBack({ node.child("target").child("frame_2").attribute("x").as_int(), node.child("target").child("frame_2").attribute("y").as_int(), node.child("target").child("frame_2").attribute("w").as_int(), node.child("target").child("frame_2").attribute("h").as_int() });
+	
+	targeting.speed = node.child("target").attribute("speed").as_float();
 
 	uint i = 0;
 	for (pugi::xml_node arrow_node = node.child("arrow").child("frame_1"); arrow_node; arrow_node = arrow_node.next_sibling())
@@ -91,7 +100,7 @@ bool Player::Update(float dt)
 	if (App->input->state == PLAYER_INPUT)
 		Input(dt);
 
-	if (selected_unit != NULL && selected_unit->entity_type == UNIT && selected_unit->state == SELECTED && selected_unit->entity_army == turn)
+	if (selected_unit != NULL && selected_unit->entity_type == UNIT && selected_unit->state == SELECTED && selected_unit->entity_army == turn && state != TARGETING)
 		DrawArrow();
 
 	if (selected_unit != NULL)
@@ -118,146 +127,410 @@ bool Player::CleanUp()
 
 void Player::Input(float dt)
 {
-	//moving
-	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	switch (state)
 	{
-		uint scale = App->win->GetScale();
-		uint camy = abs(App->render->camera.y) / 16;
-		uint width, height;
-		App->win->GetWindowSize(width, height);
-		camy += (height / 16);
-
-		if (camy / scale < App->map->map_data.height && position.y > (camy / scale) - 3)
+		case NAVIGATING:
 		{
-			App->render->camera.y -= 16 * scale;
-		}
-
-		if (position.y < App->map->map_data.height - 1)
-		{
-			position.y += 1;
-			App->audio->PlayFx(1);
-		}
-	}
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
-	{
-		uint scale = App->win->GetScale();
-		uint camy = abs(App->render->camera.y) / 16;
-
-		if (camy > 0 && position.y < (camy / scale) + 2)
-		{
-			App->render->camera.y += 16 * scale;
-		}
-
-		if (position.y > 0)
-		{
-			position.y -= 1;
-			App->audio->PlayFx(1);
-		}
-	}
-	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
-	{
-		uint scale = App->win->GetScale();
-		uint camx = abs(App->render->camera.x) / 16;
-		uint width, height;
-		App->win->GetWindowSize(width, height);
-		camx += (width / 16);
-
-		if (camx / scale < App->map->map_data.width && position.x > (camx / scale) - 3)
-		{
-			App->render->camera.x -= 16 * scale;
-		}
-
-		if (position.x < App->map->map_data.width - 1)
-		{
-			position.x += 1;
-			App->audio->PlayFx(1);
-		}
-	}
-	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
-	{
-		uint scale = App->win->GetScale();
-		uint camx = abs(App->render->camera.x) / 16;
-
-		if (camx > 0 && position.x < (camx / scale) + 2)
-		{
-			App->render->camera.x += 16 * scale;
-		}
-
-		if (position.x > 0)
-		{
-			position.x -= 1;
-			App->audio->PlayFx(1);
-		}
-	}
-
-	//controlling units
-	if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && selected_unit == NULL)
-	{
-		bool available_square = true;
-
-		for (p2List_item<Unit*>* unit = App->entities->units.start; unit; unit = unit->next)
-		{
-			if (unit->data->position == position)
+			//moving
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 			{
-				if (unit->data->state != WAITING_TURN)
+				uint scale = App->win->GetScale();
+				uint camy = abs(App->render->camera.y) / 16;
+				uint width, height;
+				App->win->GetWindowSize(width, height);
+				camy += (height / 16);
+
+				if (camy / scale < App->map->map_data.height && position.y >(camy / scale) - 3)
 				{
-					selected_unit = unit->data;
-					state = UNIT_SELECTED;
-					selected_unit->OnSelection();
-					App->audio->PlayFx(2);
-					break;
+					App->render->camera.y -= 16 * scale;
 				}
-				else if (unit->data->state == WAITING_TURN)
-					available_square = false;
-			}
-		}
 
-		if (selected_unit == NULL && available_square == true)
-		{
-			for (p2List_item<Building*>* building = App->entities->buildings.start; building; building = building->next)
-			{
-				if (building->data->position == position)
+				if (position.y < App->map->map_data.height - 1)
 				{
-					if (building->data->state != WAITING_TURN)
+					position.y += 1;
+					App->audio->PlayFx(1);
+				}
+			}
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+			{
+				uint scale = App->win->GetScale();
+				uint camy = abs(App->render->camera.y) / 16;
+
+				if (camy > 0 && position.y < (camy / scale) + 2)
+				{
+					App->render->camera.y += 16 * scale;
+				}
+
+				if (position.y > 0)
+				{
+					position.y -= 1;
+					App->audio->PlayFx(1);
+				}
+			}
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+			{
+				uint scale = App->win->GetScale();
+				uint camx = abs(App->render->camera.x) / 16;
+				uint width, height;
+				App->win->GetWindowSize(width, height);
+				camx += (width / 16);
+
+				if (camx / scale < App->map->map_data.width && position.x >(camx / scale) - 3)
+				{
+					App->render->camera.x -= 16 * scale;
+				}
+
+				if (position.x < App->map->map_data.width - 1)
+				{
+					position.x += 1;
+					App->audio->PlayFx(1);
+				}
+			}
+			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+			{
+				uint scale = App->win->GetScale();
+				uint camx = abs(App->render->camera.x) / 16;
+
+				if (camx > 0 && position.x < (camx / scale) + 2)
+				{
+					App->render->camera.x += 16 * scale;
+				}
+
+				if (position.x > 0)
+				{
+					position.x -= 1;
+					App->audio->PlayFx(1);
+				}
+			}
+
+			//controlling units
+			if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && selected_unit == NULL)
+			{
+				bool available_square = true;
+
+				for (p2List_item<Unit*>* unit = App->entities->units.start; unit; unit = unit->next)
+				{
+					if (unit->data->position == position)
 					{
-						selected_unit = building->data;
-						state = BUILDING_SELECTED;
-						App->input->keyboard[SDL_SCANCODE_O] = KEY_UP;
-						selected_unit->OnSelection();
-						App->audio->PlayFx(2);
-						break;
+						if (unit->data->state != WAITING_TURN)
+						{
+							selected_unit = unit->data;
+							state = UNIT_SELECTED;
+							selected_unit->OnSelection();
+							App->audio->PlayFx(2);
+							break;
+						}
+						else if (unit->data->state == WAITING_TURN)
+							available_square = false;
 					}
 				}
-			}
-		}
-		
-		if (selected_unit == NULL)
-		{
-			App->input->keyboard[SDL_SCANCODE_O] = KEY_UP;
-			active = false;
-			App->input->state = UI_INPUT;
-			App->gui->ActivateMenu(INGAME_OPTIONS_MENU);
-			App->audio->PlayFx(2);
-		}
-	}
-	else if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && selected_unit != NULL && selected_unit->entity_army == turn)
-	{
-		if (selected_unit->entity_type == UNIT && App->map->visited.find(position) != -1)
-		{
-			selected_unit->GetPath(position);
-			selected_unit->state = MOVING;
-			this->active = false;
-			App->audio->PlayFx(2);
-		}
-	}
 
-	if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
-	{
-		if (selected_unit != NULL && selected_unit->state == SELECTED)
+				if (selected_unit == NULL && available_square == true)
+				{
+					for (p2List_item<Building*>* building = App->entities->buildings.start; building; building = building->next)
+					{
+						if (building->data->position == position)
+						{
+							if (building->data->state != WAITING_TURN)
+							{
+								selected_unit = building->data;
+								state = BUILDING_SELECTED;
+								App->input->keyboard[SDL_SCANCODE_O] = KEY_UP;
+								selected_unit->OnSelection();
+								App->audio->PlayFx(2);
+								break;
+							}
+						}
+					}
+				}
+
+				if (selected_unit == NULL)
+				{
+					App->input->keyboard[SDL_SCANCODE_O] = KEY_UP;
+					active = false;
+					App->input->state = UI_INPUT;
+					App->gui->ActivateMenu(INGAME_OPTIONS_MENU);
+					App->audio->PlayFx(2);
+				}
+			}
+			else if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && selected_unit != NULL && selected_unit->entity_army == turn)
+			{
+				if (selected_unit->entity_type == UNIT && App->map->visited.find(position) != -1)
+				{
+					selected_unit->GetPath(position);
+					selected_unit->state = MOVING;
+					this->active = false;
+					App->audio->PlayFx(2);
+				}
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+			{
+				if (selected_unit != NULL && selected_unit->state == SELECTED)
+				{
+					selected_unit->OnRelease();
+					position = selected_unit->position;
+					selected_unit = nullptr;
+					state = NAVIGATING;
+				}
+			}
+			break;
+		}
+		case UNIT_SELECTED:
 		{
-			selected_unit->OnRelease();
-			selected_unit = nullptr;
-			state = NAVIGATING;
+			//moving
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+			{
+				uint scale = App->win->GetScale();
+				uint camy = abs(App->render->camera.y) / 16;
+				uint width, height;
+				App->win->GetWindowSize(width, height);
+				camy += (height / 16);
+
+				if (camy / scale < App->map->map_data.height && position.y >(camy / scale) - 3)
+				{
+					App->render->camera.y -= 16 * scale;
+				}
+
+				if (position.y < App->map->map_data.height - 1)
+				{
+					position.y += 1;
+					App->audio->PlayFx(1);
+				}
+			}
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+			{
+				uint scale = App->win->GetScale();
+				uint camy = abs(App->render->camera.y) / 16;
+
+				if (camy > 0 && position.y < (camy / scale) + 2)
+				{
+					App->render->camera.y += 16 * scale;
+				}
+
+				if (position.y > 0)
+				{
+					position.y -= 1;
+					App->audio->PlayFx(1);
+				}
+			}
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+			{
+				uint scale = App->win->GetScale();
+				uint camx = abs(App->render->camera.x) / 16;
+				uint width, height;
+				App->win->GetWindowSize(width, height);
+				camx += (width / 16);
+
+				if (camx / scale < App->map->map_data.width && position.x >(camx / scale) - 3)
+				{
+					App->render->camera.x -= 16 * scale;
+				}
+
+				if (position.x < App->map->map_data.width - 1)
+				{
+					position.x += 1;
+					App->audio->PlayFx(1);
+				}
+			}
+			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+			{
+				uint scale = App->win->GetScale();
+				uint camx = abs(App->render->camera.x) / 16;
+
+				if (camx > 0 && position.x < (camx / scale) + 2)
+				{
+					App->render->camera.x += 16 * scale;
+				}
+
+				if (position.x > 0)
+				{
+					position.x -= 1;
+					App->audio->PlayFx(1);
+				}
+			}
+
+			//controlling units
+			if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && selected_unit == NULL)
+			{
+				bool available_square = true;
+
+				for (p2List_item<Unit*>* unit = App->entities->units.start; unit; unit = unit->next)
+				{
+					if (unit->data->position == position)
+					{
+						if (unit->data->state != WAITING_TURN)
+						{
+							selected_unit = unit->data;
+							state = UNIT_SELECTED;
+							selected_unit->OnSelection();
+							App->audio->PlayFx(2);
+							break;
+						}
+						else if (unit->data->state == WAITING_TURN)
+							available_square = false;
+					}
+				}
+
+				if (selected_unit == NULL && available_square == true)
+				{
+					for (p2List_item<Building*>* building = App->entities->buildings.start; building; building = building->next)
+					{
+						if (building->data->position == position)
+						{
+							if (building->data->state != WAITING_TURN)
+							{
+								selected_unit = building->data;
+								state = BUILDING_SELECTED;
+								App->input->keyboard[SDL_SCANCODE_O] = KEY_UP;
+								selected_unit->OnSelection();
+								App->audio->PlayFx(2);
+								break;
+							}
+						}
+					}
+				}
+
+				if (selected_unit == NULL)
+				{
+					App->input->keyboard[SDL_SCANCODE_O] = KEY_UP;
+					active = false;
+					App->input->state = UI_INPUT;
+					App->gui->ActivateMenu(INGAME_OPTIONS_MENU);
+					App->audio->PlayFx(2);
+				}
+			}
+			else if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN && selected_unit != NULL && selected_unit->entity_army == turn)
+			{
+				if (selected_unit->entity_type == UNIT && App->map->visited.find(position) != -1)
+				{
+					selected_unit->GetPath(position);
+					selected_unit->state = MOVING;
+					this->active = false;
+					App->audio->PlayFx(2);
+				}
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+			{
+				if (selected_unit != NULL && selected_unit->state == SELECTED)
+				{
+					selected_unit->OnRelease();
+					position = selected_unit->position;
+					selected_unit = nullptr;
+					state = NAVIGATING;
+				}
+			}
+			break;
+		}
+		case TARGETING:
+		{
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+			{
+				Unit* unit = (Unit*)selected_unit;
+
+				if (unit->targets.count() > 1)
+				{
+					int targeted_unit_position = unit->targets.find(unit->targeted_unit);
+					p2List_item<Unit*>* item = unit->targets.start;
+
+					for (int i = 0; i < targeted_unit_position; i++)
+					{
+						item = item->next;
+					}
+
+					if (item->next != NULL)
+						unit->targeted_unit = item->next->data;
+					else
+						unit->targeted_unit = unit->targets.start->data;
+
+					App->audio->PlayFx(1);
+				}
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+			{
+				Unit* unit = (Unit*)selected_unit;
+
+				if (unit->targets.count() > 1)
+				{
+					int targeted_unit_position = unit->targets.find(unit->targeted_unit);
+					p2List_item<Unit*>* item = unit->targets.start;
+
+					for (int i = 0; i < targeted_unit_position; i++)
+					{
+						item = item->next;
+					}
+
+					if (item->next != NULL)
+						unit->targeted_unit = item->next->data;
+					else
+						unit->targeted_unit = unit->targets.start->data;
+
+					App->audio->PlayFx(1);
+				}
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+			{
+				Unit* unit = (Unit*)selected_unit;
+
+				if (unit->targets.count() > 1)
+				{
+					int targeted_unit_position = unit->targets.find(unit->targeted_unit);
+					p2List_item<Unit*>* item = unit->targets.start;
+
+					for (int i = 0; i < targeted_unit_position; i++)
+					{
+						item = item->next;
+					}
+
+					if (item->next != NULL)
+						unit->targeted_unit = item->next->data;
+					else
+						unit->targeted_unit = unit->targets.start->data;
+
+					App->audio->PlayFx(1);
+				}
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+			{
+				Unit* unit = (Unit*)selected_unit;
+
+				if (unit->targets.count() > 1)
+				{
+					int targeted_unit_position = unit->targets.find(unit->targeted_unit);
+					p2List_item<Unit*>* item = unit->targets.start;
+
+					for (int i = 0; i < targeted_unit_position; i++)
+					{
+						item = item->next;
+					}
+
+					if (item->next != NULL)
+						unit->targeted_unit = item->next->data;
+					else
+						unit->targeted_unit = unit->targets.start->data;
+
+					App->audio->PlayFx(1);
+				}
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+			{
+				Unit* unit = (Unit*)App->player->selected_unit;
+				unit->targeted_unit = nullptr;
+
+				App->input->state = UI_INPUT;
+				App->gui->ActivateMenu(COMMAND_MENU);
+
+				App->input->keyboard[SDL_SCANCODE_K] = KEY_UP;
+				state = UNIT_SELECTED;
+				active = false;
+			}
+
+			break;
 		}
 	}
 }
@@ -271,11 +544,47 @@ void Player::Draw()
 			current_animation = &navigating;
 			break;
 		}
+
+		case TARGETING:
+		{
+			current_animation = &targeting;
+			break;
+		}
+
+		case UNIT_SELECTED:
+		{
+			current_animation = &navigating;
+		}
 	}
 
 	SDL_Rect r = current_animation->GetCurrentFrame();
-	iPoint world_position = App->map->MapToWorld(position.x, position.y);
-	App->render->Blit(graphic, offset.x + world_position.x, offset.y + world_position.y, &r);
+
+	switch (state)
+	{
+		case NAVIGATING:
+		{
+
+			iPoint world_position = App->map->MapToWorld(position.x, position.y);
+			App->render->Blit(graphic, navigating_offset.x + world_position.x, navigating_offset.y + world_position.y, &r);
+			break;
+		}
+
+		case TARGETING:
+		{
+			Unit* unit = (Unit*)selected_unit;
+			iPoint world_position = App->map->MapToWorld(unit->targeted_unit->position.x, unit->targeted_unit->position.y);
+			App->render->Blit(graphic, targeting_offset.x + world_position.x, targeting_offset.y + world_position.y, &r);
+			break;
+		}
+
+		case UNIT_SELECTED:
+		{
+			iPoint world_position = App->map->MapToWorld(position.x, position.y);
+			App->render->Blit(graphic, navigating_offset.x + world_position.x, navigating_offset.y + world_position.y, &r);
+			break;
+		}
+	}
+	
 }
 
 void Player::DrawArrow() const

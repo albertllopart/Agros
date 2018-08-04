@@ -21,6 +21,7 @@ struct SDL_Rect;
 enum player_state
 {
 	NAVIGATING,
+	TARGETING,
 	UNIT_SELECTED,
 	BUILDING_SELECTED
 };
@@ -67,10 +68,12 @@ public:
 private:
 
 	iPoint				position;
-	iPoint				offset;
+	iPoint				navigating_offset;
+	iPoint				targeting_offset;
 
 	//Animations
 	Animation			navigating;
+	Animation			targeting;
 	Animation*			current_animation;
 
 	SDL_Rect			arrow[10];

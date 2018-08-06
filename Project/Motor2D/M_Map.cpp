@@ -240,6 +240,22 @@ void Map::RewriteWalkability(entity_army to_walkable, entity_army to_unwalkable)
 	}
 }
 
+void Map::RewriteTile(iPoint position)
+{
+	p2List_item<map_layer*>* walkability = map_data.layers.start;
+
+	while (walkability->data->name != "walkability" && walkability != NULL)
+	{
+		walkability = walkability->next;
+	}
+
+	int x = position.x;
+	int y = position.y;
+	int pos = y * map_data.width + x;
+
+	walkability->data->gid[pos] = 137;
+}
+
 // Called before quitting
 bool Map::CleanUp()
 {

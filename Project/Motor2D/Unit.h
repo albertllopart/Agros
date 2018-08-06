@@ -74,6 +74,16 @@ public:
 		return true;
 	}
 
+	virtual bool						OnAttack()
+	{
+		return true;
+	}
+
+	virtual bool						OnDying()
+	{
+		return true;
+	}
+
 	//pathfinding
 	virtual void						GetPath(iPoint goal)
 	{}

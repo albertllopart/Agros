@@ -34,6 +34,9 @@ public:
 	Entity* CreateBase(iPoint position, entity_army army);
 	Entity* CreateFactory(iPoint position, entity_army army);
 
+	//DELETE
+	bool DeleteEntity(Entity* entity);
+
 	//GUI
 	void GuiTrigger(GuiElement* element);
 

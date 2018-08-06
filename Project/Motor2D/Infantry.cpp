@@ -8,6 +8,7 @@
 #include "M_Textures.h"
 #include "M_Render.h"
 #include "M_Map.h"
+#include "Entity.h"
 #include "M_Player.h"
 #include "M_Gui.h"
 #include "GuiElement.h"
@@ -311,6 +312,30 @@ bool Infantry::OnWait()
 	return true;
 }
 
+bool Infantry::OnAttack()
+{
+	targeted_unit->hitpoints--;
+
+	if (targeted_unit->hitpoints < 1)
+	{
+		targeted_unit->OnDying();
+	}
+
+	OnWait();
+
+	return true;
+}
+
+bool Infantry::OnDying()
+{
+	//rewrite walkability
+	App->map->RewriteTile(position);
+	
+	App->entities->DeleteEntity(this);
+
+	return true;
+}
+
 void Infantry::GetPath(iPoint goal)
 {
 	if (path.count() > 0)
@@ -453,6 +478,7 @@ void Infantry::SearchTargets()
 void Infantry::ClearTargets()
 {
 	targets.clear();
+	targeted_unit = nullptr;
 }
 
 void Infantry::CancelAction()

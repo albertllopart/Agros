@@ -36,6 +36,8 @@ public:
 	bool				OnSelection();
 	bool				OnRelease();
 	bool				OnWait();
+	bool				OnAttack();
+	bool				OnDying();
 
 	//pathfinding
 	void						GetPath(iPoint goal);

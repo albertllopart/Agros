@@ -517,6 +517,13 @@ void Player::Input(float dt)
 				}
 			}
 
+			if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
+			{
+				Unit* unit = (Unit*)selected_unit;
+				unit->OnAttack();
+				state = NAVIGATING;
+			}
+
 			if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
 			{
 				Unit* unit = (Unit*)App->player->selected_unit;

@@ -113,6 +113,37 @@ Entity* EntityManager::CreateFactory(iPoint position, entity_army army)
 	return factory;
 }
 
+//DELETE
+bool EntityManager::DeleteEntity(Entity* entity)
+{
+	if (entity != nullptr)
+	{
+		p2List_item<Unit*>* unit = units.start;
+		Unit* eunit = (Unit*)entity;
+		while (unit != NULL)
+		{
+			if (unit->data == eunit)
+			{
+				units.del(unit);
+				break;
+			}
+			unit = unit->next;
+		}
+
+		p2List_item<Entity*>* item = entities.start;
+		while (item != NULL)
+		{
+			if (item->data == entity)
+			{
+				RELEASE(entity);
+				entities.del(item);
+				return true;
+			}
+			item = item->next;
+		}
+	}
+}
+
 void EntityManager::GuiTrigger(GuiElement* element)
 {
 	switch (element->etype)

@@ -127,7 +127,7 @@
   </player>
 
   <entities>
-    <units hp="3">
+    <units hp="5">
       <infantry move="7">-------------INFANTRY  
         <animation>
           <cani>

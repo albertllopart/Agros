@@ -66,8 +66,8 @@
           <selected x ="73" y="28" w="80" h="27"/>
         </attack>
         <capture>
-          <idle x="0" y="27" w="73" h="27"/>
-          <selected x ="73" y="27" w="80" h="27"/>
+          <idle x="0" y="56" w="73" h="27"/>
+          <selected x ="73" y="56" w="80" h="27"/>
         </capture>
       </buttons>
     </command>
@@ -235,6 +235,7 @@
     </units>
     <buildings>
       <base>--------  BASE
+        <offset x="0" y="-16"/>
         <animation>
           <cani>
             <idle>
@@ -252,7 +253,7 @@
         <animation>
           <neutral>
             <idle>
-              <frame_1 x ="0" y="32" w="16" h="16"/>
+              <frame_1 x ="80" y="0" w="16" h="16"/>
             </idle>
           </neutral>
           <cani>

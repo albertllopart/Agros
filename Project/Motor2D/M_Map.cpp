@@ -515,7 +515,7 @@ void Map::CreateEntitiesFromTMX() const
 				iPoint pos(x, y);
 				App->entities->CreateFactory(pos, CANI);
 			}
-			if (current_gid == 39)//Base hipster
+			else if (current_gid == 39)//Base hipster
 			{
 				iPoint pos(x, y);
 				App->entities->CreateBase(pos, HIPSTER);
@@ -524,6 +524,11 @@ void Map::CreateEntitiesFromTMX() const
 			{
 				iPoint pos(x, y);
 				App->entities->CreateFactory(pos, HIPSTER);
+			}
+			else if (current_gid == 42)//factory neutral
+			{
+				iPoint pos(x, y);
+				App->entities->CreateFactory(pos, NEUTRAL);
 			}
 		}
 	}

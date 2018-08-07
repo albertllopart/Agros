@@ -291,6 +291,20 @@ bool Infantry::OnRelease()
 {
 	state = IDLE;
 
+	switch (entity_army)
+	{
+		case CANI:
+		{
+			direction = RIGHT;
+			break;
+		}
+		case HIPSTER:
+		{
+			direction = LEFT;
+			break;
+		}
+	}
+
 	return true;
 }
 
@@ -321,6 +335,14 @@ bool Infantry::OnAttack()
 		targeted_unit->OnDying();
 	}
 
+	OnWait();
+
+	return true;
+}
+
+bool Infantry::OnCapture()
+{
+	targeted_building->ChangeArmy(entity_army);
 	OnWait();
 
 	return true;
@@ -445,6 +467,7 @@ void Infantry::Move(float dt)
 
 void Infantry::SearchTargets()
 {
+	//units
 	for (p2List_item<Unit*>* unit = App->entities->units.start; unit; unit = unit->next)
 	{
 		if (unit->data->position.x == position.x && unit->data->position.y == position.y - 1)//north
@@ -473,12 +496,22 @@ void Infantry::SearchTargets()
 			targets.add(unit->data);
 		}
 	}
+
+	//buildings
+	for (p2List_item<Building*>* building = App->entities->buildings.start; building; building = building->next)
+	{
+		if (building->data->position == position && building->data->entity_army != entity_army)
+		{
+			targeted_building = building->data;
+		}
+	}
 }
 
 void Infantry::ClearTargets()
 {
 	targets.clear();
 	targeted_unit = nullptr;
+	targeted_building = nullptr;
 }
 
 void Infantry::CancelAction()
@@ -489,6 +522,20 @@ void Infantry::CancelAction()
 	state = SELECTED;
 
 	ClearTargets();
+
+	switch (entity_army)
+	{
+		case CANI:
+		{
+			direction = RIGHT;
+			break;
+		}
+		case HIPSTER:
+		{
+			direction = LEFT;
+			break;
+		}
+	}
 
 	App->map->ResetBFS(position);
 	App->map->PropagateBFS(this);

@@ -17,27 +17,28 @@ public:
 	virtual~Infantry();
 
 	// Called before render is available
-	bool				 Awake(pugi::xml_node& config);
+	bool						 Awake(pugi::xml_node& config);
 
 	// Called before the first frame
-	bool				Start();
+	bool						Start();
 
 	// Called each loop iteration
-	bool				Update(float dt);
+	bool						Update(float dt);
 
 	// Called before quitting
-	bool				CleanUp();
+	bool						CleanUp();
 
-	void				Draw();
+	void						Draw();
 
-	iPoint				GetPosition() const;
+	iPoint						GetPosition() const;
 
 	//interaction with player
-	bool				OnSelection();
-	bool				OnRelease();
-	bool				OnWait();
-	bool				OnAttack();
-	bool				OnDying();
+	bool						OnSelection();
+	bool						OnRelease();
+	bool						OnWait();
+	bool						OnAttack();
+	bool						OnCapture();
+	bool						OnDying();
 
 	//pathfinding
 	void						GetPath(iPoint goal);

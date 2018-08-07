@@ -58,6 +58,9 @@ public:
 		return true;
 	}
 
+	virtual void				ChangeArmy(int new_army)
+	{}
+
 public:
 
 	building_type		building_type;

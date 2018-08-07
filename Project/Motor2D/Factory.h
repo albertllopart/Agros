@@ -35,6 +35,8 @@ public:
 
 	bool				OnRelease();
 
+	void				ChangeArmy(int new_army);
+
 public:
 
 };

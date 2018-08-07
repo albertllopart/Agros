@@ -90,6 +90,11 @@ public:
 		return true;
 	}
 
+	virtual bool OnCapture()
+	{
+		return true;
+	}
+
 	virtual void CancelAction()
 	{}
 

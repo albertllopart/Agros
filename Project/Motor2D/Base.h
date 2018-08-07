@@ -3,7 +3,6 @@
 #include "Building.h"
 #include "Animation.h"
 
-#define OFFSET -18
 #define SIZE 16
 
 struct SDL_Texture;
@@ -30,9 +29,12 @@ public:
 
 	void				Draw();
 
+	void				ChangeArmy(int new_army);
+
 	iPoint				GetPosition() const;
 
 public:
 
+	iPoint				offset;
 
 };

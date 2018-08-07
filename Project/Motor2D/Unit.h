@@ -1,6 +1,7 @@
 #pragma once
 #include "p2Point.h"
 #include "Entity.h"
+#include "Building.h"
 #include "Animation.h"
 
 #define OFFSET -2
@@ -79,6 +80,11 @@ public:
 		return true;
 	}
 
+	virtual bool						OnCapture()
+	{
+		return true;
+	}
+
 	virtual bool						OnDying()
 	{
 		return true;
@@ -98,6 +104,7 @@ public:
 
 	p2List<Unit*>		targets;
 	Unit*				targeted_unit;
+	Building*			targeted_building;
 
 	unit_direction		direction;
 	unit_type			unit_type;

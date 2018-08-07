@@ -229,7 +229,7 @@ void Player::Input(float dt)
 				{
 					for (p2List_item<Building*>* building = App->entities->buildings.start; building; building = building->next)
 					{
-						if (building->data->position == position)
+						if (building->data->position == position && building->data->building_type == FACTORY && building->data->entity_army == turn)
 						{
 							if (building->data->state != WAITING_TURN)
 							{
@@ -404,6 +404,7 @@ void Player::Input(float dt)
 			{
 				if (selected_unit->entity_type == UNIT && App->map->visited.find(position) != -1)
 				{
+					App->input->keyboard[SDL_SCANCODE_O] = KEY_UP;
 					selected_unit->GetPath(position);
 					selected_unit->state = MOVING;
 					this->active = false;

@@ -177,6 +177,15 @@ void EntityManager::GuiTrigger(GuiElement* element)
 					break;
 				}
 
+				case CAPTURE:
+				{
+					App->player->selected_unit->OnCapture();
+					App->gui->DisableMenu(button->mtype);
+					App->input->state = PLAYER_INPUT;
+					App->player->state = NAVIGATING;
+					break;
+				}
+
 				case BUY_CANI_INFANTRY:
 				{
 					CreateInfantry(App->player->selected_unit->position, CANI);

@@ -21,6 +21,7 @@ enum button_type
 {
 	WAIT,
 	ATTACK,
+	CAPTURE,
 	QUIT,
 	END_TURN,
 	BUY_CANI_INFANTRY,
